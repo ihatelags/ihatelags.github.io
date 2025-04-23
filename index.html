@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Setup</title>
+    <script>
+        function updatePlayerFields() {
+            const numPlayers = document.getElementById("numPlayers").value;
+            const playerFields = document.getElementById("playerFields");
+            playerFields.innerHTML = "";
+
+            for (let i = 1; i <= numPlayers; i++) {
+                const playerDiv = document.createElement("div");
+                playerDiv.innerHTML = `Player ${i} Name: <input type="text" id="player${i}Name"><br>`;
+                playerFields.appendChild(playerDiv);
+            }
+        }
+
+        function randomizeFactions() {
+            let factions = ["Space Marines", "Orks", "Eldar", "Chaos"];
+            if (document.getElementById("fw").checked) {
+                factions = factions.concat(["Tau", "Necron", "Tyranids", "Imperial Guard"]);
+            }
+            if (document.getElementById("fv").checked) {
+                factions = factions.concat(["Sisters", "AdMech", "Dark Eldar", "Inquisition"]);
+            }
+
+            const numPlayers = document.getElementById("numPlayers").value;
+            const playerOrder = [];
+            for (let i = 1; i <= numPlayers; i++) {
+                playerOrder.push(i);
+            }
+            playerOrder.sort(() => Math.random() - 0.5);
+
+            const results = document.getElementById("results");
+            results.innerHTML = "";
+
+            playerOrder.forEach((player, index) => {
+                const faction = factions.splice(Math.floor(Math.random() * factions.length), 1);
+                const playerName = document.getElementById(`player${player}Name`).value;
+                const firstPlayerFlag = index === 0 ? " (First Player)" : "";
+                results.innerHTML += `${index+1}. ${playerName}: ${faction}${firstPlayerFlag}<br>`;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Player Setup</h1>
+    <label for="numPlayers">Number of Players:</label>
+    <select id="numPlayers" onchange="updatePlayerFields()">
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+    <br><br>
+    <div id="playerFields"></div>
+    <br>
+    <input type="checkbox" id="fw"> FW<br>
+    <input type="checkbox" id="fv"> FV<br><br>
+    <button onclick="randomizeFactions()">Randomize Factions</button>
+    <br><br>
+    <div id="results"></div>
+</body>
+</html>
