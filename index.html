@@ -44,7 +44,7 @@
                 const playerName = document.getElementById(`player${player}Name`).value;
                 let playerTiles = "";
                 if (document.getElementById("tiles").checked) {
-                    playerTiles = ` - Tiles: ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}, ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}`;
+                    playerTiles = `<br>Tiles: ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}, ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}`;
                 }
                 results.innerHTML += `<p style="font-size: 24px;">Player ${index+1}:<br>${playerName} - ${faction}${playerTiles}</p>`;
             });
