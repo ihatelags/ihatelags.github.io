@@ -40,7 +40,7 @@
             playerOrder.forEach((player, index) => {
                 const faction = factions.splice(Math.floor(Math.random() * factions.length), 1);
                 const playerName = document.getElementById(`player${player}Name`).value;
-                results.innerHTML += `<p style="font-size: 24px;">Player ${index+1}. ${playerName}: ${faction}</p>`;
+                results.innerHTML += `<p style="font-size: 24px;">Player ${index+1} - ${playerName} - ${faction}</p>`;
             });
         }
     </script>
