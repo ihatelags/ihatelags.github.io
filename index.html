@@ -37,7 +37,7 @@
             const results = document.getElementById("results");
             results.innerHTML = "";
 
-           let tiles = Array.from({ length: 12 }, (_, i) => i + 1);
+           let tiles = Array.from({ length: 8 }, (_, i) => i + 1);
 
             playerOrder.forEach((player, index) => {
                 const faction = factions.splice(Math.floor(Math.random() * factions.length), 1);
