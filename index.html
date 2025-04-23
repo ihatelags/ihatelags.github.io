@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Setup</title>
+    <title>Forbidden Stars faction selector</title>
     <script>
         function updatePlayerFields() {
             const numPlayers = document.getElementById("numPlayers").value;
@@ -21,10 +21,10 @@
         function randomizeFactions() {
             let factions = ["Space Marines", "Orks", "Eldar", "Chaos"];
             if (document.getElementById("fw").checked) {
-                factions = factions.concat(["Tau", "Necron", "Tyranids", "Imperial Guard"]);
+                factions = factions.concat(["Tau", "Necrons", "Tyranids", "Imperial Guard"]);
             }
             if (document.getElementById("fv").checked) {
-                factions = factions.concat(["Sisters", "AdMech", "Dark Eldar", "Inquisition"]);
+                factions = factions.concat(["Adepta Sororitas", "Adeptus Mechanichus", "Dark Eldar", "Inquisition"]);
             }
 
             const numPlayers = document.getElementById("numPlayers").value;
@@ -40,16 +40,17 @@
             playerOrder.forEach((player, index) => {
                 const faction = factions.splice(Math.floor(Math.random() * factions.length), 1);
                 const playerName = document.getElementById(`player${player}Name`).value;
-                const firstPlayerFlag = index === 0 ? " (First Player)" : "";
-                results.innerHTML += `${index+1}. ${playerName}: ${faction}${firstPlayerFlag}<br>`;
+                const firstPlayerFlag = index === 0 ? " (First player)" : "";
+                results.innerHTML += `<p style="font-size: 24px;">${index+1}. ${playerName}: ${faction} ${firstPlayerFlag}</p>`;
             });
         }
     </script>
 </head>
 <body>
-    <h1>Player Setup</h1>
+    <h1>Forbidden Stars faction selector</h1>
     <label for="numPlayers">Number of Players:</label>
     <select id="numPlayers" onchange="updatePlayerFields()">
+        <option value=" "> </option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
