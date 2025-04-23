@@ -37,10 +37,16 @@
             const results = document.getElementById("results");
             results.innerHTML = "";
 
+           let tiles = Array.from({ length: 12 }, (_, i) => i + 1);
+
             playerOrder.forEach((player, index) => {
                 const faction = factions.splice(Math.floor(Math.random() * factions.length), 1);
                 const playerName = document.getElementById(`player${player}Name`).value;
-                results.innerHTML += `<p style="font-size: 24px;">Player ${index+1} - ${playerName} - ${faction}</p>`;
+                let playerTiles = "";
+                if (document.getElementById("tiles").checked) {
+                    playerTiles = ` - Tiles: ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}, ${tiles.splice(Math.floor(Math.random() * tiles.length), 1)}`;
+                }
+                results.innerHTML += `<p style="font-size: 24px;">Player ${index+1} - ${playerName} - ${faction}${playerTiles}</p>`;
             });
         }
     </script>
@@ -59,6 +65,7 @@
     <br>
     <input type="checkbox" id="fw"> FW<br>
     <input type="checkbox" id="fv"> FV<br><br>
+    <input type="checkbox" id="tiles"> Tiles<br><br>
     <button onclick="randomizeFactions()">Randomize Factions</button>
     <br><br>
     <div id="results"></div>
