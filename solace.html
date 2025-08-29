@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUD Item Decoder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a2e;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+        pre {
+            background-color: #162447;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .output-line {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="container bg-gray-800 shadow-xl rounded-xl p-6 md:p-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-purple-400 mb-2 text-center">MUD Item Decoder</h1>
+        <p class="text-center text-gray-300 mb-8">
+            Paste a MUD item or mob entry into the box below to see its properties.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Input Panel -->
+            <div>
+                <h2 class="text-xl font-bold mb-4 text-purple-300">Item Data</h2>
+                <textarea id="item-input" 
+                          class="w-full h-80 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
+                          placeholder="#21356
+mace white~
+a white tinted mace~
+A light looking mace lies here.~
+steel~
+weapon BG AN
+mace 6 6 divine DF
+25 30 2000 P
+A 19 4
+A 18 4
+A 13 25
+S fight_offensive
+"a white mace vibrates violently in your hand, echoing with deep, earthen power."
+"a white mace vibrates violently, echoing with deep, earthen power."
+"a white mace vibrates violently, echoing with deep, earthen power."
+"earthmaw" 15
+L 6"></textarea>
+            </div>
+            
+            <!-- Output Panel -->
+            <div>
+                <h2 class="text-xl font-bold mb-4 text-purple-300">Decoded Output</h2>
+                <div id="item-output" class="w-full h-80 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 overflow-y-auto">
+                    <p class="text-gray-400">Your decoded item will appear here...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8">
+            <h2 class="text-xl font-bold mb-4 text-purple-300">About the Decoder</h2>
+            <p class="text-gray-300 mb-4">
+                This tool is designed to parse a specific MUD item or mob format. It works by interpreting the
+                various lines and single-character flags, converting them into a more
+                understandable format. The logic is based on the provided sample data and may not
+                be compatible with all MUD formats.
+            </p>
+            <p class="text-gray-300">
+                It specifically decodes properties like VNUM, descriptions, item type, flags,
+                V-values (damage dice, weapon class), stats, and any special notes.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        // Comprehensive mappings for the decoding logic.
+        const ITEM_TYPES = {
+            "light": 1, "scroll": 2, "wand": 3, "staff": 4, "weapon": 5, "phylactery": 6, "treasure": 8, "armor": 9,
+            "potion": 10, "clothing": 11, "furniture": 12, "trash": 13, "container": 15, "drink_con": 17, "key": 18,
+            "food": 19, "money": 20, "boat": 22, "corpse_npc": 23, "corpse_pc": 24, "fountain": 25, "pill": 26,
+            "protect": 27, "map": 28, "portal": 29, "warp_stone": 30, "room_key": 31, "gem": 32, "jewelry": 33,
+            "jukebox": 34, "clan_item": 35, "skeleton": 36, "spellbook": 37, "assassin_bomb": 38, "manual": 39,
+            "spellbook_ii": 40, "instrument": 41, "questitem": 42, "resource": 43, "vial": 44, "pc_remains": 45,
+            "launcher": 46, "ammo": 47, "ammo_container": 48
+        };
+        const WEAPON_CLASSES = {
+            "exotic": 0, "sword": 1, "dagger": 2, "spear": 3, "mace": 4, "axe": 5, "flail": 6, "whip": 7,
+            "polearm": 8, "staff": 9, "shuriken": 10
+        };
+        const EXTRA_FLAGS = {
+            "A": "glow", "B": "hum", "C": "good", "D": "lock", "E": "evil", "F": "invis", "G": "magic", "H": "nodrop",
+            "I": "no align change", "J": "anti good", "K": "anti evil", "L": "anti neutral", "M": "noremove",
+            "N": "inventory", "O": "nopurge", "P": "rot death", "Q": "vis death", "R": "align changed",
+            "S": "nonmetal", "T": "nolocate", "U": "melt drop", "V": "had timer", "W": "sell extract",
+            "X": "purified", "Y": "burn proof", "Z": "nouncurse", "aa": "tattoo", "bb": "corpse no animate",
+            "dd": "no look", "ff": "dragon corpse"
+        };
+        const WEAR_FLAGS = {
+            "A": "take", "B": "wear finger", "C": "wear neck", "D": "wear body", "E": "wear head", "F": "wear legs",
+            "G": "wear feet", "H": "wear hands", "I": "wear arms", "J": "wear shield", "K": "wear about",
+            "L": "wear waist", "M": "wear wrist", "N": "wield", "O": "hold", "P": "no sac", "Q": "wear float",
+            "R": "wear tattoo", "S": "wear sign"
+        };
+        const RESTRICT_FLAGS = {
+            "A": "human", "B": "half elf", "C": "dwarf", "D": "elf", "E": "wild elf", "F": "dark elf", "G": "kender",
+            "H": "gnome", "I": "minotaur", "J": "draconian", "K": "lich", "L": "cobar", "M": "fighter", "N": "knight",
+            "O": "ranger", "P": "cleric", "Q": "druid", "R": "thief", "S": "assassin", "T": "mage w", "U": "mage r",
+            "V": "mage b", "W": "outcast", "X": "solamnia", "Y": "takhisis", "Z": "guardian", "aa": "mage",
+            "bb": "tower", "cc": "heretic", "dd": "warder", "ee": "entropy", "ff": "revenant"
+        };
+        const AFFECT_TYPES = {
+            0: "none", 1: "strength", 2: "dexterity", 3: "intelligence", 4: "wisdom", 5: "constitution", 6: "sex", 7: "class",
+            8: "level", 9: "age", 10: "height", 11: "weight", 12: "mana", 13: "hitpoints", 14: "move", 15: "move regeneration",
+            16: "exp", 17: "armor class", 18: "hitroll", 19: "damroll", 20: "reflex save", 21: "will save", 22: "fortitude save",
+            23: "resist earth", 24: "resist air", 25: "mana regeneration", 26: "morph form", 27: "hp regeneration",
+            28: "resist bash", 29: "resist pierce", 30: "resist slash", 31: "resist fire", 32: "resist cold",
+            33: "resist lightning", 34: "resist acid", 35: "resist poison", 36: "resist negative", 37: "resist holy",
+            38: "resist energy", 39: "resist mental", 40: "resist disease", 41: "resist drowning", 42: "resist sound",
+            43: "resist other", 44: "dam type", 45: "all saves", 46: "resist physical", 47: "spellpower",
+            48: "sdm fire", 49: "sdm cold", 50: "sdm lightning", 51: "sdm acid", 52: "sdm poison", 53: "sdm negative",
+            54: "sdm holy", 55: "sdm energy", 56: "sdm mental", 57: "sdm disease", 58: "sdm drowning", 59: "sdm other",
+            60: "sdm sound", 61: "sdm air", 62: "sdm earth", 63: "dam undead", 64: "magic find", 65: "reflex spellforce",
+            66: "will spellforce", 67: "fortitude spellforce", 68: "resist magic", 69: "dam elves", 70: "dam humans",
+            71: "dam minotaurs", 72: "dam draconians", 73: "dam gnomes", 74: "dam dwarves", 75: "dam kenders",
+            76: "dam dragons", 77: "precision", 78: "draw speed", 79: "shooting range"
+        };
+        const WEAPON_FLAGS = {
+            "A": "flaming", "B": "frost", "C": "vampiric", "D": "sharp", "E": "vorpal", "F": "two-handed",
+            "G": "shocking", "H": "poison", "I": "avenger", "J": "shadowbane", "K": "lightbringer"
+        };
+        
+        // New Mappings for Mobs
+        const MOB_FLAGS = {
+            "A": "is npc", "B": "sentinel", "C": "scavenger", "D": "is aggressive", "E": "stay area", "F": "wimpy",
+            "G": "is pet", "H": "is train", "I": "is practice", "J": "is immobile", "K": "is no-death", "L": "is summonable",
+            "M": "is no-align", "N": "is no-purge", "O": "is out-of-doors", "P": "is mounted", "Q": "is no-get",
+            "R": "is no-drop", "S": "is magic-user", "T": "is healer", "U": "is stable master", "V": "is shopkeeper",
+            "W": "is bank", "X": "is no-dispel", "Y": "is no-recall", "Z": "is undead"
+        };
+        const AFFECTED_BY_FLAGS = {
+            "A": "blind", "B": "invisible", "C": "detect evil", "D": "detect invis", "E": "detect magic",
+            "F": "detect hidden", "G": "sanctuary", "H": "faerie fire", "I": "infrared", "J": "curse",
+            "K": "invis", "L": "poison", "M": "protected", "N": "sleep", "O": "sneak", "P": "hide",
+            "Q": "charm", "R": "pass door", "S": "fear", "T": "berserk", "U": "haste", "V": "calm",
+            "W": "slow", "X": "fly", "Y": "swim", "Z": "unsummonable"
+        };
+        const FORM_FLAGS = {
+            "A": "edible", "B": "poisonous", "C": "magical", "D": "stone", "E": "flesh", "F": "gas",
+            "G": "sentient", "H": "biped", "I": "quadruped", "J": "animal", "K": "aquatic", "L": "reptile",
+            "M": "amphibian", "N": "avian", "O": "mammal", "P": "insectoid", "Q": "spider", "R": "slimy",
+            "S": "bony", "T": "liquid", "U": "humanoid", "V": "undead", "W": "golem", "X": "ethereal"
+        };
+        const RESIST_FLAGS = {
+            "A": "summon", "B": "charm", "C": "magic", "D": "weapon", "E": "bash", "F": "pierce", "G": "slash",
+            "H": "fire", "I": "cold", "J": "lightning", "K": "acid", "L": "poison", "M": "negative",
+            "N": "holy", "O": "energy", "P": "mental", "Q": "disease", "R": "drowning", "S": "sound",
+            "T": "other"
+        };
+        const SEX_TYPES = {
+            0: "neutral", 1: "male", 2: "female"
+        };
+        const POSITIONS = {
+            0: "dead", 1: "mortally wounded", 2: "incapacitated", 3: "stunned", 4: "sleeping", 5: "resting",
+            6: "standing", 7: "fighting"
+        };
+        const SIZE_TYPES = {
+            0: "tiny", 1: "small", 2: "medium", 3: "large", 4: "huge", 5: "giant"
+        };
+        const DAMAGE_TYPES = {
+            "digestion": "digestion", "acbite": "acidic bite", "slime": "slime", "bacid": "boiling acid", "acclaw": "acidic claw",
+            "acblade": "acidic blade", "frbite": "freezing bite", "chill": "chill", "cgrasp": "chilling grasp",
+            "frclaw": "freezing claw", "frblade": "freezing blade", "decay": "decay", "drowning": "drowning",
+            "earth": "grasp of earth", "wrath": "wrath", "magic": "magic", "light": "blast of light",
+            "nature": "force of nature", "fury": "deadly fury", "flbite": "flaming bite", "flame": "flame",
+            "flclaw": "flaming claw", "flblade": "flaming blade", "divine": "divine power", "apocalypse": "apocalyptic power",
+            "unholy": "unholy force", "rage": "zealous rage", "shbite": "shocking bite", "shock": "shock",
+            "shclaw": "shocking claw", "shblade": "shocking blade", "lblast": "blast of lightning",
+            "pain": "the pain of the damned", "vehemence": "vehemence", "drain": "life draining energy",
+            "deathly": "deathly touch", "negative": "negative power", "soulless": "soulless cold",
+            "defilement": "defilement", "ruin": "ruinous force", "darkness": "blast of darkness",
+            "none": "hit", "pbite": "poisonous bite", "blast": "blast", "pound": "pound", "crush": "crush",
+            "suction": "suction", "beating": "beating", "charge": "charge", "slap": "slap", "punch": "punch",
+            "smash": "smash", "thwack": "thwack", "stab": "stab", "bite": "bite", "pierce": "pierce",
+            "chomp": "chomp", "scratch": "scratch", "peck": "peck", "sting": "sting", "thrust": "thrust",
+            "slice": "slice", "slash": "slash", "whip": "whip", "claw": "claw", "grip": "grip",
+            "cleave": "cleave", "chop": "chop", "shear": "shearing blade", "shuriken": "shuriken",
+            "spin": "spinning razor", "shredding": "shredding"
+        };
+
+        const itemInput = document.getElementById('item-input');
+        const itemOutput = document.getElementById('item-output');
+
+        function getFlags(flagString, flagMap) {
+            if (!flagString || flagString.length === 0) return "none";
+            const flags = new Set();
+            for (let i = 0; i < flagString.length; i++) {
+                const twoCharFlag = flagString.substring(i, i + 2);
+                if (flagMap[twoCharFlag]) {
+                    flags.add(flagMap[twoCharFlag]);
+                    i++;
+                } else if (flagMap[flagString[i]]) {
+                    flags.add(flagMap[flagString[i]]);
+                }
+            }
+            return flags.size > 0 ? Array.from(flags).join(', ') : "none";
+        }
+        
+        function parseDiceRoll(diceString) {
+            const match = diceString.match(/^(\d+)d(\d+)([\+\-]\d+)?$/);
+            if (!match) return diceString; // Return original string if no match
+            const numDice = parseInt(match[1]);
+            const dieSides = parseInt(match[2]);
+            const bonus = match[3] ? parseInt(match[3]) : 0;
+            return `${numDice} dice of ${dieSides} sides, with a ${bonus >= 0 ? '+' : ''}${bonus} bonus`;
+        }
+
+        function decodeItem(data) {
+            const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            const result = [];
+            let lineIndex = 0;
+
+            const nextLine = () => lines[lineIndex++];
+            const hasNextLine = () => lineIndex < lines.length;
+
+            // These lines are always in a fixed order at the start.
+            let vnum = "Unknown";
+            if (hasNextLine() && lines[lineIndex].startsWith('#')) {
+                vnum = nextLine().substring(1);
+            }
+            const name = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+            const shortDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+            const longDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+            const material = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+
+            let itemType = "Unknown";
+            let extraFlags = "none";
+            let wearFlags = "none";
+            let restrictFlags = "none";
+            if (hasNextLine()) {
+                const parts = nextLine().split(' ');
+                itemType = parts[0];
+                extraFlags = getFlags(parts[1], EXTRA_FLAGS);
+                wearFlags = getFlags(parts[2], WEAR_FLAGS);
+                restrictFlags = getFlags(parts[3], RESTRICT_FLAGS);
+            }
+
+            let minDam = 0;
+            let maxDam = 0;
+            let damType = "Unknown";
+            let weaponFlags = "none";
+            let weaponClass = "Unknown";
+            if (hasNextLine()) {
+                const parts = nextLine().split(' ');
+                weaponClass = parts[0];
+                minDam = parseInt(parts[1]) || 0;
+                maxDam = parseInt(parts[2]) || 0;
+                damType = DAMAGE_TYPES[parts[3]] || parts[3] || "Unknown";
+                weaponFlags = getFlags(parts[4], WEAPON_FLAGS)
+            }
+
+            let level = 0;
+            let weight = 0;
+            let cost = 0;
+            if (hasNextLine()) {
+                const parts = nextLine().split(' ');
+                level = parseInt(parts[0]) || 0;
+                weight = parseInt(parts[1]) || 0;
+                cost = parseInt(parts[2]) || 0;
+            }
+            
+            // The remaining lines can be in any order. We'll loop through them.
+            let extraDescKeywords = "";
+            let extraDescContent = "";
+            const affects = [];
+            let limit = "none";
+            let actionType = "none";
+            let spell = "none";
+            let spellChance = 0;
+            
+            while (hasNextLine()) {
+                const line = lines[lineIndex];
+
+                if (line.startsWith('E')) {
+                    nextLine(); // Consume 'E'
+                    if (hasNextLine()) {
+                        extraDescKeywords = nextLine().replace(/~$/, '');
+                    }
+                    if (hasNextLine()) {
+                        let content = "";
+                        while (hasNextLine() && lines[lineIndex] !== '~') {
+                            content += nextLine() + '\n';
+                        }
+                        if (hasNextLine() && lines[lineIndex] === '~') {
+                            nextLine(); // Consume the final tilde line
+                        }
+                        extraDescContent = content.trim();
+                    }
+                } else if (line.startsWith('A ')) {
+                    const parts = nextLine().split(' ');
+                    const type = parseInt(parts[1]) || 0;
+                    const value = parseInt(parts[2]) || 0;
+                    affects.push({ type, value });
+                } else if (line.startsWith('L ')) {
+                    limit = nextLine().split(' ')[1];
+                } else if (line.startsWith('S ')) {
+                    const parts = nextLine().split(' ');
+                    actionType = parts[1];
+                    // Skip the 3 emote lines
+                    if (hasNextLine()) nextLine();
+                    if (hasNextLine()) nextLine();
+                    if (hasNextLine()) nextLine();
+                    
+                    if (hasNextLine()) {
+                        const spellLine = nextLine().split(' ');
+                        spell = spellLine[0];
+                        spellChance = parseInt(spellLine[1]) || 0;
+                    }
+                } else {
+                    // Unrecognized line, just move on
+                    nextLine();
+                }
+            }
+            
+            // Build the final output
+            const avgDam = minDam > 0 && maxDam > 0 ? (minDam + minDam * maxDam) / 2 : 0;
+
+            result.push(`<b>Name(s):</b> ${name}`);
+            result.push(`<b>Vnum:</b> ${vnum}  <b>Type:</b> ${itemType}`);
+            result.push(`<b>Short description:</b> ${shortDesc}`);
+            result.push(`<b>Long description:</b> ${longDesc}`);
+            result.push(`<b>Wear bits:</b> ${wearFlags}`);
+            result.push(`<b>Extra bits:</b> ${extraFlags}`);
+            result.push(`<b>Restrict_flags:</b> ${restrictFlags}`);
+            result.push(`It is made of ${material}.`);
+            result.push(`<b>Weight:</b> ${weight} (${(weight / 10).toFixed(1)} pounds)`);
+            result.push(`<b>Level:</b> ${level}  <b>Cost:</b> ${cost}`);
+            
+            if (affects.length > 0) {
+                result.push(`<b>Affects:</b>`);
+                affects.forEach(affect => {
+                    const affectName = AFFECT_TYPES[affect.type] || `Type ${affect.type}`;
+                    result.push(`  - ${affectName}: ${affect.value >= 0 ? '+' : ''}${affect.value}`);
+                });
+            }
+
+            result.push(`<b>Limit is</b> ${limit}`);
+            if (actionType !== "none") {
+                 result.push(`<b>Object action type:</b> ${actionType}, <b>spell:</b> ${spell}, <b>chance:</b> ${spellChance}`);
+            }
+            if (minDam > 0 && maxDam > 0) {
+                result.push(`It deals ${minDam}d${maxDam} damage (averaging at ${avgDam}).`);
+            }
+            result.push(`Its attacks take the form of a ${damType}.`);
+            result.push(`<b>Weapon flags:</b> ${weaponFlags}`);
+            if (extraDescKeywords) {
+                result.push(`<b>Extra description keywords:</b> '${extraDescKeywords}'`);
+            }
+
+            return result.map(line => `<div class="output-line">${line}</div>`).join('');
+        }
+        
+        function decodeMob(data) {
+            const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            const result = [];
+            let lineIndex = 0;
+
+            const nextLine = () => lines[lineIndex++];
+            const hasNextLine = () => lineIndex < lines.length;
+
+            // VNUM and Keywords
+            const vnumLine = nextLine();
+            const vnum = vnumLine.startsWith('#') ? vnumLine.substring(1) : "Unknown";
+            const keywords = nextLine().replace(/~$/, '');
+
+            // Descriptions
+            const shortDesc = nextLine().replace(/~$/, '');
+            const longDesc = nextLine().replace(/~$/, '');
+            let extraDesc = "";
+            if (hasNextLine()) {
+                let content = "";
+                while(hasNextLine() && lines[lineIndex] !== '~') {
+                    content += nextLine() + '\n';
+                }
+                if (hasNextLine() && lines[lineIndex] === '~') {
+                    nextLine();
+                }
+                extraDesc = content.trim();
+            }
+
+            // Race
+            const race = nextLine().replace(/~$/, '');
+            
+            // Flags
+            const flagsLine = nextLine().split(' ');
+            const mobFlags = getFlags(flagsLine[0], MOB_FLAGS);
+            const affectedByFlags = getFlags(flagsLine[1], AFFECTED_BY_FLAGS);
+            const alignment = flagsLine[2] || "Unknown";
+            
+            // Stats
+            const statsLine = nextLine().split(' ');
+            const level = statsLine[0] || "Unknown";
+            const hp = parseDiceRoll(statsLine[2]);
+            const mana = parseDiceRoll(statsLine[3]);
+            const damage = parseDiceRoll(statsLine[4]);
+            const attackType = DAMAGE_TYPES[statsLine[5]] || statsLine[5] || "Unknown";
+            
+            // AC
+            const acLine = nextLine().split(' ');
+            const ac = acLine.join(', ');
+            
+            // Other Flags
+            const moreFlagsLine = nextLine().split(' ');
+            const resists = getFlags(moreFlagsLine[0], RESIST_FLAGS);
+            const immunities = getFlags(moreFlagsLine[1], RESIST_FLAGS); // Same mapping as resists
+            const susceptibilities = getFlags(moreFlagsLine[2], RESIST_FLAGS); // Same mapping as resists
+            
+            // Position, Sex, Gold
+            const posSexGoldLine = nextLine().split(' ');
+            const defaultPosition = posSexGoldLine[0] || "Unknown";
+            const fightingPosition = posSexGoldLine[1] || "Unknown";
+            const sex = posSexGoldLine[2] || "Unknown";
+            const gold = posSexGoldLine[3] || "Unknown";
+            
+            // XP and Size
+            const xpSizeLine = nextLine().split(' ');
+            const xp = xpSizeLine[0] || "Unknown";
+            const size = xpSizeLine[2] || "Unknown";
+            
+            // Build the final output
+            result.push(`<b>Name(s):</b> ${keywords}`);
+            result.push(`<b>Vnum:</b> ${vnum}`);
+            result.push(`<b>Short description:</b> ${shortDesc}`);
+            result.push(`<b>Long description:</b> ${longDesc}`);
+            result.push(`<b>Extra description:</b> ${extraDesc}`);
+            result.push(`<b>Race:</b> ${race}`);
+            result.push(`<b>Mob flags:</b> ${mobFlags}`);
+            result.push(`<b>Affected by flags:</b> ${affectedByFlags}`);
+            result.push(`<b>Alignment:</b> ${alignment}`);
+            result.push(`<b>Level:</b> ${level}`);
+            result.push(`<b>Hitpoints:</b> ${hp}`);
+            result.push(`<b>Mana:</b> ${mana}`);
+            result.push(`<b>Damage:</b> ${damage}`);
+            result.push(`<b>Attack type:</b> ${attackType}`);
+            result.push(`<b>AC (Bash, Pierce, Slash, Exotic):</b> ${ac}`);
+            result.push(`<b>Resists:</b> ${resists}`);
+            result.push(`<b>Immunities:</b> ${immunities}`);
+            result.push(`<b>Susceptibilities:</b> ${susceptibilities}`);
+            result.push(`<b>Default Position:</b> ${POSITIONS[defaultPosition] || defaultPosition}`);
+            result.push(`<b>Fighting Position:</b> ${POSITIONS[fightingPosition] || fightingPosition}`);
+            result.push(`<b>Sex:</b> ${SEX_TYPES[sex] || sex}`);
+            result.push(`<b>Gold:</b> ${gold}`);
+            result.push(`<b>XP:</b> ${xp}`);
+            result.push(`<b>Size:</b> ${SIZE_TYPES[size] || size}`);
+
+            return result.map(line => `<div class="output-line">${line}</div>`).join('');
+        }
+
+        const updateOutput = () => {
+            const inputValue = itemInput.value.trim();
+            if (inputValue) {
+                const lines = inputValue.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+                if (lines[0] && lines[0].startsWith('#')) {
+                    // Check if it's an item or mob by the structure
+                    // A quick heuristic: mob lines are typically longer and more numerous
+                    // The presence of a second line without a '~' is a good indicator
+                    if (lines[1] && lines[1].endsWith('~')) {
+                        itemOutput.innerHTML = decodeItem(inputValue);
+                    } else {
+                        itemOutput.innerHTML = decodeMob(inputValue);
+                    }
+                } else {
+                    itemOutput.innerHTML = decodeItem(inputValue);
+                }
+            } else {
+                itemOutput.innerHTML = '<p class="text-gray-400">Your decoded item or mob will appear here...</p>';
+            }
+        };
+
+        itemInput.addEventListener('input', updateOutput);
+        updateOutput();
+    </script>
+</body>
+</html>
