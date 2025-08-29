@@ -24,8 +24,14 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+        /* Reduced space between output lines */
         .output-line {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+        /* New font styling for input and output */
+        #item-input, #item-output {
+            font-family: 'Fixedsys', 'Courier New', 'Courier', monospace;
         }
     </style>
 </head>
@@ -36,12 +42,12 @@
             Paste a MUD item or mob entry into the box below to see its properties.
         </p>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:col-span-3 gap-8">
             <!-- Input Panel -->
-            <div>
+            <div class="md:col-span-1">
                 <h2 class="text-xl font-bold mb-4 text-purple-300">Item Data</h2>
                 <textarea id="item-input" 
-                          class="w-full h-80 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
+                          class="w-full h-64 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
                           placeholder="#21356
 mace white~
 a white tinted mace~
@@ -62,28 +68,13 @@ L 6"></textarea>
             </div>
             
             <!-- Output Panel -->
-            <div>
+            <div class="md:col-span-2">
                 <h2 class="text-xl font-bold mb-4 text-purple-300">Decoded Output</h2>
-                <div id="item-output" class="w-full h-80 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 overflow-y-auto">
-                    <p class="text-gray-400">Your decoded item will appear here...</p>
+                <div id="item-output" class="w-full h-96 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 overflow-y-auto">
+                    <p class="text-gray-400">Your decoded item or mob will appear here...</p>
                 </div>
             </div>
         </div>
-        
-        <div class="mt-8">
-            <h2 class="text-xl font-bold mb-4 text-purple-300">About the Decoder</h2>
-            <p class="text-gray-300 mb-4">
-                This tool is designed to parse a specific MUD item or mob format. It works by interpreting the
-                various lines and single-character flags, converting them into a more
-                understandable format. The logic is based on the provided sample data and may not
-                be compatible with all MUD formats.
-            </p>
-            <p class="text-gray-300">
-                It specifically decodes properties like VNUM, descriptions, item type, flags,
-                V-values (damage dice, weapon class), stats, and any special notes.
-            </p>
-        </div>
-
     </div>
 
     <script>
@@ -205,7 +196,7 @@ L 6"></textarea>
         const itemOutput = document.getElementById('item-output');
 
         function getFlags(flagString, flagMap) {
-            if (!flagString || flagString.length === 0) return "none";
+            if (!flagString || flagString.length === 0) return [];
             const flags = new Set();
             for (let i = 0; i < flagString.length; i++) {
                 const twoCharFlag = flagString.substring(i, i + 2);
@@ -216,7 +207,7 @@ L 6"></textarea>
                     flags.add(flagMap[flagString[i]]);
                 }
             }
-            return flags.size > 0 ? Array.from(flags).join(', ') : "none";
+            return Array.from(flags);
         }
         
         function parseDiceRoll(diceString) {
@@ -247,29 +238,42 @@ L 6"></textarea>
             const material = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
 
             let itemType = "Unknown";
-            let extraFlags = "none";
-            let wearFlags = "none";
-            let restrictFlags = "none";
+            let extraFlags = [];
+            let wearFlags = [];
+            let restrictFlags = [];
+            
+            // This line is always item flags
             if (hasNextLine()) {
                 const parts = nextLine().split(' ');
                 itemType = parts[0];
-                extraFlags = getFlags(parts[1], EXTRA_FLAGS);
-                wearFlags = getFlags(parts[2], WEAR_FLAGS);
-                restrictFlags = getFlags(parts[3], RESTRICT_FLAGS);
+                if (ITEM_TYPES[itemType]) {
+                    // Corrected order: extra flags followed by wear flags
+                    extraFlags = getFlags(parts[1], EXTRA_FLAGS);
+                    wearFlags = getFlags(parts[2], WEAR_FLAGS);
+                    if (parts.length > 3) {
+                       restrictFlags = getFlags(parts[3], RESTRICT_FLAGS);
+                    }
+                }
             }
-
+            
             let minDam = 0;
             let maxDam = 0;
             let damType = "Unknown";
             let weaponFlags = "none";
-            let weaponClass = "Unknown";
+            let ac = [];
+
+            // This line depends on item type (weapon or armor)
             if (hasNextLine()) {
                 const parts = nextLine().split(' ');
-                weaponClass = parts[0];
-                minDam = parseInt(parts[1]) || 0;
-                maxDam = parseInt(parts[2]) || 0;
-                damType = DAMAGE_TYPES[parts[3]] || parts[3] || "Unknown";
-                weaponFlags = getFlags(parts[4], WEAPON_FLAGS)
+                if (itemType === "weapon") {
+                    const weaponClass = parts[0]; // Currently unused
+                    minDam = parseInt(parts[1]) || 0;
+                    maxDam = parseInt(parts[2]) || 0;
+                    damType = DAMAGE_TYPES[parts[3]] || parts[3] || "Unknown";
+                    weaponFlags = getFlags(parts[4], WEAPON_FLAGS).join(', ');
+                } else if (itemType === "armor") {
+                    ac = parts.slice(0, 4).map(val => parseInt(val) || 0);
+                }
             }
 
             let level = 0;
@@ -319,16 +323,24 @@ L 6"></textarea>
                 } else if (line.startsWith('S ')) {
                     const parts = nextLine().split(' ');
                     actionType = parts[1];
-                    // Skip the 3 emote lines
+                    // Skip the three emote lines
                     if (hasNextLine()) nextLine();
                     if (hasNextLine()) nextLine();
                     if (hasNextLine()) nextLine();
                     
+                    // Parse the spell and chance line
                     if (hasNextLine()) {
-                        const spellLine = nextLine().split(' ');
-                        spell = spellLine[0];
-                        spellChance = parseInt(spellLine[1]) || 0;
+                        const spellLine = nextLine();
+                        const spellMatch = spellLine.match(/"(.*)"\s+(\d+)/);
+                        if (spellMatch) {
+                            spell = spellMatch[1];
+                            spellChance = parseInt(spellMatch[2], 10);
+                        }
                     }
+                } else if (line.startsWith('R ')) {
+                    const parts = nextLine().split(' ');
+                    const newRestrictFlags = getFlags(parts[1], RESTRICT_FLAGS);
+                    restrictFlags.push(...newRestrictFlags);
                 } else {
                     // Unrecognized line, just move on
                     nextLine();
@@ -336,19 +348,25 @@ L 6"></textarea>
             }
             
             // Build the final output
-            const avgDam = minDam > 0 && maxDam > 0 ? (minDam + minDam * maxDam) / 2 : 0;
+            const finalRestrictFlags = restrictFlags.length > 0 ? restrictFlags.join(', ') : "none";
 
             result.push(`<b>Name(s):</b> ${name}`);
             result.push(`<b>Vnum:</b> ${vnum}  <b>Type:</b> ${itemType}`);
-            result.push(`<b>Short description:</b> ${shortDesc}`);
-            result.push(`<b>Long description:</b> ${longDesc}`);
-            result.push(`<b>Wear bits:</b> ${wearFlags}`);
-            result.push(`<b>Extra bits:</b> ${extraFlags}`);
-            result.push(`<b>Restrict_flags:</b> ${restrictFlags}`);
-            result.push(`It is made of ${material}.`);
+            result.push(`<b>Wear bits:</b> ${wearFlags.length > 0 ? wearFlags.join(', ') : "none"}`);
+            result.push(`<b>Extra bits:</b> ${extraFlags.length > 0 ? extraFlags.join(', ') : "none"}`);
+            result.push(`<b>Restrict_flags:</b> ${finalRestrictFlags}`);
             result.push(`<b>Weight:</b> ${weight} (${(weight / 10).toFixed(1)} pounds)`);
             result.push(`<b>Level:</b> ${level}  <b>Cost:</b> ${cost}`);
-            
+
+            if (itemType === "weapon") {
+                const avgDam = (minDam + minDam * maxDam) / 2;
+                result.push(`It deals ${minDam}d${maxDam} damage (averaging at ${avgDam}).`);
+                result.push(`Its attacks take the form of a ${damType}.`);
+                result.push(`<b>Weapon flags:</b> ${weaponFlags}`);
+            } else if (itemType === "armor") {
+                result.push(`<b>Armor Class (Pierce, Bash, Slash, Exotic):</b> ${ac.join(', ')}`);
+            }
+
             if (affects.length > 0) {
                 result.push(`<b>Affects:</b>`);
                 affects.forEach(affect => {
@@ -361,11 +379,6 @@ L 6"></textarea>
             if (actionType !== "none") {
                  result.push(`<b>Object action type:</b> ${actionType}, <b>spell:</b> ${spell}, <b>chance:</b> ${spellChance}`);
             }
-            if (minDam > 0 && maxDam > 0) {
-                result.push(`It deals ${minDam}d${maxDam} damage (averaging at ${avgDam}).`);
-            }
-            result.push(`Its attacks take the form of a ${damType}.`);
-            result.push(`<b>Weapon flags:</b> ${weaponFlags}`);
             if (extraDescKeywords) {
                 result.push(`<b>Extra description keywords:</b> '${extraDescKeywords}'`);
             }
@@ -388,26 +401,29 @@ L 6"></textarea>
 
             // Descriptions
             const shortDesc = nextLine().replace(/~$/, '');
-            const longDesc = nextLine().replace(/~$/, '');
+            const longDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
             let extraDesc = "";
-            if (hasNextLine()) {
-                let content = "";
-                while(hasNextLine() && lines[lineIndex] !== '~') {
-                    content += nextLine() + '\n';
+            if (hasNextLine() && lines[lineIndex] === 'E') {
+                nextLine();
+                if (hasNextLine()) {
+                    let content = "";
+                    while(hasNextLine() && lines[lineIndex] !== '~') {
+                        content += nextLine() + '\n';
+                    }
+                    if (hasNextLine() && lines[lineIndex] === '~') {
+                        nextLine();
+                    }
+                    extraDesc = content.trim();
                 }
-                if (hasNextLine() && lines[lineIndex] === '~') {
-                    nextLine();
-                }
-                extraDesc = content.trim();
             }
-
+            
             // Race
             const race = nextLine().replace(/~$/, '');
             
             // Flags
             const flagsLine = nextLine().split(' ');
-            const mobFlags = getFlags(flagsLine[0], MOB_FLAGS);
-            const affectedByFlags = getFlags(flagsLine[1], AFFECTED_BY_FLAGS);
+            const mobFlags = getFlags(flagsLine[0], MOB_FLAGS).join(', ');
+            const affectedByFlags = getFlags(flagsLine[1], AFFECTED_BY_FLAGS).join(', ');
             const alignment = flagsLine[2] || "Unknown";
             
             // Stats
@@ -424,9 +440,9 @@ L 6"></textarea>
             
             // Other Flags
             const moreFlagsLine = nextLine().split(' ');
-            const resists = getFlags(moreFlagsLine[0], RESIST_FLAGS);
-            const immunities = getFlags(moreFlagsLine[1], RESIST_FLAGS); // Same mapping as resists
-            const susceptibilities = getFlags(moreFlagsLine[2], RESIST_FLAGS); // Same mapping as resists
+            const resists = getFlags(moreFlagsLine[0], RESIST_FLAGS).join(', ');
+            const immunities = getFlags(moreFlagsLine[1], RESIST_FLAGS).join(', '); // Same mapping as resists
+            const susceptibilities = getFlags(moreFlagsLine[2], RESIST_FLAGS).join(', '); // Same mapping as resists
             
             // Position, Sex, Gold
             const posSexGoldLine = nextLine().split(' ');
