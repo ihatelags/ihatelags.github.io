@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solace area item decoder</title>
+    <title>MUD Item Decoder</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -16,22 +19,22 @@
             max-width: 900px;
             margin: auto;
         }
-        pre {
+        pre, textarea {
             background-color: #162447;
-            padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
-        }
-        /* Reduced space between output lines */
-        .output-line {
-            margin-bottom: 0;
-            line-height: 1;
-        }
-        /* New font styling for input and output */
-        #item-input, #item-output {
             font-family: 'Fixedsys', 'Courier New', 'Courier', monospace;
+            padding: 1rem;
+            border: 1px solid #3d3d52;
+            min-height: 20rem;
+        }
+        pre {
+            line-height: 1.1;
+        }
+        #json-output {
+            resize: vertical;
         }
     </style>
 </head>
@@ -39,24 +42,159 @@
     <div class="container bg-gray-800 shadow-xl rounded-xl p-6 md:p-10">
         <h1 class="text-3xl sm:text-4xl font-extrabold text-purple-400 mb-2 text-center">MUD Item Decoder</h1>
         <p class="text-center text-gray-300 mb-8">
-            Paste a MUD item or mob entry into the box below to see its properties.
+            Paste a MUD item, mob entry, or JSON data into the box below.
         </p>
         
-        <div class="grid grid-cols-1 md:col-span-3 gap-8">
+        <div class="space-y-8">
             <!-- Input Panel -->
-            <div class="md:col-span-1">
-                <h2 class="text-xl font-bold mb-4 text-purple-300">Item Data</h2>
+            <div>
+                <h2 class="text-xl font-bold mb-4 text-purple-300">Item/Mob Data (Input)</h2>
                 <textarea id="item-input" 
-                          class="w-full h-64 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
-                          placeholder="paste item/mob data here">
-                </textarea>
+                          class="w-full bg-gray-900 text-gray-200 border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
+                          placeholder="#21354
+golden bracelet~
+a golden bracelet~
+A small golden bracelet lies here.~
+gold~
+armor A AM
+3 2 4 0 0
+5 10 400 P
+A 5 1
+A 13 15
+A 20 2
+A 22 2
+--- OR ---
+#19419
+warhammer hammer kharas~
+the hammer of Kharas~
+A powerful warhammer has been carelessly left here.~
+iron~
+weapon ABGHMK AN
+mace 7 7 crush 0
+35 190 32300 P
+A 13 50
+A 18 2
+A 19 12
+A 62 15
+S fight_offensive
+"$p vibrates violently in your hand, echoing with deep, earthen power."
+"$p vibrates violently, echoing with deep, earthen power."
+"$p vibrates violently, echoing with deep, earthen power."
+"earthmaw" 15
+E
+hammer warhammer kharas~
+This is the legendary hammer of Kharas, used in the great wars against
+the dwarven enemies.
+~
+L 1"></textarea>
             </div>
             
-            <!-- Output Panel -->
-            <div class="md:col-span-2">
+            <!-- Output Panels -->
+            <div>
                 <h2 class="text-xl font-bold mb-4 text-purple-300">Decoded Output</h2>
-                <div id="item-output" class="w-full h-96 bg-gray-900 text-gray-200 border border-gray-700 rounded-lg p-4 overflow-y-auto">
+                <pre id="item-output" class="w-full bg-gray-900 text-gray-200 border-gray-700 rounded-lg p-4 overflow-y-auto">
                     <p class="text-gray-400">Your decoded item or mob will appear here...</p>
+                </pre>
+            </div>
+            
+            <div>
+                <h2 class="text-xl font-bold mb-4 text-purple-300">JSON Output</h2>
+                <textarea id="json-output" 
+                          class="w-full bg-gray-900 text-gray-200 border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
+                          placeholder="JSON representation will appear here..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Help Section -->
+        <div class="mt-8 pt-8 border-t border-gray-700">
+            <h2 class="text-2xl font-bold mb-4 text-purple-300">Help & Flag Explanations</h2>
+            <div class="space-y-6 text-gray-300">
+                <div>
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Mob Flags</h3>
+                    <p>This section provides detailed explanations of various flags that determine a mob's behavior and characteristics within the game.  </p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><b>is npc(A)</b>: The mob is an NPC.</li>
+                        <li><b>sentinel(B)</b>: The mob is tied to its room and will not leave on its own.</li>
+                        <li><b>scavenger(C)</b>: The mob will pick up items left on the ground.</li>
+                        <li><b>wimpy(H)</b>: The mob will flee from combat when its health drops to 20%.</li>
+                        <li><b>nopurge(V)</b>: This mob will not be automatically removed from the game.</li>
+                        <li><b>update always(cc)</b>: The mob is always "active" and processed by the game engine.</li>
+                        <li><b>aggressive(F)</b>: The mob will attack any character in its level range.</li>
+                        <li><b>stay area(G)</b>: The mob will not leave the area defined by its virtual number range.</li>
+                        <li><b>indoors(Y)</b>: The mob will not venture indoors.</li>
+                        <li><b>outdoors(W)</b>: The mob will not venture outdoors.</li>
+                        <li><b>banker(ee)</b>: This mob provides banking services.</li>
+                        <li><b>pet(I)</b>: The mob is a pet that can be charmed.</li>
+                        <li><b>train(J)</b>: The mob is a trainer for player attributes.</li>
+                        <li><b>practice(K)</b>: The mob is a practitioner for skills.</li>
+                        <li><b>cleric(Q)</b>: The mob can cast cleric spells.</li>
+                        <li><b>mage(R)</b>: The mob can cast mage spells.</li>
+                        <li><b>thief(S)</b>: The mob can use thief skills.</li>
+                        <li><b>warrior(T)</b>: The mob can use warrior skills like bash or parry.</li>
+                        <li><b>healer(aa)</b>: The mob can heal characters of its alignment for a fee.</li>
+                        <li><b>undead(O)</b>: The mob is an undead creature.</li>
+                        <li><b>noalign(U)</b>: The mob is not bound by a specific alignment.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Body Parts</h3>
+                    <p>These flags indicate the physical parts of a mob, which can be relevant for dismemberment or special attacks.</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><b>head(A)</b>: Indicates the presence of this limb.</li>
+                        <li><b>arms(B)</b>: Indicates the presence of these limbs.</li>
+                        <li><b>legs(C)</b>: Indicates the presence of these limbs.</li>
+                        <li><b>heart(D)</b>: Indicates the presence of this vital organ.</li>
+                        <li><b>brains(E)</b>: Indicates the presence of this vital organ.</li>
+                        <li><b>guts(F)</b>: Indicates the presence of these vital organs.</li>
+                        <li><b>hands(G)</b>: Indicates the presence of these extremities, often for wearing specific gear.</li>
+                        <li><b>feet(H)</b>: Indicates the presence of these extremities, often for wearing specific gear.</li>
+                        <li><b>fingers(I)</b>: Indicates the presence of these extremities.</li>
+                        <li><b>ear(J)</b>: Indicates the presence of this sensory organ.</li>
+                        <li><b>eye(K)</b>: Indicates the presence of this sensory organ.</li>
+                        <li><b>long tongue(L)</b>: A long tongue, similar to a lizard's.</li>
+                        <li><b>eyestalks(M)</b>: Eyes on stalks.</li>
+                        <li><b>tentacles(N)</b>: One or more tentacles.</li>
+                        <li><b>fins(O)</b>: Indicates the presence of these body parts.</li>
+                        <li><b>wings(P)</b>: Indicates the presence of these body parts.</li>
+                        <li><b>tail(Q)</b>: Indicates the presence of this body part.</li>
+                        <li><b>claws(U)</b>: Indicates the presence of these combat-capable parts.</li>
+                        <li><b>fangs(V)</b>: Indicates the presence of these combat-capable parts.</li>
+                        <li><b>horns(W)</b>: Indicates the presence of these combat-capable parts.</li>
+                        <li><b>scales(X)</b>: Indicates the mob is covered in scales.</li>
+                        <li><b>tusks(Y)</b>: Indicates the presence of these combat-capable parts.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-purple-400 mb-2">Form Flags</h3>
+                    <p>These flags define the fundamental nature or form of a mob, affecting its abilities and interactions within the game world.</p>
+                    <ul class="list-disc list-inside mt-4 space-y-2">
+                        <li><b>amphibian(aa)</b>: An amphibian mob that can also swim.</li>
+                        <li><b>animal(G)</b>: A mob with an animalistic intelligence (low reasoning).</li>
+                        <li><b>biped(M)</b>: A mob that walks on two legs.</li>
+                        <li><b>bird(W)</b>: A mob with a bird form.</li>
+                        <li><b>blob(S)</b>: A formless mob, which can be a cloud or mist if combined with the 'mist' flag.</li>
+                        <li><b>centaur(N)</b>: A mob with a humanoid torso and a beast's lower body.</li>
+                        <li><b>cold blood(cc)</b>: A mob that is cold-blooded and cannot be seen with infrared vision.</li>
+                        <li><b>construct(J)</b>: A magical mob, such as a golem.</li>
+                        <li><b>crustacean(Q)</b>: A mob with a crustacean form, like a crab or lobster.</li>
+                        <li><b>dragon(Z)</b>: A mob that is a dragon.</li>
+                        <li><b>edible(A)</b>: The mob's corpse can be eaten.</li>
+                        <li><b>fish(bb)</b>: A mob in the form of a fish, able to swim.</li>
+                        <li><b>insect(O)</b>: An insect-form mob.</li>
+                        <li><b>instant decay(D)</b>: The mob's corpse will disappear immediately upon death.</li>
+                        <li><b>intangible(L)</b>: A mob that is immaterial, like a ghost.</li>
+                        <li><b>magical(C)</b>: A mob with a magical nature, causing strange effects when eaten.</li>
+                        <li><b>mammal(V)</b>: A mob that is a mammal.</li>
+                        <li><b>mist(K)</b>: A partially material mob made of mist.</li>
+                        <li><b>other(E)</b>: A mob that is not flesh and blood.</li>
+                        <li><b>poison(B)</b>: The mob is poisonous when eaten.</li>
+                        <li><b>reptile(X)</b>: A reptile mob that should also be cold-blooded.</li>
+                        <li><b>sentient(H)</b>: A mob capable of higher reasoning.</li>
+                        <li><b>snake(Y)</b>: A mob in the form of a snake, which should also be a reptile.</li>
+                        <li><b>spider(P)</b>: An arachnid mob.</li>
+                        <li><b>undead(I)</b>: A mob that is undead and not truly alive.</li>
+                        <li><b>worm(R)</b>: An invertebrate, tube-shaped mob.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -99,7 +237,7 @@
             "bb": "tower", "cc": "heretic", "dd": "warder", "ee": "entropy", "ff": "revenant"
         };
         const AFFECT_TYPES = {
-            0: "none", 1: "strength", 2: "dexterity", 3: "intelligence", 4: "wisdom", 5: "constitution", 6: "sex", 7: "class",
+            0: "none", 1: "strength", 2: "dexterity", 3: "intelligence", 4: "wisdom", 5: "constitution", 6: "gender", 7: "class",
             8: "level", 9: "age", 10: "height", 11: "weight", 12: "mana", 13: "hitpoints", 14: "move", 15: "move regeneration",
             16: "exp", 17: "armor class", 18: "hitroll", 19: "damroll", 20: "reflex save", 21: "will save", 22: "fortitude save",
             23: "resist earth", 24: "resist air", 25: "mana regeneration", 26: "morph form", 27: "hp regeneration",
@@ -119,32 +257,61 @@
             "G": "shocking", "H": "poison", "I": "avenger", "J": "shadowbane", "K": "lightbringer"
         };
         
-        // New Mappings for Mobs
-        const MOB_FLAGS = {
-            "A": "is npc", "B": "sentinel", "C": "scavenger", "D": "is aggressive", "E": "stay area", "F": "wimpy",
-            "G": "is pet", "H": "is train", "I": "is practice", "J": "is immobile", "K": "is no-death", "L": "is summonable",
-            "M": "is no-align", "N": "is no-purge", "O": "is out-of-doors", "P": "is mounted", "Q": "is no-get",
-            "R": "is no-drop", "S": "is magic-user", "T": "is healer", "U": "is stable master", "V": "is shopkeeper",
-            "W": "is bank", "X": "is no-dispel", "Y": "is no-recall", "Z": "is undead"
+        // Comprehensive Mappings for Mobs
+        const MOB_ACT_FLAGS = {
+            "A": "is npc", "B": "sentinel", "C": "scavenger", "E": "astral watcher", "F": "aggressive",
+            "G": "stay area", "H": "wimpy", "I": "pet", "J": "train", "K": "practice", "M": "archer",
+            "O": "undead", "Q": "cleric", "R": "mage", "S": "thief", "T": "warrior", "U": "noalign",
+            "V": "nopurge", "W": "outdoors", "Y": "indoors", "Z": "guild guard", "aa": "is healer",
+            "bb": "gain", "cc": "update always", "dd": "wall", "ee": "banker", "ff": "extraplanar"
         };
-        const AFFECTED_BY_FLAGS = {
+        const MOB_AFFECT_FLAGS = {
             "A": "blind", "B": "invisible", "C": "detect evil", "D": "detect invis", "E": "detect magic",
-            "F": "detect hidden", "G": "sanctuary", "H": "faerie fire", "I": "infrared", "J": "curse",
-            "K": "invis", "L": "poison", "M": "protected", "N": "sleep", "O": "sneak", "P": "hide",
-            "Q": "charm", "R": "pass door", "S": "fear", "T": "berserk", "U": "haste", "V": "calm",
-            "W": "slow", "X": "fly", "Y": "swim", "Z": "unsummonable"
+            "F": "detect hidden", "G": "detect good", "H": "sanctuary", "I": "faerie fire", "J": "infrared",
+            "K": "curse", "L": "instinct hunter", "M": "poison", "N": "protect evil", "O": "protect good",
+            "P": "sneak", "Q": "hide", "R": "sleep", "S": "charm", "T": "flying", "U": "pass door",
+            "V": "haste", "W": "calm", "X": "plague", "Y": "instinct preserve", "Z": "dark vision",
+            "aa": "berserk", "bb": "swim", "cc": "regeneration", "dd": "slow", "ee": "camouflage",
+            "ff": "acute vision"
         };
-        const FORM_FLAGS = {
-            "A": "edible", "B": "poisonous", "C": "magical", "D": "stone", "E": "flesh", "F": "gas",
-            "G": "sentient", "H": "biped", "I": "quadruped", "J": "animal", "K": "aquatic", "L": "reptile",
-            "M": "amphibian", "N": "avian", "O": "mammal", "P": "insectoid", "Q": "spider", "R": "slimy",
-            "S": "bony", "T": "liquid", "U": "humanoid", "V": "undead", "W": "golem", "X": "ethereal"
+        const MOB_OFF_ASSIST_FLAGS = {
+            "A": "area attack", "B": "backstab", "C": "bash", "D": "berserk", "E": "disarm", "F": "dodge",
+            "G": "ground control", "H": "fast", "I": "kick", "J": "kick dirt", "K": "parry", "M": "tail",
+            "N": "trip", "O": "crush", "P": "assist all", "Q": "assist align", "R": "assist race",
+            "S": "assist players", "T": "assist guard", "U": "assist vnum", "V": "no track",
+            "W": "static tracking", "X": "spam murder", "Z": "undead drain", "aa": "spellturning",
+            "bb": "stances"
         };
-        const RESIST_FLAGS = {
-            "A": "summon", "B": "charm", "C": "magic", "D": "weapon", "E": "bash", "F": "pierce", "G": "slash",
-            "H": "fire", "I": "cold", "J": "lightning", "K": "acid", "L": "poison", "M": "negative",
-            "N": "holy", "O": "energy", "P": "mental", "Q": "disease", "R": "drowning", "S": "sound",
-            "T": "other"
+        const MOB_IMM_FLAGS = {
+            "A": "summon", "C": "magic", "D": "weapon", "E": "bash", "F": "pierce", "G": "slash", "H": "fire",
+            "I": "cold", "J": "lightning", "K": "acid", "L": "poison", "M": "negative", "N": "holy",
+            "O": "energy", "P": "mental", "Q": "disease", "R": "drowning", "T": "sound", "U": "air",
+            "V": "earth", "aa": "ranged"
+        };
+        const MOB_RES_FLAGS = {
+            "A": "summon", "C": "magic", "D": "weapon", "E": "bash", "F": "pierce", "G": "slash", "H": "fire",
+            "I": "cold", "J": "lightning", "K": "acid", "L": "poison", "M": "negative", "N": "holy",
+            "O": "energy", "P": "mental", "Q": "disease", "R": "drowning", "T": "sound", "U": "air",
+            "V": "earth"
+        };
+        const MOB_VULN_FLAGS = {
+            "A": "summon", "C": "magic", "D": "weapon", "E": "bash", "F": "pierce", "G": "slash", "H": "fire",
+            "I": "cold", "J": "lightning", "K": "acid", "L": "poison", "M": "negative", "N": "holy",
+            "O": "energy", "P": "mental", "Q": "disease", "R": "drowning", "T": "sound", "U": "air",
+            "V": "earth"
+        };
+        const MOB_FORM_FLAGS = {
+            "A": "edible", "B": "poison", "C": "magical", "D": "instant decay", "E": "other", "G": "animal",
+            "H": "sentient", "I": "undead", "J": "construct", "K": "mist", "L": "intangible", "M": "biped",
+            "N": "centaur", "O": "insect", "P": "spider", "Q": "crustacean", "R": "worm", "S": "blob",
+            "V": "mammal", "W": "bird", "X": "reptile", "Y": "snake", "Z": "dragon", "aa": "amphibian",
+            "bb": "fish", "cc": "cold blood"
+        };
+        const MOB_PART_FLAGS = {
+            "A": "head", "B": "arms", "C": "legs", "D": "heart", "E": "brains", "F": "guts", "G": "hands",
+            "H": "feet", "I": "fingers", "J": "ear", "K": "eye", "L": "long tongue", "M": "eyestalks",
+            "N": "tentacles", "O": "fins", "P": "wings", "Q": "tail", "U": "claws", "V": "fangs",
+            "W": "horns", "X": "scales", "Y": "tusks", "Z": "mountable", "cc": "cart"
         };
         const SEX_TYPES = {
             0: "neutral", 1: "male", 2: "female"
@@ -179,17 +346,14 @@
 
         const itemInput = document.getElementById('item-input');
         const itemOutput = document.getElementById('item-output');
+        const jsonOutput = document.getElementById('json-output');
 
         function getFlags(flagString, flagMap) {
             if (!flagString || flagString.length === 0) return [];
             const flags = new Set();
-            for (let i = 0; i < flagString.length; i++) {
-                const twoCharFlag = flagString.substring(i, i + 2);
-                if (flagMap[twoCharFlag]) {
-                    flags.add(flagMap[twoCharFlag]);
-                    i++;
-                } else if (flagMap[flagString[i]]) {
-                    flags.add(flagMap[flagString[i]]);
+            for (const char of flagString) {
+                if (flagMap[char]) {
+                    flags.add(flagMap[char]);
                 }
             }
             return Array.from(flags);
@@ -197,300 +361,400 @@
         
         function parseDiceRoll(diceString) {
             const match = diceString.match(/^(\d+)d(\d+)([\+\-]\d+)?$/);
-            if (!match) return diceString; // Return original string if no match
+            if (!match) return { min: "Unknown", max: "Unknown", bonus: "Unknown", avg: "Unknown" };
+            
             const numDice = parseInt(match[1]);
             const dieSides = parseInt(match[2]);
             const bonus = match[3] ? parseInt(match[3]) : 0;
-            return `${numDice} dice of ${dieSides} sides, with a ${bonus >= 0 ? '+' : ''}${bonus} bonus`;
+            const min = numDice + bonus;
+            const max = (numDice * dieSides) + bonus;
+            const avg = (min + max) / 2;
+            
+            return { min, max, bonus, avg };
+        }
+        
+        function readUntilTilde(lines, startIndex) {
+            let content = "";
+            let i = startIndex;
+            while (i < lines.length) {
+                const line = lines[i];
+                if (line.endsWith('~')) {
+                    content += line.substring(0, line.length - 1);
+                    i++;
+                    break;
+                }
+                if (line.trim() === '~') {
+                    i++;
+                    break;
+                }
+                content += line + '\n';
+                i++;
+            }
+            return { content: content.trim(), nextIndex: i };
         }
 
         function decodeItem(data) {
             const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-            const result = [];
             let lineIndex = 0;
-
             const nextLine = () => lines[lineIndex++];
             const hasNextLine = () => lineIndex < lines.length;
+            
+            const decoded = {
+                vnum: "Unknown",
+                name: "Unknown",
+                shortDesc: "Unknown",
+                longDesc: "Unknown",
+                material: "Unknown",
+                type: "Unknown",
+                extraFlags: [],
+                wearFlags: [],
+                restrictFlags: [],
+                stats: {},
+                affects: [],
+                specials: [],
+                extraDesc: null
+            };
 
-            // These lines are always in a fixed order at the start.
-            let vnum = "Unknown";
             if (hasNextLine() && lines[lineIndex].startsWith('#')) {
-                vnum = nextLine().substring(1);
+                decoded.vnum = nextLine().substring(1);
             }
-            const name = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
-            const shortDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
-            const longDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
-            const material = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
-
-            let itemType = "Unknown";
-            let extraFlags = [];
-            let wearFlags = [];
-            let restrictFlags = [];
+            decoded.name = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+            decoded.shortDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
             
-            // This line is always item flags
+            let longDescResult = readUntilTilde(lines, lineIndex);
+            decoded.longDesc = longDescResult.content;
+            lineIndex = longDescResult.nextIndex;
+            
+            decoded.material = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
+            
+            let typeLineParts = hasNextLine() ? nextLine().split(' ') : [];
+            let typeString = typeLineParts[0];
+            
+            decoded.type = typeString || "Unknown";
+            
+            // Correctly parse extra flags and wear flags from the same line
+            // Only use the second and third parts if they exist
+            if (typeLineParts.length > 1) {
+              decoded.extraFlags = getFlags(typeLineParts[1], EXTRA_FLAGS);
+            }
+            if (typeLineParts.length > 2) {
+              decoded.wearFlags = getFlags(typeLineParts[2], WEAR_FLAGS);
+            }
+            
             if (hasNextLine()) {
                 const parts = nextLine().split(' ');
-                itemType = parts[0];
-                if (ITEM_TYPES[itemType]) {
-                    // Corrected order: extra flags followed by wear flags
-                    extraFlags = getFlags(parts[1], EXTRA_FLAGS);
-                    wearFlags = getFlags(parts[2], WEAR_FLAGS);
-                    if (parts.length > 3) {
-                       restrictFlags = getFlags(parts[3], RESTRICT_FLAGS);
-                    }
+                if (decoded.type === "weapon") {
+                    decoded.stats.weaponClass = WEAPON_CLASSES[parts[0]] || parts[0] || "Unknown";
+                    decoded.stats.minDam = parseInt(parts[1]) || 0;
+                    decoded.stats.maxDam = parseInt(parts[2]) || 0;
+                    decoded.stats.damType = DAMAGE_TYPES[parts[3]] || parts[3] || "Unknown";
+                    decoded.stats.weaponFlags = getFlags(parts[4], WEAPON_FLAGS);
+                } else if (decoded.type === "armor" || decoded.type === "treasure" || decoded.type === "trash") {
+                    decoded.stats.ac = {
+                        pierce: parseInt(parts[0]) || 0,
+                        bash: parseInt(parts[1]) || 0,
+                        slash: parseInt(parts[2]) || 0,
+                        exotic: parseInt(parts[3]) || 0
+                    };
                 }
             }
             
-            let minDam = 0;
-            let maxDam = 0;
-            let damType = "Unknown";
-            let weaponFlags = "none";
-            let ac = [];
-
-            // This line depends on item type (weapon or armor)
             if (hasNextLine()) {
                 const parts = nextLine().split(' ');
-                if (itemType === "weapon") {
-                    const weaponClass = parts[0]; // Currently unused
-                    minDam = parseInt(parts[1]) || 0;
-                    maxDam = parseInt(parts[2]) || 0;
-                    damType = DAMAGE_TYPES[parts[3]] || parts[3] || "Unknown";
-                    weaponFlags = getFlags(parts[4], WEAPON_FLAGS).join(', ');
-                } else if (itemType === "armor") {
-                    ac = parts.slice(0, 4).map(val => parseInt(val) || 0);
+                decoded.stats.level = parseInt(parts[0]) || 0;
+                decoded.stats.weight = parseInt(parts[1]) || 0;
+                decoded.stats.cost = parseInt(parts[2]) || 0;
+                // Only add extra flags from this line if the value exists and is a valid flag
+                if (parts.length > 3 && parts[3].length > 0) {
+                    const newExtraFlags = getFlags(parts[3], EXTRA_FLAGS);
+                    // Filter out 'rot death' as per user feedback for this line
+                    const filteredFlags = newExtraFlags.filter(flag => flag !== 'rot death');
+                    decoded.extraFlags.push(...filteredFlags);
                 }
             }
-
-            let level = 0;
-            let weight = 0;
-            let cost = 0;
-            if (hasNextLine()) {
-                const parts = nextLine().split(' ');
-                level = parseInt(parts[0]) || 0;
-                weight = parseInt(parts[1]) || 0;
-                cost = parseInt(parts[2]) || 0;
-            }
-            
-            // The remaining lines can be in any order. We'll loop through them.
-            let extraDescKeywords = "";
-            let extraDescContent = "";
-            const affects = [];
-            let limit = "none";
-            let actionType = "none";
-            let spell = "none";
-            let spellChance = 0;
             
             while (hasNextLine()) {
-                const line = lines[lineIndex];
-
-                if (line.startsWith('E')) {
-                    nextLine(); // Consume 'E'
-                    if (hasNextLine()) {
-                        extraDescKeywords = nextLine().replace(/~$/, '');
-                    }
-                    if (hasNextLine()) {
-                        let content = "";
-                        while (hasNextLine() && lines[lineIndex] !== '~') {
-                            content += nextLine() + '\n';
-                        }
-                        if (hasNextLine() && lines[lineIndex] === '~') {
-                            nextLine(); // Consume the final tilde line
-                        }
-                        extraDescContent = content.trim();
-                    }
-                } else if (line.startsWith('A ')) {
+                const line = lines[lineIndex].trim();
+                const firstChar = line[0];
+                if (firstChar === 'A') {
                     const parts = nextLine().split(' ');
                     const type = parseInt(parts[1]) || 0;
-                    const value = parseInt(parts[2]) || 0;
-                    affects.push({ type, value });
-                } else if (line.startsWith('L ')) {
-                    limit = nextLine().split(' ')[1];
-                } else if (line.startsWith('S ')) {
-                    const parts = nextLine().split(' ');
-                    actionType = parts[1];
-                    // Skip the three emote lines
-                    if (hasNextLine()) nextLine();
-                    if (hasNextLine()) nextLine();
-                    if (hasNextLine()) nextLine();
-                    
-                    // Parse the spell and chance line
-                    if (hasNextLine()) {
-                        const spellLine = nextLine();
-                        const spellMatch = spellLine.match(/"(.*)"\s+(\d+)/);
-                        if (spellMatch) {
-                            spell = spellMatch[1];
-                            spellChance = parseInt(spellMatch[2], 10);
-                        }
-                    }
-                } else if (line.startsWith('R ')) {
+                    const value = parseInt(parseInt(parts[2]) || 0);
+                    decoded.affects.push({ type, value });
+                } else if (firstChar === 'E') {
+                    nextLine(); // Consume the 'E' flag
+                    const extraDescKeywords = nextLine().replace(/~$/, '');
+                    const extraDescResult = readUntilTilde(lines, lineIndex);
+                    decoded.extraDesc = {
+                        keywords: extraDescKeywords,
+                        content: extraDescResult.content
+                    };
+                    lineIndex = extraDescResult.nextIndex;
+                } else if (firstChar === 'L') {
+                    decoded.stats.limit = nextLine().split(' ')[1];
+                } else if (firstChar === 'R') {
                     const parts = nextLine().split(' ');
                     const newRestrictFlags = getFlags(parts[1], RESTRICT_FLAGS);
-                    restrictFlags.push(...newRestrictFlags);
+                    decoded.restrictFlags.push(...newRestrictFlags);
+                } else if (firstChar === 'S') {
+                    const sLineParts = nextLine().split(' ');
+                    const actionType = sLineParts[1];
+                    let spell = "Unknown";
+                    let chance = "Unknown";
+                    let multiplier = "Unknown";
+                    
+                    // Consume all descriptive lines until we find a line with numbers or a quoted string.
+                    while (hasNextLine()) {
+                        const nextLineText = lines[lineIndex].trim();
+                        // Case 1: Quoted string and a number (e.g., "slow" 3)
+                        const spellMatch = nextLineText.match(/"(.*)"\s+(\d+)/);
+                        if (spellMatch) {
+                            spell = spellMatch[1];
+                            chance = parseInt(spellMatch[2], 10);
+                            nextLine(); // Consume the line with the spell
+                            break;
+                        }
+                        // Case 2: Two numbers (e.g., 2 10)
+                        const numberMatch = nextLineText.match(/^(\d+)\s+(\d+)/);
+                        if (numberMatch) {
+                            multiplier = parseInt(numberMatch[1], 10);
+                            chance = parseInt(numberMatch[2], 10);
+                            nextLine(); // Consume the line with the numbers
+                            break;
+                        }
+                        // If neither, it's just flavor text, consume it.
+                        nextLine();
+                    }
+
+                    const specialObject = {
+                        actionType: actionType
+                    };
+                    if (spell !== "Unknown") {
+                        specialObject.spell = spell;
+                    }
+                    if (multiplier !== "Unknown") {
+                        specialObject.multiplier = multiplier;
+                    }
+                    if (chance !== "Unknown") {
+                        specialObject.chance = chance;
+                    }
+
+                    decoded.specials.push(specialObject);
                 } else {
-                    // Unrecognized line, just move on
                     nextLine();
                 }
             }
-            
-            // Build the final output
-            const finalRestrictFlags = restrictFlags.length > 0 ? restrictFlags.join(', ') : "none";
-
-            result.push(`<b>Name(s):</b> ${name}`);
-            result.push(`<b>Vnum:</b> ${vnum}  <b>Type:</b> ${itemType}`);
-            result.push(`<b>Wear bits:</b> ${wearFlags.length > 0 ? wearFlags.join(', ') : "none"}`);
-            result.push(`<b>Extra bits:</b> ${extraFlags.length > 0 ? extraFlags.join(', ') : "none"}`);
-            result.push(`<b>Restrict_flags:</b> ${finalRestrictFlags}`);
-            result.push(`<b>Weight:</b> ${weight} (${(weight / 10).toFixed(1)} pounds)`);
-            result.push(`<b>Level:</b> ${level}  <b>Cost:</b> ${cost}`);
-
-            if (itemType === "weapon") {
-                const avgDam = (minDam + minDam * maxDam) / 2;
-                result.push(`It deals ${minDam}d${maxDam} damage (averaging at ${avgDam}).`);
-                result.push(`Its attacks take the form of a ${damType}.`);
-                result.push(`<b>Weapon flags:</b> ${weaponFlags}`);
-            } else if (itemType === "armor") {
-                result.push(`<b>Armor Class (Pierce, Bash, Slash, Exotic):</b> ${ac.join(', ')}`);
-            }
-
-            if (affects.length > 0) {
-                result.push(`<b>Affects:</b>`);
-                affects.forEach(affect => {
-                    const affectName = AFFECT_TYPES[affect.type] || `Type ${affect.type}`;
-                    result.push(`  - ${affectName}: ${affect.value >= 0 ? '+' : ''}${affect.value}`);
-                });
-            }
-
-            result.push(`<b>Limit is</b> ${limit}`);
-            if (actionType !== "none") {
-                 result.push(`<b>Object action type:</b> ${actionType}, <b>spell:</b> ${spell}, <b>chance:</b> ${spellChance}`);
-            }
-            if (extraDescKeywords) {
-                result.push(`<b>Extra description keywords:</b> '${extraDescKeywords}'`);
-            }
-
-            return result.map(line => `<div class="output-line">${line}</div>`).join('');
+            return decoded;
         }
         
         function decodeMob(data) {
             const lines = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-            const result = [];
             let lineIndex = 0;
-
             const nextLine = () => lines[lineIndex++];
             const hasNextLine = () => lineIndex < lines.length;
 
-            // VNUM and Keywords
+            const decoded = {
+                vnum: "Unknown",
+                keywords: "Unknown",
+                shortDesc: "Unknown",
+                longDesc: "Unknown",
+                extraDesc: "Unknown",
+                race: "Unknown",
+                mobFlags: [],
+                affectedByFlags: [],
+                alignment: "Unknown",
+                mobGroup: "Unknown",
+                level: "Unknown",
+                hitroll: "Unknown",
+                hp: { min: "Unknown", max: "Unknown" },
+                mana: { min: "Unknown", max: "Unknown" },
+                damage: { min: "Unknown", max: "Unknown", bonus: "Unknown" },
+                attackType: "Unknown",
+                ac: "Unknown",
+                offensiveAssists: [],
+                immunities: [],
+                resists: [],
+                vulns: [],
+                defaultPosition: "Unknown",
+                fightingPosition: "Unknown",
+                gender: "Unknown",
+                silver: "Unknown",
+                size: "Unknown",
+                form: [],
+                parts: []
+            };
+
             const vnumLine = nextLine();
-            const vnum = vnumLine.startsWith('#') ? vnumLine.substring(1) : "Unknown";
-            const keywords = nextLine().replace(/~$/, '');
+            decoded.vnum = vnumLine.startsWith('#') ? vnumLine.substring(1) : "Unknown";
+            decoded.keywords = nextLine().replace(/~$/, '');
+            decoded.shortDesc = nextLine().replace(/~$/, '');
+            
+            let longDescResult = readUntilTilde(lines, lineIndex);
+            decoded.longDesc = longDescResult.content;
+            lineIndex = longDescResult.nextIndex;
+            
+            let extraDescResult = readUntilTilde(lines, lineIndex);
+            decoded.extraDesc = extraDescResult.content;
+            lineIndex = extraDescResult.nextIndex;
 
-            // Descriptions
-            const shortDesc = nextLine().replace(/~$/, '');
-            const longDesc = hasNextLine() ? nextLine().replace(/~$/, '') : "Unknown";
-            let extraDesc = "";
-            if (hasNextLine() && lines[lineIndex] === 'E') {
-                nextLine();
-                if (hasNextLine()) {
-                    let content = "";
-                    while(hasNextLine() && lines[lineIndex] !== '~') {
-                        content += nextLine() + '\n';
-                    }
-                    if (hasNextLine() && lines[lineIndex] === '~') {
-                        nextLine();
-                    }
-                    extraDesc = content.trim();
-                }
-            }
+            decoded.race = nextLine().replace(/~$/, '');
             
-            // Race
-            const race = nextLine().replace(/~$/, '');
-            
-            // Flags
             const flagsLine = nextLine().split(' ');
-            const mobFlags = getFlags(flagsLine[0], MOB_FLAGS).join(', ');
-            const affectedByFlags = getFlags(flagsLine[1], AFFECTED_BY_FLAGS).join(', ');
-            const alignment = flagsLine[2] || "Unknown";
+            decoded.mobFlags = getFlags(flagsLine[0], MOB_ACT_FLAGS);
+            decoded.affectedByFlags = getFlags(flagsLine[1], MOB_AFFECT_FLAGS);
+            decoded.alignment = flagsLine[2] || "Unknown";
+            decoded.mobGroup = flagsLine[3] || "Unknown";
             
-            // Stats
             const statsLine = nextLine().split(' ');
-            const level = statsLine[0] || "Unknown";
-            const hp = parseDiceRoll(statsLine[2]);
-            const mana = parseDiceRoll(statsLine[3]);
-            const damage = parseDiceRoll(statsLine[4]);
-            const attackType = DAMAGE_TYPES[statsLine[5]] || statsLine[5] || "Unknown";
+            decoded.level = statsLine[0] || "Unknown";
+            decoded.hitroll = statsLine[1] || "Unknown";
+            decoded.hp = parseDiceRoll(statsLine[2]);
+            decoded.mana = parseDiceRoll(statsLine[3]);
+            decoded.damage = parseDiceRoll(statsLine[4]);
+            decoded.attackType = DAMAGE_TYPES[statsLine[5]] || statsLine[5] || "Unknown";
             
-            // AC
             const acLine = nextLine().split(' ');
-            const ac = acLine.join(', ');
+            decoded.ac = acLine.join(', ');
             
-            // Other Flags
             const moreFlagsLine = nextLine().split(' ');
-            const resists = getFlags(moreFlagsLine[0], RESIST_FLAGS).join(', ');
-            const immunities = getFlags(moreFlagsLine[1], RESIST_FLAGS).join(', '); // Same mapping as resists
-            const susceptibilities = getFlags(moreFlagsLine[2], RESIST_FLAGS).join(', '); // Same mapping as resists
+            decoded.offensiveAssists = getFlags(moreFlagsLine[0], MOB_OFF_ASSIST_FLAGS);
+            decoded.immunities = getFlags(moreFlagsLine[1], MOB_IMM_FLAGS);
+            decoded.resists = getFlags(moreFlagsLine[2], MOB_RES_FLAGS);
+            decoded.vulns = getFlags(moreFlagsLine[3], MOB_VULN_FLAGS);
             
-            // Position, Sex, Gold
             const posSexGoldLine = nextLine().split(' ');
-            const defaultPosition = posSexGoldLine[0] || "Unknown";
-            const fightingPosition = posSexGoldLine[1] || "Unknown";
-            const sex = posSexGoldLine[2] || "Unknown";
-            const gold = posSexGoldLine[3] || "Unknown";
+            decoded.defaultPosition = POSITIONS[posSexGoldLine[0]] || posSexGoldLine[0] || "Unknown";
+            decoded.fightingPosition = POSITIONS[posSexGoldLine[1]] || posSexGoldLine[1] || "Unknown";
+            decoded.gender = SEX_TYPES[posSexGoldLine[2]] || posSexGoldLine[2] || "Unknown";
+            decoded.silver = posSexGoldLine[3] || "Unknown";
             
-            // XP and Size
-            const xpSizeLine = nextLine().split(' ');
-            const xp = xpSizeLine[0] || "Unknown";
-            const size = xpSizeLine[2] || "Unknown";
+            const formPartsSizeLine = nextLine().split(' ');
+            decoded.form = getFlags(formPartsSizeLine[0], MOB_FORM_FLAGS);
+            decoded.parts = getFlags(formPartsSizeLine[1], MOB_PART_FLAGS);
+            decoded.size = SIZE_TYPES[formPartsSizeLine[2]] || formPartsSizeLine[2] || "Unknown";
             
-            // Build the final output
-            result.push(`<b>Name(s):</b> ${keywords}`);
-            result.push(`<b>Vnum:</b> ${vnum}`);
-            result.push(`<b>Short description:</b> ${shortDesc}`);
-            result.push(`<b>Long description:</b> ${longDesc}`);
-            result.push(`<b>Extra description:</b> ${extraDesc}`);
-            result.push(`<b>Race:</b> ${race}`);
-            result.push(`<b>Mob flags:</b> ${mobFlags}`);
-            result.push(`<b>Affected by flags:</b> ${affectedByFlags}`);
-            result.push(`<b>Alignment:</b> ${alignment}`);
-            result.push(`<b>Level:</b> ${level}`);
-            result.push(`<b>Hitpoints:</b> ${hp}`);
-            result.push(`<b>Mana:</b> ${mana}`);
-            result.push(`<b>Damage:</b> ${damage}`);
-            result.push(`<b>Attack type:</b> ${attackType}`);
-            result.push(`<b>AC (Bash, Pierce, Slash, Exotic):</b> ${ac}`);
-            result.push(`<b>Resists:</b> ${resists}`);
-            result.push(`<b>Immunities:</b> ${immunities}`);
-            result.push(`<b>Susceptibilities:</b> ${susceptibilities}`);
-            result.push(`<b>Default Position:</b> ${POSITIONS[defaultPosition] || defaultPosition}`);
-            result.push(`<b>Fighting Position:</b> ${POSITIONS[fightingPosition] || fightingPosition}`);
-            result.push(`<b>Sex:</b> ${SEX_TYPES[sex] || sex}`);
-            result.push(`<b>Gold:</b> ${gold}`);
-            result.push(`<b>XP:</b> ${xp}`);
-            result.push(`<b>Size:</b> ${SIZE_TYPES[size] || size}`);
-
-            return result.map(line => `<div class="output-line">${line}</div>`).join('');
+            return decoded;
         }
 
-        const updateOutput = () => {
-            const inputValue = itemInput.value.trim();
-            if (inputValue) {
-                const lines = inputValue.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-                if (lines[0] && lines[0].startsWith('#')) {
-                    // Check if it's an item or mob by the structure
-                    // A quick heuristic: mob lines are typically longer and more numerous
-                    // The presence of a second line without a '~' is a good indicator
-                    if (lines[1] && lines[1].endsWith('~')) {
-                        itemOutput.innerHTML = decodeItem(inputValue);
-                    } else {
-                        itemOutput.innerHTML = decodeMob(inputValue);
-                    }
-                } else {
-                    itemOutput.innerHTML = decodeItem(inputValue);
-                }
-            } else {
-                itemOutput.innerHTML = '<p class="text-gray-400">Your decoded item or mob will appear here...</p>';
-            }
-        };
+        // --- JSON Parsing and Formatting Functions ---
+        function formatAlignment(alignment) {
+            const num = parseInt(alignment, 10);
+            if (num === -1000) return "evil";
+            if (num === 0) return "neutral";
+            if (num === 1000) return "good";
+            return alignment;
+        }
 
+        function formatHtmlOutput(data) {
+            const result = [];
+            
+            if (data.type) {
+                result.push(`Vnum: ${data.vnum ?? 'Unknown'}`);
+                result.push(`Name(s): ${data.name ?? 'Unknown'}`);
+                result.push(`Type: ${data.type ?? 'Unknown'}`);
+                result.push(`Wear Flags: ${data.wearFlags?.length > 0 ? data.wearFlags.join(', ') : 'none'}`);
+                result.push(`Extra Flags: ${data.extraFlags?.length > 0 ? data.extraFlags.join(', ') : 'none'}`);
+                result.push(`Restriction Flags: ${data.restrictFlags?.length > 0 ? data.restrictFlags.join(', ') : 'none'}`);
+
+                if (data.type === "weapon") {
+                    result.push(`Weapon Class: ${data.stats?.weaponClass ?? 'Unknown'}`);
+                    result.push(`Damage: ${data.stats?.minDam ?? 0}d${data.stats?.maxDam ?? 0} (${((data.stats?.minDam ?? 0) + (data.stats?.minDam * (data.stats?.maxDam ?? 0)))/2} avg)`);
+                    result.push(`Damage Type: ${data.stats?.damType ?? 'Unknown'}`);
+                    if (data.stats?.weaponFlags?.length > 0) {
+                        result.push(`Weapon Flags: ${data.stats.weaponFlags.join(', ')}`);
+                    }
+                } else if (data.type === "armor" || data.type === "treasure" || data.type === "trash") {
+                    result.push(`Armor Class: Pierce(${data.stats?.ac?.pierce ?? 'Unknown'}), Bash(${data.stats?.ac?.bash ?? 'Unknown'}), Slash(${data.stats?.ac?.slash ?? 'Unknown'}), Exotic(${data.stats?.ac?.exotic ?? 'Unknown'})`);
+                }
+
+                result.push(`Level: ${data.stats?.level ?? 'Unknown'}`);
+                result.push(`Weight: ${data.stats?.weight ?? 'Unknown'} (${((data.stats?.weight ?? 0) / 10).toFixed(1)} lbs)`);
+                result.push(`Cost: ${data.stats?.cost ?? 'Unknown'}`);
+                result.push(`Limit: ${data.stats?.limit ?? 'Unknown'}`);
+
+                if (data.affects?.length > 0) {
+                    result.push(`Affects:`);
+                    data.affects.forEach(a => {
+                        result.push(`  - ${AFFECT_TYPES[a.type] || `Type ${a.type}`} ${a.value > 0 ? '+' : ''}${a.value}`);
+                    });
+                }
+                
+                if (data.specials && data.specials.length > 0) {
+                    result.push(`Specials:`);
+                    data.specials.forEach(s => {
+                        let specialText = `  - ${s.actionType}`;
+                        if (s.spell) {
+                            specialText += `: ${s.spell} (${s.chance}% chance)`;
+                        } else if (s.multiplier) {
+                            specialText += `: multiplier ${s.multiplier} (${s.chance}% chance)`;
+                        }
+                        result.push(specialText);
+                    });
+                }
+            } else if (data.keywords) {
+                result.push(`Vnum: ${data.vnum ?? 'Unknown'}`);
+                result.push(`Keywords: ${data.keywords ?? 'Unknown'}`);
+                result.push(`Short Description: ${data.shortDesc ?? 'Unknown'}`);
+                result.push(`Race: ${data.race ?? 'Unknown'}`);
+                result.push(`Mob Flags: ${data.mobFlags?.length > 0 ? data.mobFlags.join(', ') : 'none'}`);
+                result.push(`Affected By: ${data.affectedByFlags?.length > 0 ? data.affectedByFlags.join(', ') : 'none'}`);
+                result.push(`Alignment: ${formatAlignment(data.alignment)}`);
+                result.push(`Mob Group: ${data.mobGroup ?? 'Unknown'}`);
+                result.push(`Level: ${data.level ?? 'Unknown'}`);
+                result.push(`Hitroll: ${data.hitroll ?? 'Unknown'}`);
+                result.push(`Hit Points: ${data.hp?.min}-${data.hp?.max}`);
+                result.push(`Mana: ${data.mana?.min}-${data.mana?.max}`);
+                result.push(`Damage: ${data.damage?.min}-${data.damage?.max} (avg ${data.damage?.avg}), damroll: ${data.damage?.bonus}`);
+                result.push(`Attack Type: ${data.attackType ?? 'Unknown'}`);
+                result.push(`Armor Class: ${data.ac ?? 'Unknown'}`);
+                result.push(`Offensive/Assists: ${data.offensiveAssists?.length > 0 ? data.offensiveAssists.join(', ') : 'none'}`);
+                result.push(`Immunities: ${data.immunities?.length > 0 ? data.immunities.join(', ') : 'none'}`);
+                result.push(`Resists: ${data.resists?.length > 0 ? data.resists.join(', ') : 'none'}`);
+                result.push(`Vulns: ${data.vulns?.length > 0 ? data.vulns.join(', ') : 'none'}`);
+                result.push(`Position: Starting(${data.defaultPosition ?? 'Unknown'}), Default(${data.fightingPosition ?? 'Unknown'})`);
+                result.push(`Gender: ${data.gender ?? 'Unknown'}`);
+                result.push(`Silver: ${data.silver ?? 'Unknown'}`);
+                result.push(`Size: ${data.size ?? 'Unknown'}`);
+                result.push(`Form: ${data.form?.length > 0 ? data.form.join(', ') : 'none'}`);
+                result.push(`Parts: ${data.parts?.length > 0 ? data.parts.join(', ') : 'none'}`);
+            }
+
+            return result.join('\n');
+        }
+
+        function updateOutput() {
+            const data = itemInput.value.trim();
+            if (data.length === 0) {
+                itemOutput.innerHTML = '<p class="text-gray-400">Your decoded item or mob will appear here...</p>';
+                jsonOutput.value = '';
+                return;
+            }
+
+            let decodedData = null;
+            let isJson = false;
+            try {
+                decodedData = JSON.parse(data);
+                isJson = true;
+            } catch (e) {
+                if (data.startsWith('#') || data.match(/^\S+~\n/)) {
+                    const firstLines = data.split('\n').slice(0, 7).join(' ').toLowerCase();
+                    if (firstLines.includes('weapon') || firstLines.includes('armor') || firstLines.includes('treasure') || firstLines.includes('trash')) {
+                        decodedData = decodeItem(data);
+                    } else {
+                        decodedData = decodeMob(data);
+                    }
+                }
+            }
+
+            if (decodedData) {
+                itemOutput.innerHTML = formatHtmlOutput(decodedData);
+                jsonOutput.value = JSON.stringify(decodedData, null, 2);
+            } else {
+                itemOutput.innerHTML = '<p class="text-red-400">Error: Could not decode the input data. Please check the format.</p>';
+                jsonOutput.value = '';
+            }
+        }
+        
         itemInput.addEventListener('input', updateOutput);
         updateOutput();
     </script>
