@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUD Item Bonus Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .table-container {
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 0.1rem 1rem;
+        }
+        th {
+            background-color: #e5e7eb;
+        }
+        .table-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10 border border-gray-200">
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">MUD Item Bonus Calculator</h1>
+        <p class="text-center text-gray-500 mb-6">Paste your item descriptions below to calculate total bonuses.</p>
+
+        <textarea
+            id="item-descriptions"
+            class="w-full h-80 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 resize-y"
+            placeholder="Paste your item descriptions here..."
+        ></textarea>
+
+        <button
+            onclick="calculateBonuses()"
+            class="w-full mt-4 py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200"
+        >
+            Calculate Bonuses
+        </button>
+
+        <div id="results" class="mt-8">
+            <!-- Results will be displayed here in two tables -->
+        </div>
+    </div>
+
+    <script>
+        function calculateBonuses() {
+            const descriptions = document.getElementById('item-descriptions').value.split(/\.\. this object,/);
+            
+            let totalAC = { pierce: 0, bash: 0, slash: 0, magic: 0 };
+            let totalModifiers = {};
+
+            const acBonusRegex = /Armor class bonus: (\d+) vs pierce, (\d+) vs bash, (\d+) vs slash, and (\d+) vs magic\./;
+            const modifierRegex = /(modifies|resistance to)\s+(.+?)\s+by\s+(-?\d+)/g;
+            const noValueModifierRegex = /modifies\s+([a-zA-Z\s]+?)\s*$/gm;
+
+            descriptions.forEach(desc => {
+                if (desc.trim() === '') return;
+                
+                // Match the specific Armor Class bonus line
+                const acMatch = desc.match(acBonusRegex);
+                if (acMatch) {
+                    totalAC.pierce += parseInt(acMatch[1] || 0);
+                    totalAC.bash += parseInt(acMatch[2] || 0);
+                    totalAC.slash += parseInt(acMatch[3] || 0);
+                    totalAC.magic += parseInt(acMatch[4] || 0);
+                }
+
+                // Match modifiers with a number
+                let match;
+                while ((match = modifierRegex.exec(desc)) !== null) {
+                    const type = match[1];
+                    const name = match[2].trim();
+                    let value = parseInt(match[3]);
+
+                    if (type === 'modifies' && name === 'armor class') {
+                         if (!totalModifiers[name]) {
+                            totalModifiers[name] = 0;
+                        }
+                        totalModifiers[name] += value;
+                    } else if (type === 'resistance to') {
+                        const fullName = `resistance to ${name}`;
+                        if (!totalModifiers[fullName]) {
+                            totalModifiers[fullName] = 0;
+                        }
+                        totalModifiers[fullName] += value;
+                    } else {
+                        if (!totalModifiers[name]) {
+                            totalModifiers[name] = 0;
+                        }
+                        totalModifiers[name] += value;
+                    }
+                }
+
+                // Match modifiers without a value, like "modifies damage roll"
+                while ((match = noValueModifierRegex.exec(desc)) !== null) {
+                    const name = match[1].trim();
+                    if (!totalModifiers[name]) {
+                        totalModifiers[name] = 0;
+                    }
+                    totalModifiers[name] += 1;
+                }
+            });
+
+            displayResults(totalAC, totalModifiers);
+        }
+
+        function displayResults(ac, modifiers) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            const mainBonuses = [];
+            const otherBonuses = [];
+            const acBonuses = [];
+
+            const mainCategories = {
+                'reflex save': 'reflex saves',
+                'will save': 'will saves',
+                'fortitude save': 'fort saves',
+                'damage roll': 'damroll',
+                'health': 'hp'
+            };
+
+            const resistanceCategories = {
+                'resistance to fire': 'resist fire',
+                'resistance to negative': 'resist negative',
+                'resistance to holy': 'resist holy',
+                'resistance to bashing': 'resist bashing',
+                'resistance to piercing': 'resist piercing',
+                'resistance to slashing': 'resist slashing'
+            };
+            
+            // Separate resistances from other modifiers
+            const resistances = [];
+            const other = [];
+
+            for (const name in modifiers) {
+                if (mainCategories[name]) {
+                    mainBonuses.push({ name: mainCategories[name], value: modifiers[name] });
+                } else if (resistanceCategories[name]) {
+                    resistances.push({ name: resistanceCategories[name], value: modifiers[name] });
+                } else {
+                    other.push({ name, value: modifiers[name] });
+                }
+            }
+            
+            for (const type in ac) {
+                if (ac[type] !== 0) {
+                    acBonuses.push({ name: `armor class vs. ${type}`, value: ac[type] });
+                }
+            }
+
+            // Sort individual arrays
+            mainBonuses.sort((a, b) => a.name.localeCompare(b.name));
+            resistances.sort((a, b) => a.name.localeCompare(b.name));
+            other.sort((a, b) => a.name.localeCompare(b.name));
+            acBonuses.sort((a, b) => a.name.localeCompare(b.name));
+            
+            // Combine resistances and other into one array for the "Everything Else" table
+            otherBonuses.push(...resistances, ...other);
+
+            const createTableHtml = (title, bonuses) => {
+                if (bonuses.length === 0) return '';
+                let tableHtml = `<div class="table-container">
+                                    <h3 class="table-title">${title}</h3>
+                                    <table class="w-full text-left border-collapse rounded-lg overflow-hidden shadow">
+                                        <tbody>`;
+
+                bonuses.forEach(bonus => {
+                    tableHtml += `<tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors duration-200">
+                                    <td class="capitalize">${bonus.name}</td>
+                                    <td>${bonus.value}</td>
+                                  </tr>`;
+                });
+
+                tableHtml += `</tbody></table></div>`;
+                return tableHtml;
+            };
+
+            const mainTableHtml = createTableHtml('Main Bonuses', mainBonuses);
+            const otherTableHtml = createTableHtml('Everything Else', otherBonuses);
+            const acTableHtml = createTableHtml('Armor Class Bonuses', acBonuses);
+
+            if (mainTableHtml === '' && otherTableHtml === '' && acTableHtml === '') {
+                resultsDiv.innerHTML = `<p class="text-center text-gray-500">No bonuses found in the provided text.</p>`;
+            } else {
+                resultsDiv.innerHTML = mainTableHtml + otherTableHtml + acTableHtml;
+            }
+        }
+    </script>
+</body>
+</html>
