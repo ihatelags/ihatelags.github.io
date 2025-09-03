@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solace area item/mob Decoder</title>
+    <title>Solace area item/mob Decode</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@
                 <h2 class="text-xl font-bold mb-4 text-purple-300">Item/Mob Data (Input)</h2>
                 <textarea id="item-input" 
                           class="w-full bg-gray-900 text-gray-200 border-gray-700 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors" 
-                          placeholder="copy the item/mob here"></textarea>
+                          placeholder="copy the item/mob data here"></textarea>
             </div>
             
             <!-- Output Panels -->
@@ -96,7 +96,7 @@
                         <li><b>mage(R)</b>: The mob can cast mage spells.</li>
                         <li><b>thief(S)</b>: The mob can use thief skills.</li>
                         <li><b>warrior(T)</b>: The mob can use warrior skills like bash or parry.</li>
-                        <li><b>healer(a)</b>: The mob can heal characters of its alignment for a fee.</li>
+                        <li><b>healer(aa)</b>: The mob can heal characters of its alignment for a fee.</li>
                         <li><b>undead(O)</b>: The mob is an undead creature.</li>
                         <li><b>noalign(U)</b>: The mob is not bound by a specific alignment.</li>
                     </ul>
@@ -441,10 +441,19 @@
             while (hasNextLine()) {
                 const line = lines[lineIndex].trim();
                 const firstChar = line[0];
-                if (firstChar === 'A') {
+
+                if (line === 'A') { // New format: 'A' on its own line
+                    nextLine(); // Consume the 'A'
+                    if (hasNextLine()) {
+                        const parts = nextLine().split(' ');
+                        const type = parseInt(parts[0]) || 0;
+                        const value = parseInt(parts[1]) || 0;
+                        decoded.affects.push({ type, value });
+                    }
+                } else if (firstChar === 'A' && line.trim().length > 1) { // Old format: 'A' followed by data
                     const parts = nextLine().split(' ');
                     const type = parseInt(parts[1]) || 0;
-                    const value = parseInt(parseInt(parts[2]) || 0);
+                    const value = parseInt(parts[2]) || 0;
                     decoded.affects.push({ type, value });
                 } else if (firstChar === 'E') {
                     nextLine(); // Consume the 'E' flag
