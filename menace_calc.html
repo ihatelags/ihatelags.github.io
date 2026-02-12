@@ -15,6 +15,13 @@
         .supp-highlight { color: #c084fc; }
         .base-stat-table th { background-color: #1a1d23; color: #94a3b8; font-size: 0.7rem; }
         select { background-color: #1f2937; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 0.375rem; padding: 0.25rem 0.5rem; }
+        
+        /* Sorting UI */
+        .sortable { cursor: pointer; transition: color 0.2s; position: relative; }
+        .sortable:hover { color: #fbbf24; background-color: #1f2937; }
+        .sort-icon::after { content: '↕'; margin-left: 4px; opacity: 0.3; font-size: 0.8em; }
+        .sort-asc::after { content: '↑'; opacity: 1; color: #fbbf24; }
+        .sort-desc::after { content: '↓'; opacity: 1; color: #fbbf24; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -84,7 +91,7 @@
             
             <div class="bg-gray-900/50 p-4 rounded-lg flex items-center justify-center text-center">
                 <div id="statSummary" class="text-xs text-gray-400">
-                    <!-- Dynamic summary -->
+                    Click headers to sort table by specific metrics.
                 </div>
             </div>
         </div>
@@ -96,13 +103,13 @@
                 <thead class="bg-gray-800 text-gray-300 uppercase text-xs">
                     <tr>
                         <th class="px-4 py-4 font-semibold text-center w-12">#</th>
-                        <th class="px-4 py-4 font-semibold">Weapon</th>
-                        <th class="px-4 py-4 font-semibold text-center">Avg HP Dmg</th>
-                        <th class="px-4 py-4 font-semibold text-center">Avg Arm Dmg</th>
-                        <th class="px-4 py-4 font-semibold text-center">Avg Supp</th>
-                        <th class="px-4 py-4 font-semibold text-center">Hit %</th>
-                        <th class="px-4 py-4 font-semibold text-center">Pen %</th>
-                        <th class="px-4 py-4 font-semibold text-center text-gray-500">Eff. AP</th>
+                        <th class="px-4 py-4 font-semibold sortable sort-icon" data-sort="name">Weapon</th>
+                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expHP">Avg HP Dmg</th>
+                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expArm">Avg Arm Dmg</th>
+                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expSupp">Avg Supp</th>
+                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="finalAcc">Hit %</th>
+                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="penChance">Pen %</th>
+                        <th class="px-4 py-4 font-semibold text-center text-gray-500 sortable sort-icon" data-sort="effAP">Eff. AP</th>
                     </tr>
                 </thead>
                 <tbody id="results-body">
@@ -137,8 +144,8 @@
         <footer class="mt-8 text-xs text-gray-500 leading-relaxed bg-gray-900/50 p-4 rounded-lg">
             <strong>Calculation Parameters:</strong><br>
             • Accuracy: (Base x Mod) + <span class="text-green-400">Ammo Bonus</span> - <span class="text-red-400 font-semibold">(Acc Dropoff)</span>.<br>
-            • <strong>New Suppression Logic:</strong> <span class="text-purple-400 font-semibold">(Hits * Base Supp) + (Misses * Base Supp * 0.5)</span>, then reduced by <span class="text-purple-300">Cover Modifier</span>.<br>
-            • <strong>New Cover Reductions:</strong> Light (20% Dmg / 10% Supp), Medium (40% Dmg / 20% Supp), Heavy (60% Dmg / 40% Supp).
+            • <strong>Suppression:</strong> Hits give 100%, Misses give 50%. Reduced by target cover.<br>
+            • <strong>Sorting:</strong> Click any header in the main table to toggle Ascending/Descending sorts.
         </footer>
     </div>
 
@@ -175,6 +182,9 @@
             heavy: { dmgRed: 0.6, suppRed: 0.4 }
         };
 
+        // State for sorting
+        let currentSort = { key: 'expHP', direction: 'desc' };
+
         function syncInputs(id1, id2) {
             const el1 = document.getElementById(id1);
             const el2 = document.getElementById(id2);
@@ -194,6 +204,27 @@
         syncInputs('squadRange', 'squadNum');
         document.getElementById('ammoSelect').addEventListener('change', calculate);
         document.getElementById('coverSelect').addEventListener('change', calculate);
+
+        // Header click listeners
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const key = header.getAttribute('data-sort');
+                if (currentSort.key === key) {
+                    currentSort.direction = currentSort.direction === 'desc' ? 'asc' : 'desc';
+                } else {
+                    currentSort.key = key;
+                    currentSort.direction = 'desc';
+                }
+                
+                // Update header styles
+                document.querySelectorAll('.sortable').forEach(h => {
+                    h.classList.remove('sort-asc', 'sort-desc');
+                });
+                header.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+                
+                calculate();
+            });
+        });
 
         function calculate() {
             const range = parseFloat(document.getElementById('rangeNum').value) || 1;
@@ -243,7 +274,21 @@
                 };
             });
 
-            results.sort((a, b) => b.expHP - a.expHP);
+            // Apply sorting
+            results.sort((a, b) => {
+                let valA = a[currentSort.key];
+                let valB = b[currentSort.key];
+                
+                // Special case for string sorting (Weapon Name)
+                if (typeof valA === 'string') {
+                    return currentSort.direction === 'desc' 
+                        ? valB.localeCompare(valA) 
+                        : valA.localeCompare(valB);
+                }
+
+                return currentSort.direction === 'desc' ? valB - valA : valA - valB;
+            });
+
             render(results);
         }
 
@@ -291,6 +336,8 @@
             });
         }
 
+        // Initialize sorting indicator for default column
+        document.querySelector('[data-sort="expHP"]').classList.add('sort-desc');
         calculate();
     </script>
 </body>
