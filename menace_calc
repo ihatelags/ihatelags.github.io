@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menace Weapon Damage Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f1115; color: #e2e8f0; }
+        .input-card { background: #1a1d23; border: 1px solid #2d3748; }
+        .data-row:nth-child(even) { background-color: #16191e; }
+        .data-row:hover { background-color: #242931; }
+        .hp-highlight { color: #f87171; }
+        .armor-highlight { color: #60a5fa; }
+        .base-stat-table th { background-color: #1a1d23; color: #94a3b8; font-size: 0.7rem; }
+        select { background-color: #1f2937; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 0.375rem; padding: 0.25rem 0.5rem; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-8 border-b border-gray-700 pb-4">
+            <h1 class="text-3xl font-bold text-yellow-500">Menace Combat Analysis</h1>
+            <p class="text-gray-400 mt-2">Calculate effective damage based on distance, armor, ammo type, and squad size.</p>
+        </header>
+
+        <!-- Inputs Section -->
+        <div class="input-card rounded-xl p-6 shadow-2xl mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Distance to Target (Tiles)</label>
+                    <input type="range" id="rangeRange" min="1" max="11" value="5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xs text-gray-500">1 tile</span>
+                        <input type="number" id="rangeNum" value="5" min="1" max="11" class="bg-800 border border-gray-600 rounded px-2 py-1 w-16 text-center text-yellow-500 font-bold bg-gray-800">
+                        <span class="text-xs text-gray-500">11 tiles</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Target Armor Value</label>
+                    <input type="range" id="armorRange" min="0" max="120" value="40" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xs text-gray-500">No Armor</span>
+                        <input type="number" id="armorNum" value="40" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-16 text-center text-blue-400 font-bold">
+                        <span class="text-xs text-gray-500">Heavy</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Base Accuracy (%)</label>
+                    <input type="range" id="accRange" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xs text-gray-500">Recruit</span>
+                        <input type="number" id="accNum" value="80" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-16 text-center text-green-400 font-bold">
+                        <span class="text-xs text-gray-500">Elite</span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-400 mb-2">Squad Size (Elements)</label>
+                    <input type="range" id="squadRange" min="1" max="9" value="9" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-xs text-gray-500">1 Man</span>
+                        <input type="number" id="squadNum" value="9" min="1" max="9" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-16 text-center text-purple-400 font-bold">
+                        <span class="text-xs text-gray-500">9 Men</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-center">
+                <label class="block text-sm font-medium text-gray-400 mb-3">Ammo Type Selection</label>
+                <select id="ammoSelect" class="w-full py-3 px-4 text-lg font-semibold bg-gray-800 border-gray-600 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none">
+                    <option value="standard">Standard Issue</option>
+                    <option value="ap">Armor Piercing (-2 HP, +25 AP)</option>
+                    <option value="rend">Rend (+2 HP, +15 Arm Dmg, -15 AP)</option>
+                    <option value="hollow">Hollow Point (+10 HP, -10 AP)</option>
+                    <option value="match">Match (+1 Max Range, +10 Acc, -0.02 Acc Falloff)</option>
+                </select>
+                <p id="ammoDesc" class="mt-4 text-xs text-gray-500 italic"></p>
+            </div>
+        </div>
+
+        <!-- Main Calculation Table -->
+        <h2 class="text-xl font-bold mb-4 text-gray-300">Live Performance Comparison</h2>
+        <div class="overflow-x-auto rounded-xl border border-gray-700 shadow-xl mb-12">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-gray-800 text-gray-300 uppercase text-xs">
+                    <tr>
+                        <th class="px-4 py-4 font-semibold text-center w-12">#</th>
+                        <th class="px-4 py-4 font-semibold">Weapon</th>
+                        <th class="px-4 py-4 font-semibold text-center">Avg HP Damage</th>
+                        <th class="px-4 py-4 font-semibold text-center">Avg Armor Damage</th>
+                        <th class="px-4 py-4 font-semibold text-center">Hit Chance</th>
+                        <th class="px-4 py-4 font-semibold text-center">Pen Chance</th>
+                        <th class="px-4 py-4 font-semibold text-center text-gray-500">Eff. AP</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Base Stats Reference Table -->
+        <h2 class="text-xl font-bold mb-4 text-gray-300">Weapon Base Statistics Reference</h2>
+        <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-xl opacity-80">
+            <table class="w-full text-left text-xs base-stat-table">
+                <thead class="bg-gray-900 text-gray-400 uppercase">
+                    <tr>
+                        <th class="px-3 py-3">Weapon Name</th>
+                        <th class="px-3 py-3 text-center">Ideal</th>
+                        <th class="px-3 py-3 text-center">Max</th>
+                        <th class="px-3 py-3 text-center">HP Dmg</th>
+                        <th class="px-3 py-3 text-center">Arm Dmg</th>
+                        <th class="px-3 py-3 text-center">AP</th>
+                        <th class="px-3 py-3 text-center">ROF</th>
+                        <th class="px-3 py-3 text-center">Acc Mod</th>
+                    </tr>
+                </thead>
+                <tbody id="base-stats-body" class="divide-y divide-gray-800">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+
+        <footer class="mt-8 text-xs text-gray-500 leading-relaxed bg-gray-900/50 p-4 rounded-lg">
+            <strong>Calculation Parameters:</strong><br>
+            • Accuracy: (Base x Mod) + <span class="text-green-400">Ammo Bonus</span> - <span class="text-red-400 font-semibold">(Acc Dropoff per tile above Ideal)</span>. Capped at 0% if > Max Range.<br>
+            • HP Damage: <span class="text-yellow-400 font-semibold">Total Shots * Accuracy * Pen Chance * Eff. HP Damage.</span><br>
+            • Armor Damage: <span class="text-blue-400 font-semibold">Total Shots * Accuracy * (1 - Pen Chance) * Eff. Armor Damage.</span><br>
+            • Stat Falloff (per tile): <span class="text-gray-300 font-semibold">HP Damage -0.8 | Armor Damage -0.6 | AP -1.8.</span><br>
+            • Penetration formula: <span class="text-blue-400 font-semibold">Eff. AP / Target Armor</span> (Capped at 100%).
+        </footer>
+    </div>
+
+    <script>
+        const weaponData = [
+            {"Weapon": "R14A2 ARC", "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "ROF": 3, "Mod": 1.0},
+            {"Weapon": "R14A2 SOCC", "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "ROF": 3, "Mod": 1.1},
+            {"Weapon": "R10A6 K-PAC", "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 9, "AP": 30, "ROF": 3, "Mod": 1.0},
+            {"Weapon": "R10A6 RANGE", "Ideal": 6, "Max": 9, "HPDmg": 9, "ArmDmg": 9, "AP": 34, "ROF": 3, "Mod": 1.0},
+            {"Weapon": "BR3A3 Kr-BaR", "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "ROF": 2, "Mod": 1.0},
+            {"Weapon": "BR3A3 MOD2", "Ideal": 3, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "ROF": 2, "Mod": 1.1},
+            {"Weapon": "BR3A MOD3", "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "ROF": 2, "Mod": 1.1},
+            {"Weapon": "MP3A9 PPP", "Ideal": 2, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "ROF": 5, "Mod": 1.0},
+            {"Weapon": "MP3A9 PPP Hi-Cap", "Ideal": 1, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "ROF": 7, "Mod": 1.0},
+            {"Weapon": "C1A2 SPC", "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 10, "AP": 25, "ROF": 2, "Mod": 1.0},
+            {"Weapon": "Pirate Assault", "Ideal": 3, "Max": 8, "HPDmg": 9, "ArmDmg": 7, "AP": 24, "ROF": 3, "Mod": 0.95},
+            {"Weapon": "Pirate PDW", "Ideal": 3, "Max": 6, "HPDmg": 7, "ArmDmg": 8, "AP": 30, "ROF": 5, "Mod": 1.0},
+            {"Weapon": "MK46MOD2 SPC", "Ideal": 3, "Max": 6, "HPDmg": 8, "ArmDmg": 9, "AP": 30, "ROF": 5, "Mod": 1.0}
+        ];
+
+        const ammoTypes = {
+            standard: { hp: 0, ap: 0, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
+            ap: { hp: -2, ap: 25, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
+            rend: { hp: 2, ap: -15, arm: 15, max: 0, acc: 0, accDrop: 0.06 },
+            hollow: { hp: 10, ap: -10, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
+            match: { hp: 0, ap: 0, arm: 0, max: 1, acc: 10, accDrop: 0.04 } // 0.06 - 0.02
+        };
+
+        function syncInputs(id1, id2) {
+            const el1 = document.getElementById(id1);
+            const el2 = document.getElementById(id2);
+            el1.addEventListener('input', () => { 
+                let val = parseFloat(el1.value);
+                if(el1.max && val > parseFloat(el1.max)) val = el1.max;
+                if(el1.min && val < parseFloat(el1.min)) val = el1.min;
+                el2.value = val; 
+                calculate(); 
+            });
+            el2.addEventListener('input', () => { 
+                let val = parseFloat(el2.value);
+                if(el2.max && val > parseFloat(el2.max)) val = el2.max;
+                if(el2.min && val < parseFloat(el2.min)) val = el2.min;
+                el1.value = val; 
+                calculate(); 
+            });
+        }
+
+        syncInputs('rangeRange', 'rangeNum');
+        syncInputs('armorRange', 'armorNum');
+        syncInputs('accRange', 'accNum');
+        syncInputs('squadRange', 'squadNum');
+        document.getElementById('ammoSelect').addEventListener('change', calculate);
+
+        function calculate() {
+            const range = parseFloat(document.getElementById('rangeNum').value) || 1;
+            const armor = parseFloat(document.getElementById('armorNum').value) || 0; 
+            const baseAcc = (parseFloat(document.getElementById('accNum').value) || 0) / 100;
+            const squadSize = parseFloat(document.getElementById('squadNum').value) || 1;
+            const ammo = ammoTypes[document.getElementById('ammoSelect').value];
+
+            const results = weaponData.map(w => {
+                const effectiveMax = w.Max + ammo.max;
+                const isOutOfRange = range > effectiveMax;
+                
+                // 1. Effective Accuracy
+                let finalAcc = (baseAcc * w.Mod) + (ammo.acc / 100);
+                if (range > w.Ideal) {
+                    finalAcc -= (range - w.Ideal) * ammo.accDrop;
+                }
+                finalAcc = Math.max(0, finalAcc);
+                if (isOutOfRange) finalAcc = 0;
+
+                // 2. Stat Degradation (Distance Penalties)
+                const effAP = Math.max(0, (w.AP + ammo.ap) - (range * 1.8));
+                const effArmDmgStat = Math.max(0, (w.ArmDmg + ammo.arm) - (range * 0.6));
+                const effHPDmgStat = Math.max(0, (w.HPDmg + ammo.hp) - (range * 0.8));
+
+                // 3. Penetration Chance
+                let penChance = 1.0;
+                if (armor > 0) {
+                    penChance = effAP / armor;
+                }
+                penChance = Math.max(0, Math.min(1, penChance));
+
+                // 4. Calculations
+                const totalShots = w.ROF * squadSize;
+                const hits = totalShots * finalAcc;
+
+                const expHP = hits * penChance * effHPDmgStat;
+                const expArm = hits * (1 - penChance) * effArmDmgStat;
+
+                return {
+                    name: w.Weapon,
+                    expHP,
+                    expArm,
+                    finalAcc,
+                    penChance,
+                    effAP,
+                    isOutOfRange
+                };
+            });
+
+            results.sort((a, b) => b.expHP - a.expHP);
+            render(results);
+        }
+
+        function render(results) {
+            const tbody = document.getElementById('results-body');
+            tbody.innerHTML = '';
+
+            results.forEach((res, index) => {
+                const tr = document.createElement('tr');
+                tr.className = `data-row border-b border-gray-800 ${res.isOutOfRange ? 'opacity-30 grayscale' : ''}`;
+                
+                tr.innerHTML = `
+                    <td class="px-4 py-4 text-center text-gray-600 font-mono text-xs">${index + 1}</td>
+                    <td class="px-4 py-4 font-medium text-gray-200">
+                        ${res.name}
+                        ${res.isOutOfRange ? '<span class="text-[10px] block text-red-500 uppercase font-bold">OUT OF RANGE</span>' : ''}
+                    </td>
+                    <td class="px-4 py-4 text-center hp-highlight text-lg font-bold">${res.expHP.toFixed(1)}</td>
+                    <td class="px-4 py-4 text-center armor-highlight font-semibold">${res.expArm.toFixed(1)}</td>
+                    <td class="px-4 py-4 text-center text-gray-400 font-mono">${(res.finalAcc * 100).toFixed(0)}%</td>
+                    <td class="px-4 py-4 text-center text-gray-400 font-mono">${(res.penChance * 100).toFixed(0)}%</td>
+                    <td class="px-4 py-4 text-center text-gray-500 text-xs">${res.effAP.toFixed(1)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const baseStatsBody = document.getElementById('base-stats-body');
+            baseStatsBody.innerHTML = '';
+            weaponData.forEach(w => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-800/50";
+                tr.innerHTML = `
+                    <td class="px-3 py-2 text-gray-300 font-medium">${w.Weapon}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.Ideal}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.Max}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.HPDmg}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.ArmDmg}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.AP}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.ROF}</td>
+                    <td class="px-3 py-2 text-center text-gray-500">${w.Mod}</td>
+                `;
+                baseStatsBody.appendChild(tr);
+            });
+        }
+
+        calculate();
+    </script>
+</body>
+</html>
