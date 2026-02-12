@@ -125,7 +125,7 @@
 
         <footer class="mt-8 text-xs text-gray-500 leading-relaxed bg-gray-900/50 p-4 rounded-lg">
             <strong>Calculation Parameters:</strong><br>
-            • Accuracy: (Base x Mod) + <span class="text-green-400">Ammo Bonus</span> - <span class="text-red-400 font-semibold">(Acc Dropoff per tile above Ideal)</span>. Capped at 0% if > Max Range.<br>
+            • Accuracy: (Base x Mod) + <span class="text-green-400">Ammo Bonus</span> - <span class="text-red-400 font-semibold">(Acc Dropoff per tile distance from Ideal)</span>. Capped at 0% if > Max Range.<br>
             • HP Damage: <span class="text-yellow-400 font-semibold">Total Shots * Accuracy * Pen Chance * Eff. HP Damage.</span><br>
             • Armor Damage: <span class="text-blue-400 font-semibold">Total Shots * Accuracy * (1 - Pen Chance) * Eff. Armor Damage.</span><br>
             • Stat Falloff (per tile): <span class="text-gray-300 font-semibold">HP Damage -0.8 | Armor Damage -0.6 | AP -1.8.</span><br>
@@ -155,7 +155,7 @@
             ap: { hp: -2, ap: 25, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
             rend: { hp: 2, ap: -15, arm: 15, max: 0, acc: 0, accDrop: 0.06 },
             hollow: { hp: 10, ap: -10, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
-            match: { hp: 0, ap: 0, arm: 0, max: 1, acc: 10, accDrop: 0.04 } // 0.06 - 0.02
+            match: { hp: 0, ap: 0, arm: 0, max: 1, acc: 10, accDrop: 0.04 } 
         };
 
         function syncInputs(id1, id2) {
@@ -194,11 +194,14 @@
                 const effectiveMax = w.Max + ammo.max;
                 const isOutOfRange = range > effectiveMax;
                 
-                // 1. Effective Accuracy
+                // 1. Effective Accuracy (Dropoff applies if distance != Ideal)
                 let finalAcc = (baseAcc * w.Mod) + (ammo.acc / 100);
-                if (range > w.Ideal) {
-                    finalAcc -= (range - w.Ideal) * ammo.accDrop;
+                const distanceDelta = Math.abs(range - w.Ideal);
+                
+                if (distanceDelta > 0) {
+                    finalAcc -= distanceDelta * ammo.accDrop;
                 }
+
                 finalAcc = Math.max(0, finalAcc);
                 if (isOutOfRange) finalAcc = 0;
 
