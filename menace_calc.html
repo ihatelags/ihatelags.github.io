@@ -6,330 +6,292 @@
     <title>Menace Weapon Damage Comparison</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0f1115; color: #e2e8f0; }
+        body { background-color: #0f1115; color: #e2e8f0; font-family: system-ui, -apple-system, sans-serif; }
         .input-card { background: #1a1d23; border: 1px solid #2d3748; }
         .data-row:nth-child(even) { background-color: #16191e; }
-        .data-row:hover { background-color: #242931; }
+        .data-row:hover { background-color: #242931; transition: background 0.2s; }
         .hp-highlight { color: #f87171; }
         .armor-highlight { color: #60a5fa; }
         .supp-highlight { color: #c084fc; }
-        .base-stat-table th { background-color: #1a1d23; color: #94a3b8; font-size: 0.7rem; }
-        select { background-color: #1f2937; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 0.375rem; padding: 0.25rem 0.5rem; }
         
-        /* Sorting UI */
-        .sortable { cursor: pointer; transition: color 0.2s; position: relative; }
+        .sortable { cursor: pointer; transition: all 0.2s; }
         .sortable:hover { color: #fbbf24; background-color: #1f2937; }
-        .sort-icon::after { content: '↕'; margin-left: 4px; opacity: 0.3; font-size: 0.8em; }
+        .sort-icon::after { content: '↕'; margin-left: 6px; opacity: 0.3; font-size: 0.8em; }
         .sort-asc::after { content: '↑'; opacity: 1; color: #fbbf24; }
         .sort-desc::after { content: '↓'; opacity: 1; color: #fbbf24; }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #fbbf24;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
-        <header class="mb-8 border-b border-gray-700 pb-4">
-            <h1 class="text-3xl font-bold text-yellow-500">Menace Combat Analysis</h1>
-            <p class="text-gray-400 mt-2">Calculate effective damage and suppression based on distance, armor, cover, and squad size.</p>
+        <header class="mb-8 border-b border-gray-700 pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-yellow-500 tracking-tight">Menace Weapon Damage Comparison</h1>
+            </div>
         </header>
 
         <!-- Inputs Section -->
-        <div class="input-card rounded-xl p-6 shadow-2xl mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="grid grid-cols-1 gap-4">
+        <div class="input-card rounded-xl p-6 shadow-2xl mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Distance (Tiles)</label>
-                    <input type="range" id="rangeRange" min="1" max="11" value="5" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between items-center mt-2">
-                        <input type="number" id="rangeNum" value="5" min="1" max="11" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-full text-center text-yellow-500 font-bold">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Range</label>
+                    <input type="range" id="rangeRange" min="1" max="15" value="5" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="mt-2">
+                        <input type="number" id="rangeNum" value="5" min="1" max="15" class="bg-gray-900 border border-gray-700 rounded px-3 py-1.5 w-full text-center text-yellow-500 font-bold text-lg">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Armor Value (Pen Resist)</label>
-                    <input type="range" id="armorRange" min="0" max="120" value="40" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between items-center mt-2">
-                        <input type="number" id="armorNum" value="40" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-full text-center text-blue-400 font-bold">
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Base Accuracy (%)</label>
-                    <input type="range" id="accRange" min="0" max="100" value="80" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between items-center mt-2">
-                        <input type="number" id="accNum" value="80" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-full text-center text-green-400 font-bold">
-                    </div>
-                </div>
-                <div class="flex flex-col justify-end">
-                    <div class="bg-gray-900/50 p-4 rounded-lg text-center h-[72px] flex flex-col justify-center">
-                         <span class="text-[10px] text-gray-500 uppercase tracking-widest">Sorting Enabled</span>
-                         <span class="text-[9px] text-gray-600">Click headers to reorder</span>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Target Armor</label>
+                    <input type="range" id="armorRange" min="0" max="150" step="5" value="40" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="mt-2">
+                        <input type="number" id="armorNum" value="40" class="bg-gray-900 border border-gray-700 rounded px-3 py-1.5 w-full text-center text-blue-400 font-bold text-lg">
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Squad Size</label>
-                    <input type="range" id="squadRange" min="1" max="9" value="9" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between items-center mt-2">
-                        <input type="number" id="squadNum" value="9" min="1" max="9" class="bg-gray-800 border border-gray-600 rounded px-2 py-1 w-full text-center text-purple-400 font-bold">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Base Accuracy (%)</label>
+                    <input type="range" id="accRange" min="0" max="100" step="5" value="5" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="mt-2">
+                        <input type="number" id="accNum" value="80" class="bg-gray-900 border border-gray-700 rounded px-3 py-1.5 w-full text-center text-green-400 font-bold text-lg">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Target Cover</label>
-                    <select id="coverSelect" class="w-full py-2 px-3 bg-gray-800 border-gray-600 outline-none">
-                        <option value="none">Open Ground (0%)</option>
-                        <option value="light">Light Cover (20% Dmg / 10% Supp)</option>
-                        <option value="medium">Medium Cover (40% Dmg / 20% Supp)</option>
-                        <option value="heavy">Heavy Cover (60% Dmg / 40% Supp)</option>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Squad Size</label>
+                    <input type="range" id="squadRange" min="1" max="9" value="9" class="w-full h-1.5 bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                    <div class="mt-2">
+                        <input type="number" id="squadNum" value="9" min="1" max="9" class="bg-gray-900 border border-gray-700 rounded px-3 py-1.5 w-full text-center text-purple-400 font-bold text-lg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Weapon group (ideal range)</label>
+                    <select id="rangeFilterSelect" class="w-full py-2.5 px-3 bg-gray-900 border border-gray-700 rounded font-medium focus:border-yellow-500 outline-none">
+                        <option value="all">All Weapons</option>
+                        <option value="long">Long Range (7+)</option>
+                        <option value="mid">Mid Range (4-6)</option>
+                        <option value="short">Short Range (1-3)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Cover</label>
+                    <select id="coverSelect" class="w-full py-2.5 px-3 bg-gray-900 border border-gray-700 rounded font-medium focus:border-yellow-500 outline-none">
+                        <option value="none">No Cover</option>
+                        <option value="light">Light (20% Reduction)</option>
+                        <option value="medium">Medium (40% Reduction)</option>
+                        <option value="heavy">Heavy (60% Reduction)</option>
                     </select>
                 </div>
             </div>
-            
-            <div class="flex flex-col gap-4">
+
+            <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-400 mb-2">Ammo Type</label>
-                    <select id="ammoSelect" class="w-full py-2 px-3 bg-gray-800 border-gray-600 outline-none">
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Ammo Type</label>
+                    <select id="ammoSelect" class="w-full py-2.5 px-3 bg-gray-900 border border-gray-700 rounded font-medium focus:border-yellow-500 outline-none">
                         <option value="standard">Standard Issue</option>
-                        <option value="ap">Armor Piercing (-2 HP, +25 AP)</option>
-                        <option value="rend">Rend (+2 HP, +15 Arm Dmg, -15 AP)</option>
-                        <option value="hollow">Hollow Point (+10 HP, -10 AP)</option>
-                        <option value="match">Match (+1 Max Range, +10 Acc)</option>
+                        <option value="ap">Armor Piercing (AP)</option>
+                        <option value="rend">Rend (Armor Shred)</option>
+                        <option value="hollow">Hollow Point</option>
+                        <option value="match">Match Grade</option>
                     </select>
-                </div>
-                <div class="bg-gray-900/50 p-2 rounded-lg flex items-center justify-center text-center h-full">
-                    <div id="statSummary" class="text-[10px] text-gray-500 uppercase tracking-wider">
-                        Live Combat Simulation
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Calculation Table -->
-        <h2 class="text-xl font-bold mb-4 text-gray-300">Live Performance Comparison</h2>
-        <div class="overflow-x-auto rounded-xl border border-gray-700 shadow-xl mb-12">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-gray-800 text-gray-300 uppercase text-xs">
+        <!-- Table -->
+        <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-2xl mb-12 bg-gray-900/50">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-gray-800/80 text-gray-400 uppercase text-[10px] tracking-widest font-bold">
                     <tr>
-                        <th class="px-4 py-4 font-semibold text-center w-12">#</th>
-                        <th class="px-4 py-4 font-semibold sortable sort-icon" data-sort="name">Weapon</th>
-                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expHP">Avg HP Dmg</th>
-                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expArm">Avg Arm Dmg</th>
-                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="expSupp">Avg Supp</th>
-                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="finalAcc">Hit %</th>
-                        <th class="px-4 py-4 font-semibold text-center sortable sort-icon" data-sort="penChance">Pen %</th>
-                        <th class="px-4 py-4 font-semibold text-center text-gray-500 sortable sort-icon" data-sort="effAP">Eff. AP</th>
+                        <th class="px-6 py-4 sortable sort-icon" data-sort="name">Weapon Name</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expHP">Avg HP Dmg</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expArm">Avg Arm Dmg</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expSupp">Avg Supp</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="finalAcc">Hit Chance</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="penChance">Pen Chance</th>
+                        <th class="px-6 py-4 text-center text-gray-600 sortable sort-icon" data-sort="effAP">Effective AP</th>
                     </tr>
                 </thead>
-                <tbody id="results-body">
-                    <!-- JS Injected -->
-                </tbody>
+                <tbody id="results-body"></tbody>
             </table>
         </div>
-
-        <!-- Base Stats Reference Table -->
-        <h2 class="text-xl font-bold mb-4 text-gray-300">Weapon Base Statistics Reference</h2>
-        <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-xl opacity-80">
-            <table class="w-full text-left text-xs base-stat-table">
-                <thead class="bg-gray-900 text-gray-400 uppercase">
-                    <tr>
-                        <th class="px-3 py-3">Weapon Name</th>
-                        <th class="px-3 py-3 text-center">Ideal</th>
-                        <th class="px-3 py-3 text-center">Max</th>
-                        <th class="px-3 py-3 text-center">HP Dmg</th>
-                        <th class="px-3 py-3 text-center">Arm Dmg</th>
-                        <th class="px-3 py-3 text-center">AP</th>
-                        <th class="px-3 py-3 text-center">Supp</th>
-                        <th class="px-3 py-3 text-center">ROF</th>
-                        <th class="px-3 py-3 text-center">Acc Mod</th>
-                    </tr>
-                </thead>
-                <tbody id="base-stats-body" class="divide-y divide-gray-800">
-                    <!-- JS Injected -->
-                </tbody>
-            </table>
-        </div>
-
-        <footer class="mt-8 text-xs text-gray-500 leading-relaxed bg-gray-900/50 p-4 rounded-lg">
-            <strong>Calculation Parameters:</strong><br>
-            • <strong>Armor Logic:</strong> Armor reduces damage until penetrated. Penetration probability is based on Effective AP vs Armor Value.<br>
-            • <strong>Energy Weapons:</strong> XL1A14 Laser ignores Ammo Type modifiers (always uses base stats).<br>
-            • <strong>Distance Scaling:</strong> Accuracy, AP, and Damage decay linearly based on tiles away from Ideal Range and toward Max Range.
-        </footer>
     </div>
 
     <script>
         const weaponData = [
-            {"Weapon": "R14A2 ARC", "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "Supp": 3, "ROF": 3, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "R14A2 SOCC", "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "Supp": 3, "ROF": 3, "Mod": 1.1, type: "kinetic"},
-            {"Weapon": "R10A6 K-PAC", "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 3, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "R10A6 RANGE", "Ideal": 6, "Max": 9, "HPDmg": 9, "ArmDmg": 9, "AP": 34, "Supp": 3, "ROF": 3, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "BR3A3 Kr-BaR", "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 4, "ROF": 2, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "BR3A3 MOD2", "Ideal": 3, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 4, "ROF": 2, "Mod": 1.1, type: "kinetic"},
-            {"Weapon": "BR3A MOD3", "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 4, "ROF": 2, "Mod": 1.1, type: "kinetic"},
-            {"Weapon": "MP3A9 PPP", "Ideal": 2, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "Supp": 3, "ROF": 5, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "MP3A9 PPP Hi-Cap", "Ideal": 1, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "Supp": 3, "ROF": 7, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "C1A2 SPC", "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 10, "AP": 25, "Supp": 2, "ROF": 2, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "Pirate Assault", "Ideal": 3, "Max": 8, "HPDmg": 9, "ArmDmg": 7, "AP": 24, "Supp": 3, "ROF": 3, "Mod": 0.95, type: "kinetic"},
-            {"Weapon": "Pirate PDW", "Ideal": 3, "Max": 6, "HPDmg": 7, "ArmDmg": 8, "AP": 30, "Supp": 2, "ROF": 5, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "MK46MOD2 SPC", "Ideal": 3, "Max": 6, "HPDmg": 8, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 5, "Mod": 1.0, type: "kinetic"},
-            {"Weapon": "XL1A14 Laser", "Ideal": 4, "Max": 8, "HPDmg": 8, "ArmDmg": 25, "AP": 75, "Supp": 3, "ROF": 2, "Mod": 1.05, type: "energy"}
+            {"Weapon": "Pirate Assault Rifle",      "Ideal": 3, "Max": 8, "HPDmg": 9, "ArmDmg": 7, "AP": 24, "Supp": 3, "ROF": 3, "AccBonus": -5, "DmgDrop": -0.9, "APDrop": -2, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "R10A6 \"CQB\" K-PAC",       "Ideal": 2, "Max": 7, "HPDmg": 9, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 3, "AccBonus": 5, "DmgDrop": -0.9, "APDrop": -2, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "R10A6 \"RANGE\" K-PAC",     "Ideal": 6, "Max": 9, "HPDmg": 9, "ArmDmg": 9, "AP": 34, "Supp": 3, "ROF": 3, "AccBonus": 0, "DmgDrop": -0.7, "APDrop": -1.7, "AccDrop": -5, type: "kinetic"},
+            {"Weapon": "R10A6 \"SOF\" K-PAC",       "Ideal": 4, "Max": 8, "HPDmg": 10, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 3, "AccBonus": 10, "DmgDrop": -0.8, "APDrop": -1.8, "AccDrop": -6, type: "kinetic"},
+            {"Weapon": "R10A6 K-PAC",               "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 3, "AccBonus": 0, "DmgDrop": -0.8, "APDrop": -1.8, "AccDrop": -6, type: "kinetic"},
+            {"Weapon": "R10A6 K-PAC with Launcher", "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 3, "AccBonus": -10, "DmgDrop": -0.8, "APDrop": -1.8, "AccDrop": -6, type: "kinetic"},
+            {"Weapon": "R14A2 ARC",                 "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "Supp": 3, "ROF": 3, "AccBonus": 0, "DmgDrop": -0.9, "APDrop": -1.9, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "R14A2 ARC \"CSP\"",         "Ideal": 3, "Max": 7, "HPDmg": 14, "ArmDmg": 15, "AP": 20, "Supp": 3, "ROF": 3, "AccBonus": 10, "DmgDrop": -1, "APDrop": -2, "AccDrop": -9, type: "kinetic"},
+            {"Weapon": "R14A2 ARC \"Range\"",       "Ideal": 6, "Max": 8, "HPDmg": 12, "ArmDmg": 13, "AP": 25, "Supp": 3, "ROF": 3, "AccBonus": 0, "DmgDrop": -0.9, "APDrop": -1.9, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "R14A2 ARC \"SOCC\"",        "Ideal": 4, "Max": 7, "HPDmg": 12, "ArmDmg": 13, "AP": 20, "Supp": 3, "ROF": 3, "AccBonus": 10, "DmgDrop": -1, "APDrop": -2, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "R228A1 MRS",                "Ideal": 4, "Max": 9, "HPDmg": 11, "ArmDmg": 11, "AP": 35, "Supp": 3.3, "ROF": 3, "AccBonus": 0, "DmgDrop": -0.6, "APDrop": -1.6, "AccDrop": -5, type: "kinetic"},
+            {"Weapon": "BR3A3 Kr-BaR \"Crowbar\"",  "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 3.75, "ROF": 2, "AccBonus": 0, "DmgDrop": -0.8, "APDrop": -1.4, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "BR3A3 Kr-BaR MOD2 Carbine", "Ideal": 3, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 3.75, "ROF": 2, "AccBonus": 10, "DmgDrop": -0.8, "APDrop": -1.4, "AccDrop": -9, type: "kinetic"},
+            {"Weapon": "BR3A3 Kr-BaR MOD3 Supp",    "Ideal": 7, "Max": 9, "HPDmg": 11, "ArmDmg": 13, "AP": 35, "Supp": 3.75, "ROF": 2, "AccBonus": 10, "DmgDrop": -0.8, "APDrop": -1.4, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "BR3A3 Kr-BaR MOD1",         "Ideal": 8, "Max": 10, "HPDmg": 12, "ArmDmg": 13, "AP": 35, "Supp": 3.75, "ROF": 2, "AccBonus": 0, "DmgDrop": -0.7, "APDrop": -1.2, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "BR6A1 HaMER",               "Ideal": 8, "Max": 10, "HPDmg": 13, "ArmDmg": 15, "AP": 40, "Supp": 5.25, "ROF": 2, "AccBonus": 0, "DmgDrop": -0.7, "APDrop": -1.2, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "Pirate Pipe Gun",           "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 25, "AP": 20, "Supp": 3, "ROF": 2, "AccBonus": 0, "DmgDrop": -1, "APDrop": -1.8, "AccDrop": -4, type: "kinetic"},
+            {"Weapon": "C1A2 SPC",                  "Ideal": 4, "Max": 8, "HPDmg": 9, "ArmDmg": 10, "AP": 25, "Supp": 2.4, "ROF": 2, "AccBonus": 0, "DmgDrop": -1, "APDrop": -1.8, "AccDrop": -6, type: "kinetic"},
+            {"Weapon": "MK46MOD2 SPC",              "Ideal": 3, "Max": 6, "HPDmg": 8, "ArmDmg": 9, "AP": 30, "Supp": 3, "ROF": 5, "AccBonus": 0, "DmgDrop": -0.9, "APDrop": -2, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "Pirate looted PDW",         "Ideal": 3, "Max": 6, "HPDmg": 7, "ArmDmg": 8, "AP": 30, "Supp": 2, "ROF": 5, "AccBonus": 0, "DmgDrop": -1, "APDrop": -2.2, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "Griffin MK1MOD1",           "Ideal": 2, "Max": 6, "HPDmg": 13, "ArmDmg": 10, "AP": 20, "Supp": 3.75, "ROF": 5, "AccBonus": 0, "DmgDrop": -1, "APDrop": -2, "AccDrop": -7, type: "kinetic"},
+            {"Weapon": "MP11A2 - HIG Oktagon",      "Ideal": 3, "Max": 7, "HPDmg": 14, "ArmDmg": 11, "AP": 25, "Supp": 4.5, "ROF": 5, "AccBonus": 0, "DmgDrop": -0.9, "APDrop": -1.8, "AccDrop": -6, type: "kinetic"},
+            {"Weapon": "MP3A9 \"SOF\" PPP",         "Ideal": 2, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "Supp": 3, "ROF": 5, "AccBonus": 10, "DmgDrop": -1.1, "APDrop": -2.2, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "MP3A9 PPP",                 "Ideal": 2, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "Supp": 3, "ROF": 5, "AccBonus": 0, "DmgDrop": -1.1, "APDrop": -2.2, "AccDrop": -8, type: "kinetic"},
+            {"Weapon": "MP3A9 PPP \"Hi-Cap\"",      "Ideal": 1, "Max": 5, "HPDmg": 12, "ArmDmg": 9, "AP": 15, "Supp": 3, "ROF": 7, "AccBonus": 0, "DmgDrop": -1.2, "APDrop": -2.2, "AccDrop": -9, type: "kinetic"},
+            {"Weapon": "XL1A14",                    "Ideal": 4, "Max": 8, "HPDmg": 8, "ArmDmg": 25, "AP": 75, "Supp": 2, "ROF": 2, "AccBonus": 5, "DmgDrop": -0.5, "APDrop": -3, "AccDrop": -4, type: "energy"}
         ];
 
         const ammoTypes = {
-            standard: { hp: 0, ap: 0, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
-            ap: { hp: -2, ap: 25, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
-            rend: { hp: 2, ap: -15, arm: 15, max: 0, acc: 0, accDrop: 0.06 },
-            hollow: { hp: 10, ap: -10, arm: 0, max: 0, acc: 0, accDrop: 0.06 },
-            match: { hp: 0, ap: 0, arm: 0, max: 1, acc: 10, accDrop: 0.04 } 
+            standard: { hp: 0, ap: 0, arm: 0, max: 0, acc: 0 },
+            ap: { hp: -2, ap: 25, arm: 0, max: 0, acc: 0 },
+            rend: { hp: 2, ap: -15, arm: 15, max: 0, acc: 0 },
+            hollow: { hp: 10, ap: -10, arm: 0, max: 0, acc: 0 },
+            match: { hp: 0, ap: 0, arm: 0, max: 1, acc: 10 } 
         };
 
         const coverTypes = {
-            none: { dmgRed: 0.0, suppRed: 0.0 },
-            light: { dmgRed: 0.2, suppRed: 0.1 },
-            medium: { dmgRed: 0.4, suppRed: 0.2 },
-            heavy: { dmgRed: 0.6, suppRed: 0.4 }
+            none: { dmgRed: 0.0 },
+            light: { dmgRed: 0.2 },
+            medium: { dmgRed: 0.4 },
+            heavy: { dmgRed: 0.6 }
         };
 
         let currentSort = { key: 'expHP', direction: 'desc' };
 
-        function syncInputs(id1, id2) {
-            const el1 = document.getElementById(id1);
-            const el2 = document.getElementById(id2);
-            el1.addEventListener('input', () => { 
-                el2.value = el1.value; 
-                calculate(); 
+        function setup() {
+            const inputs = ['rangeRange', 'rangeNum', 'armorRange', 'armorNum', 'accRange', 'accNum', 'squadRange', 'squadNum'];
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('input', (e) => {
+                    const pair = id.endsWith('Range') ? id.replace('Range', 'Num') : id.replace('Num', 'Range');
+                    document.getElementById(pair).value = e.target.value;
+                    calculate();
+                });
             });
-            el2.addEventListener('input', () => { 
-                el1.value = el2.value; 
-                calculate(); 
+            document.getElementById('ammoSelect').addEventListener('change', calculate);
+            document.getElementById('coverSelect').addEventListener('change', calculate);
+            document.getElementById('rangeFilterSelect').addEventListener('change', calculate);
+            
+            document.querySelectorAll('.sortable').forEach(th => {
+                th.addEventListener('click', () => {
+                    const key = th.dataset.sort;
+                    if (currentSort.key === key) {
+                        currentSort.direction = currentSort.direction === 'desc' ? 'asc' : 'desc';
+                    } else {
+                        currentSort.key = key;
+                        currentSort.direction = 'desc';
+                    }
+                    updateSortIcons();
+                    calculate();
+                });
             });
         }
 
-        syncInputs('rangeRange', 'rangeNum');
-        syncInputs('armorRange', 'armorNum');
-        syncInputs('accRange', 'accNum');
-        syncInputs('squadRange', 'squadNum');
-        document.getElementById('ammoSelect').addEventListener('change', calculate);
-        document.getElementById('coverSelect').addEventListener('change', calculate);
-
-        document.querySelectorAll('.sortable').forEach(header => {
-            header.addEventListener('click', () => {
-                const key = header.getAttribute('data-sort');
-                if (currentSort.key === key) {
-                    currentSort.direction = currentSort.direction === 'desc' ? 'asc' : 'desc';
-                } else {
-                    currentSort.key = key;
-                    currentSort.direction = 'desc';
+        function updateSortIcons() {
+            document.querySelectorAll('.sortable').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+                if (th.dataset.sort === currentSort.key) {
+                    th.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
                 }
-                document.querySelectorAll('.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-                header.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
-                calculate();
             });
-        });
+        }
 
         function calculate() {
-            const range = parseFloat(document.getElementById('rangeNum').value) || 1;
-            const targetArmorVal = parseFloat(document.getElementById('armorNum').value) || 0; 
-            const baseAcc = (parseFloat(document.getElementById('accNum').value) || 0) / 100;
-            const squadSize = parseFloat(document.getElementById('squadNum').value) || 1;
-            const ammoSelection = ammoTypes[document.getElementById('ammoSelect').value];
+            const range = parseFloat(document.getElementById('rangeNum').value);
+            const targetArmor = parseFloat(document.getElementById('armorNum').value); 
+            const unitBaseAcc = parseFloat(document.getElementById('accNum').value);
+            const squadSize = parseFloat(document.getElementById('squadNum').value);
+            const ammo = ammoTypes[document.getElementById('ammoSelect').value];
             const cover = coverTypes[document.getElementById('coverSelect').value];
+            const rangeFilter = document.getElementById('rangeFilterSelect').value;
 
-            const results = weaponData.map(w => {
-                const a = w.type === 'energy' ? ammoTypes.standard : ammoSelection;
-                
-                const effectiveMax = w.Max + a.max;
-                const isOutOfRange = range > effectiveMax;
-                
-                let finalAcc = (baseAcc * w.Mod) + (a.acc / 100);
-                const distanceDelta = Math.abs(range - w.Ideal);
-                if (distanceDelta > 0) finalAcc -= distanceDelta * a.accDrop;
-                finalAcc = Math.max(0.01, finalAcc);
-                if (isOutOfRange) finalAcc = 0;
+            // Updated Filter based on new ranges: Short (1-3), Mid (4-6), Long (7+)
+            const filteredData = weaponData.filter(w => {
+                if (rangeFilter === 'all') return true;
+                if (rangeFilter === 'long') return w.Ideal >= 7;
+                if (rangeFilter === 'mid') return w.Ideal >= 4 && w.Ideal <= 6;
+                if (rangeFilter === 'short') return w.Ideal <= 3;
+                return true;
+            });
 
-                const effAP = Math.max(0, (w.AP + a.ap) - (range * 1.8));
-                const effArmDmgStat = Math.max(0, (w.ArmDmg + a.arm) - (range * 0.6)) * (1 - cover.dmgRed);
-                const effHPDmgStat = Math.max(0, (w.HPDmg + a.hp) - (range * 0.8)) * (1 - cover.dmgRed);
+            const results = filteredData.map(w => {
+                const a = (w.type === 'energy' || w.type === 'precision') ? ammoTypes.standard : ammo;
+                const distDiff = Math.max(0, Math.abs(range - w.Ideal));
+                
+                let rawAcc = unitBaseAcc + w.AccBonus + a.acc + (distDiff * w.AccDrop);
+                let hitChance = Math.max(0, Math.min(100, rawAcc)) / 100;
+                if (range > (w.Max + a.max)) hitChance = 0;
+
+                const effAP = Math.max(0, w.AP + a.ap + (distDiff * w.APDrop));
+                const effHPDmg = Math.max(0, w.HPDmg + a.hp + (distDiff * w.DmgDrop)) * (1 - cover.dmgRed);
+                const effArmDmg = Math.max(0, w.ArmDmg + a.arm + (distDiff * w.DmgDrop)) * (1 - cover.dmgRed);
 
                 const totalShots = Math.floor(w.ROF * squadSize);
+                const penChance = targetArmor <= effAP ? 1.0 : Math.max(0, (100 - (targetArmor - effAP) * 2) / 100);
                 
-                const p_pen = (targetArmorVal <= 0) ? 1.0 : Math.max(0, Math.min(1, effAP / targetArmorVal));
-                
-                // Classic logic: HP damage on penetration, Armor damage on non-penetration
-                const hits = totalShots * finalAcc;
-                const expHP = hits * p_pen * effHPDmgStat;
-                const expArm = hits * (1 - p_pen) * effArmDmgStat;
-
-                const misses = totalShots * (1 - finalAcc);
-                const rawSupp = (hits * w.Supp) + (misses * w.Supp * 0.5);
-                const expSupp = rawSupp * (1 - cover.suppRed);
+                const hits = totalShots * hitChance;
+                const expHP = hits * penChance * effHPDmg;
+                const expArm = hits * (1 - penChance) * effArmDmg;
+                const expSupp = (hits * w.Supp) + ((totalShots - hits) * w.Supp * 0.25);
 
                 return {
                     name: w.Weapon,
-                    expHP,
-                    expArm,
-                    expSupp,
-                    finalAcc,
-                    penChance: p_pen,
+                    ideal: w.Ideal,
+                    expHP, expArm, expSupp,
+                    finalAcc: hitChance,
+                    penChance,
                     effAP,
-                    isOutOfRange
+                    isOutOfRange: range > (w.Max + a.max)
                 };
             });
 
             results.sort((a, b) => {
-                let valA = a[currentSort.key];
-                let valB = b[currentSort.key];
-                if (typeof valA === 'string') return currentSort.direction === 'desc' ? valB.localeCompare(valA) : valA.localeCompare(valB);
-                return currentSort.direction === 'desc' ? valB - valA : valA - valB;
+                let vA = a[currentSort.key];
+                let vB = b[currentSort.key];
+                if (typeof vA === 'string') return currentSort.direction === 'desc' ? vB.localeCompare(vA) : vA.localeCompare(vB);
+                return currentSort.direction === 'desc' ? vB - vA : vA - vB;
             });
 
             render(results);
         }
 
-        function render(results) {
-            const tbody = document.getElementById('results-body');
-            tbody.innerHTML = '';
-
-            results.forEach((res, index) => {
-                const tr = document.createElement('tr');
-                tr.className = `data-row border-b border-gray-800 ${res.isOutOfRange ? 'opacity-30 grayscale' : ''}`;
-                tr.innerHTML = `
-                    <td class="px-4 py-4 text-center text-gray-600 font-mono text-xs">${index + 1}</td>
-                    <td class="px-4 py-4 font-medium text-gray-200">
+        function render(data) {
+            const body = document.getElementById('results-body');
+            body.innerHTML = data.map(res => `
+                <tr class="data-row border-b border-gray-800 ${res.isOutOfRange ? 'opacity-20 grayscale' : ''}">
+                    <td class="px-6 py-4 font-bold text-gray-100">
                         ${res.name}
-                        ${res.isOutOfRange ? '<span class="text-[10px] block text-red-500 uppercase font-bold tracking-tighter">OUT OF RANGE</span>' : ''}
+                        ${res.isOutOfRange ? '<span class="block text-[8px] text-red-500 tracking-tighter uppercase">Out of Range</span>' : ''}
                     </td>
-                    <td class="px-4 py-4 text-center hp-highlight text-lg font-bold">${res.expHP.toFixed(1)}</td>
-                    <td class="px-4 py-4 text-center armor-highlight font-semibold">${res.expArm.toFixed(1)}</td>
-                    <td class="px-4 py-4 text-center supp-highlight font-semibold">${res.expSupp.toFixed(1)}</td>
-                    <td class="px-4 py-4 text-center text-gray-400 font-mono">${(res.finalAcc * 100).toFixed(0)}%</td>
-                    <td class="px-4 py-4 text-center text-gray-400 font-mono">${(res.penChance * 100).toFixed(0)}%</td>
-                    <td class="px-4 py-4 text-center text-gray-500 text-xs">${res.effAP.toFixed(1)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            const baseStatsBody = document.getElementById('base-stats-body');
-            baseStatsBody.innerHTML = '';
-            weaponData.forEach(w => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-gray-800/50";
-                tr.innerHTML = `
-                    <td class="px-3 py-2 text-gray-300 font-medium">${w.Weapon}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.Ideal}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.Max}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.HPDmg}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.ArmDmg}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.AP}</td>
-                    <td class="px-3 py-2 text-center text-purple-400 font-bold">${w.Supp}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.ROF}</td>
-                    <td class="px-3 py-2 text-center text-gray-500">${w.Mod}</td>
-                `;
-                baseStatsBody.appendChild(tr);
-            });
+                    <td class="px-6 py-4 text-center hp-highlight text-base font-black">${res.expHP.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-center armor-highlight font-bold">${res.expArm.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-center supp-highlight font-bold">${res.expSupp.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.finalAcc * 100).toFixed(0)}%</td>
+                    <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.penChance * 100).toFixed(0)}%</td>
+                    <td class="px-6 py-4 text-center text-gray-600 font-mono text-[10px]">${res.effAP.toFixed(1)}</td>
+                </tr>
+            `).join('');
         }
 
-        document.querySelector('[data-sort="expHP"]').classList.add('sort-desc');
+        setup();
         calculate();
     </script>
 </body>
