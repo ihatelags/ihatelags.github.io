@@ -128,6 +128,33 @@
         </div>
     </div>
 
+        <!-- Base Stats Reference Table -->
+        <h2 class="text-xl font-bold mb-4 text-gray-300">Weapon Base Statistics Reference</h2>
+        <div class="overflow-x-auto rounded-xl border border-gray-800 shadow-xl opacity-80">
+            <table class="w-full text-left text-xs base-stat-table">
+                <thead class="bg-gray-900 text-gray-400 uppercase">
+                    <tr>
+                        <th class="px-3 py-3">Weapon Name</th>
+                        <th class="px-3 py-3 text-center">Ideal</th>
+                        <th class="px-3 py-3 text-center">Max</th>
+                        <th class="px-3 py-3 text-center">HP Dmg</th>
+                        <th class="px-3 py-3 text-center">Arm Dmg</th>
+                        <th class="px-3 py-3 text-center">AP</th>
+                        <th class="px-3 py-3 text-center">Supp</th>
+                        <th class="px-3 py-3 text-center">ROF</th>
+                        <th class="px-3 py-3 text-center">Acc Mod</th>
+                        <th class="px-3 py-3 text-center">Dmg Drop</th>
+                        <th class="px-3 py-3 text-center">AP Drop</th>
+                        <th class="px-3 py-3 text-center">Acc Drop</th>
+                    </tr>
+                </thead>
+                <tbody id="base-stats-body" class="divide-y divide-gray-800">
+                    <!-- JS Injected -->
+                </tbody>
+            </table>
+        </div>
+
+
     <script>
         const weaponData = [
             {"Weapon": "Pirate Assault Rifle",      "Ideal": 3, "Max": 8, "HPDmg": 9, "ArmDmg": 7, "AP": 24, "Supp": 3, "ROF": 3, "AccBonus": -5, "DmgDrop": -0.9, "APDrop": -2, "AccDrop": -7, type: "kinetic"},
@@ -291,6 +318,28 @@
                     <td class="px-6 py-4 text-center text-gray-600 font-mono text-[10px]">${res.effAP.toFixed(1)}</td>
                 </tr>
             `).join('');
+
+            const baseStatsBody = document.getElementById('base-stats-body');
+            baseStatsBody.innerHTML = '';
+            weaponData.forEach(w => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-800/50";
+                tr.innerHTML = `
+                    <td class="px-3 py-2 text-gray-300 font-medium">${w.Weapon}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.Ideal}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.Max}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.HPDmg}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.ArmDmg}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.AP}</td>
+                    <td class="px-3 py-2 text-center text-gray-400 font-bold">${w.Supp}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.ROF}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.AccBonus}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.DmgDrop}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.APDrop}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.AccDrop}</td>
+                `;
+                baseStatsBody.appendChild(tr);
+            });
         }
 
         setup();
