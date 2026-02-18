@@ -120,7 +120,7 @@
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expSupp">Avg Supp</th>
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="finalAcc">Hit Chance</th>
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="penChance">Pen Chance</th>
-                        <th class="px-6 py-4 text-center text-gray-600 sortable sort-icon" data-sort="effAP">Effective AP</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="effAP">Effective AP</th>
                     </tr>
                 </thead>
                 <tbody id="results-body"></tbody>
@@ -261,16 +261,16 @@
             });
 
             const results = filteredData.map(w => {
-                const a = (w.type === 'energy' || w.type === 'precision') ? ammoTypes.standard : ammo;
+                const a = (w.type === 'energy') ? ammoTypes.standard : ammo;
                 const distDiff = Math.max(0, Math.abs(range - w.Ideal));
                 
                 let rawAcc = unitBaseAcc + w.AccBonus + a.acc + (distDiff * w.AccDrop);
                 let hitChance = Math.max(0, Math.min(100, rawAcc)) / 100;
                 if (range > (w.Max + a.max)) hitChance = 0;
 
-                const effAP = Math.max(0, w.AP + a.ap + (distDiff * w.APDrop));
-                const effHPDmg = Math.max(0, w.HPDmg + a.hp + (distDiff * w.DmgDrop)) * (1 - cover.dmgRed);
-                const effArmDmg = Math.max(0, w.ArmDmg + a.arm + (distDiff * w.DmgDrop)) * (1 - cover.dmgRed);
+                const effAP = Math.max(0, w.AP + a.ap + (range * w.APDrop));
+                const effHPDmg = Math.max(0, w.HPDmg + a.hp + (range * w.DmgDrop)) * (1 - cover.dmgRed);
+                const effArmDmg = Math.max(0, w.ArmDmg + a.arm + (range * w.DmgDrop)) * (1 - cover.dmgRed);
                 const effSuppPerShot = Math.max(0, w.Supp * (1 - cover.suppRed));
 
                 const totalShots = Math.floor(w.ROF * squadSize);
@@ -315,7 +315,7 @@
                     <td class="px-6 py-4 text-center supp-highlight font-bold">${res.expSupp.toFixed(1)}</td>
                     <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.finalAcc * 100).toFixed(0)}%</td>
                     <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.penChance * 100).toFixed(0)}%</td>
-                    <td class="px-6 py-4 text-center text-gray-600 font-mono text-[10px]">${res.effAP.toFixed(1)}</td>
+                    <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${res.effAP.toFixed(1)}</td>
                 </tr>
             `).join('');
 
@@ -331,7 +331,7 @@
                     <td class="px-3 py-2 text-center text-gray-400">${w.HPDmg}</td>
                     <td class="px-3 py-2 text-center text-gray-400">${w.ArmDmg}</td>
                     <td class="px-3 py-2 text-center text-gray-400">${w.AP}</td>
-                    <td class="px-3 py-2 text-center text-gray-400 font-bold">${w.Supp}</td>
+                    <td class="px-3 py-2 text-center text-gray-400">${w.Supp}</td>
                     <td class="px-3 py-2 text-center text-gray-400">${w.ROF}</td>
                     <td class="px-3 py-2 text-center text-gray-400">${w.AccBonus}</td>
                     <td class="px-3 py-2 text-center text-gray-400">${w.DmgDrop}</td>
