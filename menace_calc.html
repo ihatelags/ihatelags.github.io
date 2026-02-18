@@ -115,11 +115,12 @@
                 <thead class="bg-gray-800/80 text-gray-400 uppercase text-[10px] tracking-widest font-bold">
                     <tr>
                         <th class="px-6 py-4 sortable sort-icon" data-sort="name">Weapon Name</th>
-                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expHP">Avg HP Dmg</th>
-                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expArm">Avg Arm Dmg</th>
-                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expSupp">Avg Supp</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expHP">HP Dmg</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expArm">Arm Dmg</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="expSupp">Supp</th>
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="finalAcc">Hit Chance</th>
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="penChance">Pen Chance</th>
+                        <th class="px-6 py-4 text-center sortable sort-icon" data-sort="effHPDmg">HP Dmg/shot</th>
                         <th class="px-6 py-4 text-center sortable sort-icon" data-sort="effAP">Effective AP</th>
                     </tr>
                 </thead>
@@ -287,6 +288,7 @@
                     expHP, expArm, expSupp,
                     finalAcc: hitChance,
                     penChance,
+                    effHPDmg,
                     effAP,
                     isOutOfRange: range > (w.Max + a.max)
                 };
@@ -315,6 +317,7 @@
                     <td class="px-6 py-4 text-center supp-highlight font-bold">${res.expSupp.toFixed(1)}</td>
                     <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.finalAcc * 100).toFixed(0)}%</td>
                     <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${(res.penChance * 100).toFixed(0)}%</td>
+                    <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${res.effHPDmg.toFixed(1)}</td>
                     <td class="px-6 py-4 text-center text-gray-400 font-mono text-xs">${res.effAP.toFixed(1)}</td>
                 </tr>
             `).join('');
