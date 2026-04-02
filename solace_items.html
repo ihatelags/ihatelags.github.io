@@ -275,7 +275,7 @@
                 </select>
                 <select id="class">
                     <option value="ASSASSIN">ASSASSIN</option>
-                    <option value="FIGHTER selected">FIGHTER</option>
+                    <option value="FIGHTER" selected>FIGHTER</option>
                     <option value="KNIGHT">KNIGHT</option>
                     <option value="OUTCAST">OUTCAST</option>
                     <option value="RANGER">RANGER</option>
@@ -453,6 +453,7 @@
         const isNecromancer = userClass === "NECROMANCER";
         const isTransmuter = userClass === "TRANSMUTER";
         const isAssassin = userClass === "ASSASSIN";
+        const isFighter = userClass === "FIGHTER";
         
         const excludeEdges = document.getElementById('exclude-edges').checked;
         const excludeMalrauthin = document.getElementById('exclude-malrauthin').checked;
@@ -473,6 +474,11 @@
             // --- REFINED CLASS RESTRICTION MAPPING ---
             let allowedBySpecialTag = false;
             let restrictedBySpecialTag = false;
+
+            // Fighter
+            if (info.includes("only fighters can use it")) {
+                if (isFighter) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
+            }
 
             // Ranger
             if (info.includes("only forest rangers can use it")) {
