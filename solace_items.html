@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solace MUD Gear Optimizer</title>
+    <!-- PapaParse for high-performance CSV handling -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        :root {
+            --bg: #0a0e14; /* Deep Navy */
+            --panel: #1a202c; /* Slate Grey/Blue */
+            --text: #e2e8f0; /* Soft White/Grey */
+            --accent: #f6ad55; /* Soft Amber Yellow */
+            --border: #2d3748;
+            --header-bg: #171923;
+            --danger: #fc8181;
+            --muted: #718096;
+            --input-bg: #0f172a;
+        }
+
+        body { 
+            font-family: 'Segoe UI', 'Consolas', 'Monaco', monospace; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--panel);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            background: var(--header-bg);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            color: var(--accent); 
+            letter-spacing: 2px; 
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .controls { 
+            background: var(--panel); 
+            padding: 20px; 
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1.2fr auto;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .control-group { display: flex; flex-direction: column; }
+        .weights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .weight-input-pair {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 4px 8px;
+        }
+        .weight-input-pair label { 
+            margin: 0; 
+            font-size: 0.7rem; 
+            width: 60px; 
+            color: var(--muted);
+            font-weight: bold;
+        }
+        .weight-input-pair input {
+            border: none;
+            width: 100%;
+            background: transparent;
+            color: #fff;
+            padding: 2px;
+            font-size: 0.85rem;
+            text-align: right;
+            outline: none;
+        }
+
+        .filter-box {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .checkbox-label input {
+            cursor: pointer;
+            accent-color: var(--accent);
+            margin: 0;
+        }
+
+        label.main-label { 
+            font-size: 0.65rem; 
+            color: var(--muted); 
+            margin-bottom: 6px; 
+            text-transform: uppercase; 
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        select { 
+            padding: 8px; 
+            background: var(--input-bg); 
+            color: #fff; 
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            outline: none;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .btn-execute { 
+            padding: 0 25px; 
+            background: var(--accent); 
+            color: #1a202c; 
+            border: none; 
+            font-weight: 800; 
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            height: 100%;
+            min-height: 140px;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn-execute:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-execute:active { transform: translateY(0); }
+
+        .file-input-wrapper {
+            grid-column: 1 / -1;
+            padding-top: 15px;
+            margin-top: 5px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        .content { padding: 20px; background: var(--bg); }
+
+        .set-container { 
+            background: var(--panel); 
+            border: 1px solid var(--border); 
+            border-radius: 6px;
+            margin-bottom: 25px; 
+            overflow: hidden;
+        }
+
+        .set-header {
+            background: var(--border);
+            padding: 8px 15px;
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .item-list { padding: 12px 15px; }
+        .item-row { 
+            display: flex; 
+            padding: 6px 0; 
+            font-size: 0.85rem; 
+            border-bottom: 1px solid rgba(255,255,255,0.03); 
+        }
+        .item-row:last-child { border-bottom: none; }
+        
+        .slot-name { color: var(--muted); width: 230px; flex-shrink: 0; text-align: left; white-space: pre; font-family: 'Consolas', monospace; }
+        .item-name { color: #cbd5e0; flex-grow: 1; }
+        .item-score { color: var(--accent); width: 60px; text-align: right; font-weight: 600; font-family: 'Consolas', monospace; }
+
+        .summary-box {
+            background: var(--header-bg);
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .summary-section-title {
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .stat-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+            gap: 4px 12px; 
+        }
+
+        .stat-val { 
+            font-size: 0.8rem; 
+            padding: 2px 0;
+            font-family: 'Consolas', monospace;
+        }
+        .priority { color: #fff; font-weight: bold; }
+        .accent-val { color: var(--accent); }
+
+        .status-bar {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .error-msg { color: var(--danger); padding: 15px; border: 1px solid var(--danger); background: rgba(252, 129, 129, 0.1); border-radius: 4px; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<div class="terminal">
+    <header>
+        <h1>Solace Gear Optimizer</h1>
+        <div id="file-status" style="font-size: 0.7rem; color: var(--muted); font-weight: bold;">RACE_CLASS</div>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label class="main-label">Character Profile</label>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+                <select id="alignment">
+                    <option value="EVIL">EVIL</option>
+                    <option value="GOOD">GOOD</option>
+                    <option value="NEUTRAL">NEUTRAL</option>
+                </select>
+                <select id="class">
+                    <option value="ASSASSIN">ASSASSIN</option>
+                    <option value="FIGHTER" selected>FIGHTER</option>
+                    <option value="KNIGHT">KNIGHT</option>
+                    <option value="RANGER">RANGER</option>
+                    <option value="CLERIC">CLERIC</option>
+                    <option value="DRUID">DRUID</option>
+                    <option value="THIEF">THIEF</option>
+                    <option value="MAGE">MAGE</option>
+                    <option value="OUTCAST">OUTCAST</option>
+                </select>
+                <select id="race">
+                    <option value="HUMAN">HUMAN</option>
+                    <option value="HALF_ELF">HALF-ELF</option>
+                    <option value="DWARF">DWARF</option>
+                    <option value="ELF">ELF</option>
+                    <option value="KENDER">KENDER</option>
+                    <option value="GNOME">GNOME</option>
+                    <option value="MINOTAUR">MINOTAUR</option>
+                    <option value="DRACONIAN" selected>DRACONIAN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="main-label">Stat Priority Weights</label>
+            <div class="weights-grid">
+                <div class="weight-input-pair"><label>DR</label><input type="number" id="w-DAMROLL" value="10"></div>
+                <div class="weight-input-pair"><label>HP</label><input type="number" id="w-HIT" value="1"></div>
+                <div class="weight-input-pair"><label>ALLSVS</label><input type="number" id="w-ALL_SVS" value="11"></div>
+                <div class="weight-input-pair"><label>FORT</label><input type="number" id="w-FORT" value="5"></div>
+                <div class="weight-input-pair"><label>WILL</label><input type="number" id="w-WILL" value="4"></div>
+                <div class="weight-input-pair"><label>REF</label><input type="number" id="w-REF" value="2"></div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="main-label">Location Exclusions</label>
+            <div class="filter-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="exclude-edges">
+                    Exclude The Edges
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="exclude-malrauthin">
+                    Exclude Malrauthin
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="exclude-netherworld">
+                    Exclude Netherworld
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-execute" onclick="calculate()">Evaluate Gear</button>
+
+        <div class="file-input-wrapper">
+            <span>DATABASE_SOURCE:</span>
+            <input type="file" id="csvFile" accept=".csv">
+            <span style="margin-left: auto;">GRANULAR_DATA_PARSER_READY</span>
+        </div>
+    </div>
+
+    <div id="output" class="content">
+        <div class="status-bar">Awaiting gear database upload...</div>
+    </div>
+</div>
+
+<script>
+    const CSV_URL = 'itemdb_solace.csv';
+
+    const ALL_CLASSES = [
+        "FIGHTER", "KNIGHT", "RANGER", "CLERIC", "DRUID", "THIEF", 
+        "ASSASSIN", "MAGE", "OUTCAST"
+    ];
+
+    const ALL_RACES = [
+        "HUMAN", "HALF_ELF", "DWARF", "ELF", "KENDER", "GNOME",
+        "MINOTAUR", "DRACONIAN"
+    ];
+
+    const DISPLAY_CONFIG = [
+        { id: "FINGER", prefix: "<worn on finger>    ", dual: true },
+        { id: "NECK",   prefix: "<worn around neck>  ", dual: true },
+        { id: "TORSO",  prefix: "<worn on torso>     ", dual: false },
+        { id: "HEAD",   prefix: "<worn on head>      ", dual: false },
+        { id: "LEGS",   prefix: "<worn on legs>      ", dual: false },
+        { id: "FEET",   prefix: "<worn on feet>      ", dual: false },
+        { id: "HANDS",  prefix: "<worn on hands>     ", dual: false },
+        { id: "ARMS",   prefix: "<worn on arms>      ", dual: false },
+        { id: "BODY",   prefix: "<worn on body>      ", dual: false },
+        { id: "WAIST",  prefix: "<worn on waist>     ", dual: false },
+        { id: "WRIST",  prefix: "<worn around wrist> ", dual: true }
+    ];
+
+    const STAT_MAP = {
+        "damage roll": "DAMROLL", "hit roll": "HITROLL", "health": "HIT", "hp": "HIT",
+        "fortitude save": "FORT", "will save": "WILL", "reflex save": "REF", "all save": "ALL_SVS",
+        "strength": "STR", "intelligence": "INT", "wisdom": "WIS", "dexterity": "DEX", "constitution": "CON",
+        "mana": "MANA", "moves": "MOVE", "armor class": "AC"
+    };
+
+    function escapeHtml(text) {
+        return text ? text.replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    function getWeights() {
+        const w = {};
+        const inputs = document.querySelectorAll('.weight-input-pair input');
+        inputs.forEach(i => {
+            const key = i.id.replace('w-', '');
+            w[key] = parseInt(i.value) || 0;
+        });
+        return w;
+    }
+
+    function calculate() {
+        const output = document.getElementById('output');
+        const fileInput = document.getElementById('csvFile');
+        const userWeights = getWeights();
+        
+        output.innerHTML = '<div class="status-bar">Calculating optimal sets...</div>';
+
+        const parseConfig = {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                if (results.errors.length > 0 && !results.data.length) {
+                    output.innerHTML = `<div class="error-msg">Error parsing CSV: Verify file format.</div>`;
+                    return;
+                }
+                const filteredItems = processItems(results.data, userWeights);
+                render(filteredItems);
+            },
+            error: function(err) {
+                 output.innerHTML = `<div class="error-msg">System error: ${err.message}</div>`;
+            }
+        };
+
+        if (fileInput.files.length > 0) {
+            Papa.parse(fileInput.files[0], parseConfig);
+        } else {
+            try {
+                Papa.parse(CSV_URL, { ...parseConfig, download: true });
+            } catch (e) {
+                output.innerHTML = `<div class="error-msg">No CSV provided. Use the file selector.</div>`;
+            }
+        }
+    }
+
+    function processItems(data, userWeights) {
+        const userAlign = document.getElementById('alignment').value;
+        const userRace = document.getElementById('race').value.toUpperCase();
+        const userClass = document.getElementById('class').value;
+        
+        const excludeEdges = document.getElementById('exclude-edges').checked;
+        const excludeMalrauthin = document.getElementById('exclude-malrauthin').checked;
+        const excludeNetherworld = document.getElementById('exclude-netherworld').checked;
+
+        return data.map(row => {
+            if (!row.wear || !row.info) return null;
+            
+            const info = row.info.toLowerCase();
+            const wear = row.wear.toUpperCase();
+            const location = (row.location || "").toLowerCase();
+
+            // Location Filters
+            if (excludeEdges && location.includes("edges")) return null;
+            if (excludeMalrauthin && location.includes("malrauthin depths")) return null;
+            if (excludeNetherworld && location.includes("netherworld")) return null;
+
+            // Class Restriction Logic
+            let restrictedToOtherClass = false;
+            ALL_CLASSES.forEach(cls => {
+                const clsKey = cls.toLowerCase();
+                const isTargetClass = userClass.toLowerCase() === clsKey;
+                const restrictedStr = [`only for ${clsKey}`, `only be used by ${clsKey}`, `${clsKey} only`];
+                if (restrictedStr.some(s => info.includes(s)) && !isTargetClass) {
+                    restrictedToOtherClass = true;
+                }
+            });
+            if (restrictedToOtherClass) return null;
+
+            // Race Restriction Logic
+            let restrictedToOtherRace = false;
+            ALL_RACES.forEach(rc => {
+                // Normalize "HALF_ELF" to "half-elf" for matching
+                const rcKey = rc.toLowerCase().replace('_', '-');
+                const isTargetRace = userRace.toLowerCase().replace('_', '-') === rcKey;
+                const restrictedStr = [`only for ${rcKey}`, `only be used by ${rcKey}`, `${rcKey} only`, `designed to be used by ${rcKey}`];
+                
+                if (restrictedStr.some(s => info.includes(s)) && !isTargetRace) {
+                    restrictedToOtherRace = true;
+                }
+            });
+            if (restrictedToOtherRace) return null;
+
+            // Alignment / Soul Logic
+            let antiGood = info.includes("anti-good") || info.includes("pure soul") || info.includes("cannot be used by good");
+            let antiEvil = info.includes("anti-evil") || info.includes("darkened soul") || info.includes("cannot be used by evil");
+            let antiNeutral = info.includes("anti-neutral") || info.includes("unbiased soul") || info.includes("cannot be used by neutral");
+
+            if (info.includes("neutral only")) { antiGood = true; antiEvil = true; }
+            if (info.includes("can only be used by")) {
+                if (info.includes("pure soul")) { antiEvil = true; antiNeutral = true; }
+                if (info.includes("darkened soul")) { antiGood = true; antiNeutral = true; }
+                if (info.includes("unbiased soul")) { antiGood = true; antiEvil = true; }
+            }
+
+            if (userAlign === "EVIL" && antiEvil) return null;
+            if (userAlign === "GOOD" && antiGood) return null;
+            if (userAlign === "NEUTRAL" && antiNeutral) return null;
+
+            const stats = {};
+            const lines = info.split('\n');
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                
+                // Resistance detection
+                const resMatch = trimmed.match(/(.*?) resistance:?\s*(-?\d+)/);
+                const namedResMatch = trimmed.match(/resistance to (.*?):?\s*(-?\d+)/);
+                const generalMatch = trimmed.match(/(?:modifies|modifying|affects) (.*?) by (-?\d+)/);
+
+                if (resMatch || namedResMatch) {
+                    const type = (resMatch ? resMatch[1] : namedResMatch[1]).trim();
+                    const val = parseInt(resMatch ? resMatch[2] : namedResMatch[2]);
+                    stats[`RES_${type.toUpperCase()}`] = (stats[`RES_${type.toUpperCase()}`] || 0) + val;
+                } else if (generalMatch) {
+                    let key = generalMatch[1].trim();
+                    const val = parseInt(generalMatch[2]);
+                    
+                    const isPhysical = key.includes("bashing") || key.includes("piercing") || key.includes("slashing") || key.includes("physical");
+                    const isNamedResist = key.includes("resistance to");
+
+                    for (let k in STAT_MAP) { if (key.includes(k)) { key = STAT_MAP[k]; break; } }
+                    
+                    if (isNamedResist || isPhysical) {
+                        const cleanKey = key.replace("resistance to", "").replace("resistance", "").trim();
+                        stats[`RES_${cleanKey.toUpperCase()}`] = (stats[`RES_${cleanKey.toUpperCase()}`] || 0) + val;
+                    } else {
+                        stats[key] = (stats[key] || 0) + val;
+                    }
+                }
+            });
+
+            // Apply Weights
+            let score = 0;
+            for (let s in userWeights) {
+                score += (stats[s] || 0) * userWeights[s];
+            }
+
+            return { name: row.name, slot: wear, score: score, stats: stats };
+        }).filter(x => x !== null);
+    }
+
+    function render(items) {
+        const output = document.getElementById('output');
+        output.innerHTML = '';
+
+        if (items.length === 0) {
+            output.innerHTML = '<div class="status-bar">No valid items matched current filters.</div>';
+            return;
+        }
+
+        for (let i = 0; i < 3; i++) {
+            const setTotal = {};
+            let setHtml = `<div class="set-container"><div class="set-header">Loadout #${i + 1}</div><div class="item-list">`;
+            
+            DISPLAY_CONFIG.forEach(slotDef => {
+                const count = slotDef.dual ? 2 : 1;
+                const matches = items.filter(it => it.slot === slotDef.id)
+                                     .sort((a,b) => b.score - a.score)
+                                     .slice(i * count, (i * count) + count);
+                
+                matches.forEach(item => {
+                    setHtml += `<div class="item-row">
+                                    <span class="slot-name">${escapeHtml(slotDef.prefix)}</span>
+                                    <span class="item-name">${item.name}</span>
+                                    <span class="item-score">[${item.score}]</span>
+                                </div>`;
+                    for (let s in item.stats) { setTotal[s] = (setTotal[s] || 0) + item.stats[s]; }
+                });
+            });
+
+            const allSvs = setTotal["ALL_SVS"] || 0;
+            const priorities = ["DAMROLL", "HIT", "FORT", "WILL", "REF"];
+            
+            setHtml += `</div><div class="summary-box">`;
+            
+            // Stats Column
+            setHtml += `<div><div class="summary-section-title">Stats summary</div><div class="stat-grid">`;
+            priorities.forEach(p => {
+                let val = setTotal[p] || 0;
+                if (["FORT", "WILL", "REF"].includes(p)) val += allSvs;
+                setHtml += `<div class="stat-val priority">${p.padEnd(8)}: <span class="accent-val">${val}</span></div>`;
+            });
+            Object.keys(setTotal).sort().forEach(s => {
+                if (priorities.includes(s) || s === "ALL_SVS" || s.startsWith("RES_")) return;
+                setHtml += `<div class="stat-val">${s.toUpperCase().padEnd(8)}: ${setTotal[s]}</div>`;
+            });
+            setHtml += `</div></div>`;
+
+            // Resistances Column
+            setHtml += `<div><div class="summary-section-title">Resistances</div><div class="stat-grid">`;
+            const resistances = Object.keys(setTotal).filter(s => s.startsWith("RES_")).sort();
+            if (resistances.length > 0) {
+                resistances.forEach(r => {
+                    const name = r.replace("RES_", "").toLowerCase();
+                    setHtml += `<div class="stat-val"><span style="color:var(--muted)">${name.padEnd(10)}</span>: <span class="accent-val">${setTotal[r]}</span></div>`;
+                });
+            } else {
+                setHtml += `<div class="stat-val" style="color:var(--muted)">NONE</div>`;
+            }
+            setHtml += `</div></div>`;
+
+            setHtml += `</div></div>`;
+            output.innerHTML += setHtml;
+        }
+    }
+</script>
+</body>
+</html>
