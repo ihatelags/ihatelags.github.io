@@ -98,6 +98,10 @@
             text-align: right;
             outline: none;
         }
+        .weight-input-pair.readonly-ghost {
+            background: transparent;
+            border-color: transparent;
+        }
 
         .filter-box {
             background: var(--input-bg);
@@ -298,10 +302,10 @@
             <div class="weights-grid">
                 <div class="weight-input-pair"><label>DR</label><input type="number" id="w-DAMROLL" value="10"></div>
                 <div class="weight-input-pair"><label>HP</label><input type="number" id="w-HIT" value="1"></div>
-                <div class="weight-input-pair"><label>ALLSVS</label><input type="number" id="w-ALL_SVS" value="11"></div>
-                <div class="weight-input-pair"><label>FORT</label><input type="number" id="w-FORT" value="5"></div>
-                <div class="weight-input-pair"><label>WILL</label><input type="number" id="w-WILL" value="4"></div>
-                <div class="weight-input-pair"><label>REF</label><input type="number" id="w-REF" value="2"></div>
+                <div class="weight-input-pair readonly-ghost"><label>ALLSVS</label><input type="number" id="w-ALL_SVS" value="11" readonly tabindex="-1"></div>
+                <div class="weight-input-pair"><label>FORT</label><input type="number" id="w-FORT" value="5" oninput="updateAllSvsWeight()"></div>
+                <div class="weight-input-pair"><label>WILL</label><input type="number" id="w-WILL" value="4" oninput="updateAllSvsWeight()"></div>
+                <div class="weight-input-pair"><label>REF</label><input type="number" id="w-REF" value="2" oninput="updateAllSvsWeight()"></div>
             </div>
         </div>
 
@@ -373,6 +377,13 @@
 
     function escapeHtml(text) {
         return text ? text.replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+    }
+
+    function updateAllSvsWeight() {
+        const fort = parseInt(document.getElementById('w-FORT').value) || 0;
+        const will = parseInt(document.getElementById('w-WILL').value) || 0;
+        const ref = parseInt(document.getElementById('w-REF').value) || 0;
+        document.getElementById('w-ALL_SVS').value = fort + will + ref;
     }
 
     function getWeights() {
@@ -588,6 +599,7 @@
             output.innerHTML += setHtml;
         }
     }
+    window.onload = updateAllSvsWeight;
 </script>
 </body>
 </html>
