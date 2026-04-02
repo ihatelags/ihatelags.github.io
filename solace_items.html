@@ -196,6 +196,28 @@
             font-weight: 800;
             letter-spacing: 1px;
             text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 0.6rem;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent);
+            color: var(--header-bg);
+            border-color: var(--accent);
         }
 
         .item-list { padding: 12px 15px; }
@@ -254,9 +276,28 @@
         }
 
         .error-msg { color: var(--danger); padding: 15px; border: 1px solid var(--danger); background: rgba(252, 129, 129, 0.1); border-radius: 4px; font-size: 0.85rem; }
+        
+        /* Toast notification */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
+
+<div id="toast">LOADOUT COPIED</div>
 
 <div class="terminal">
     <header>
@@ -342,7 +383,7 @@
     </div>
 
     <div id="output" class="content">
-        <div class="status-bar">Select your character, adjust weights and click Evaluate...</div>
+        <div class="status-bar">Select your character, adjust weights and click Execute...</div>
     </div>
 </div>
 
@@ -405,6 +446,38 @@
             w[key] = parseInt(i.value) || 0;
         });
         return w;
+    }
+
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+
+    function copyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showToast();
+        } catch (err) {
+            console.error('Copy failed', err);
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function handleCopy(index) {
+        const container = document.querySelectorAll('.set-container')[index];
+        const rows = container.querySelectorAll('.item-row');
+        let text = "";
+        rows.forEach(row => {
+            const slot = row.querySelector('.slot-name').textContent;
+            const item = row.querySelector('.item-name').textContent;
+            text += `${slot}${item}\n`;
+        });
+        copyToClipboard(text.trim());
     }
 
     function calculate() {
@@ -597,7 +670,6 @@
                 } else if (resMatch || namedResMatch) {
                     const type = (resMatch ? resMatch[1] : namedResMatch[1]).trim();
                     const val = parseInt(resMatch ? resMatch[2] : namedResMatch[2]);
-                    // Standardize physical resistance key
                     if (type.toLowerCase() === "physical") {
                         stats[`RES_PHYSICAL`] = (stats[`RES_PHYSICAL`] || 0) + val;
                     } else {
@@ -626,7 +698,13 @@
 
         for (let i = 0; i < 3; i++) {
             const setTotal = {};
-            let setHtml = `<div class="set-container"><div class="set-header">Loadout #${i + 1}</div><div class="item-list">`;
+            let setHtml = `
+                <div class="set-container">
+                    <div class="set-header">
+                        Loadout #${i + 1}
+                        <button class="btn-copy" onclick="handleCopy(${i})">Copy Loadout</button>
+                    </div>
+                    <div class="item-list">`;
             
             DISPLAY_CONFIG.forEach(slotDef => {
                 const count = slotDef.dual ? 2 : 1;
@@ -649,25 +727,19 @@
             
             setHtml += `</div><div class="summary-box">`;
             
-            // Core Stats Box
             setHtml += `<div><div class="summary-section-title">Stats summary</div><div class="stat-grid">`;
             corePriorities.forEach(p => {
                 let val = setTotal[p] || 0;
                 if (["FORT", "WILL", "REF"].includes(p)) val += allSvs;
-                
-                let label = p;
-                if (p === "HIT") label = "HP";
-
+                let label = p === "HIT" ? "HP" : p;
                 setHtml += `<div class="stat-val priority">${label.padEnd(8)}: <span class="accent-val">${val}</span></div>`;
             });
             Object.keys(setTotal).sort().forEach(s => {
-                // Filter out core priorities, all svs base, and ALL resistances
                 if (corePriorities.includes(s) || s === "ALL_SVS" || s.startsWith("RES_")) return;
                 setHtml += `<div class="stat-val">${s.toUpperCase().padEnd(8)}: ${setTotal[s]}</div>`;
             });
             setHtml += `</div></div>`;
 
-            // Resistances Box
             setHtml += `<div><div class="summary-section-title">Resistances</div><div class="stat-grid">`;
             const resistances = Object.keys(setTotal).filter(s => s.startsWith("RES_")).sort();
             if (resistances.length > 0) {
