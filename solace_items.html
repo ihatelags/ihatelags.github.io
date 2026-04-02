@@ -62,7 +62,7 @@
             padding: 20px; 
             border-bottom: 1px solid var(--border);
             display: grid;
-            grid-template-columns: 1.2fr 1.5fr 1.2fr auto;
+            grid-template-columns: 1.2fr 1.8fr 1.2fr auto;
             gap: 20px;
             align-items: start;
         }
@@ -83,8 +83,8 @@
         }
         .weight-input-pair label { 
             margin: 0; 
-            font-size: 0.7rem; 
-            width: 60px; 
+            font-size: 0.6rem; 
+            width: 80px; 
             color: var(--muted);
             font-weight: bold;
         }
@@ -159,7 +159,7 @@
             cursor: pointer;
             text-transform: uppercase;
             height: 100%;
-            min-height: 140px;
+            min-height: 160px;
             transition: transform 0.1s, opacity 0.2s;
         }
 
@@ -261,7 +261,7 @@
 <div class="terminal">
     <header>
         <h1>Solace Gear Optimizer</h1>
-        <div id="file-status" style="font-size: 0.7rem; color: var(--muted); font-weight: bold;">SOLACE_CORE_v3_MAPPING</div>
+        <div id="file-status" style="font-size: 0.7rem; color: var(--muted); font-weight: bold;"></div>
     </header>
 
     <div class="controls">
@@ -309,6 +309,8 @@
                 <div class="weight-input-pair"><label>FORT</label><input type="number" id="w-FORT" value="10" oninput="updateAllSvsWeight()"></div>
                 <div class="weight-input-pair"><label>WILL</label><input type="number" id="w-WILL" value="8" oninput="updateAllSvsWeight()"></div>
                 <div class="weight-input-pair"><label>REF</label><input type="number" id="w-REF" value="5" oninput="updateAllSvsWeight()"></div>
+                <div class="weight-input-pair"><label>RES_PHYS</label><input type="number" id="w-RES_PHYSICAL" value="0"></div>
+                <div class="weight-input-pair"><label>RES_HOLY</label><input type="number" id="w-RES_HOLY" value="0"></div>
             </div>
         </div>
 
@@ -340,7 +342,7 @@
     </div>
 
     <div id="output" class="content">
-        <div class="status-bar">Select your characer, adjust weights and click Execute...</div>
+        <div class="status-bar">Select your character, adjust weights and click Execute...</div>
     </div>
 </div>
 
@@ -466,56 +468,43 @@
             const wear = row.wear.toUpperCase();
             const location = (row.location || "").toLowerCase();
 
-            // Location Filters
             if (excludeEdges && location.includes("edges")) return null;
             if (excludeMalrauthin && location.includes("malrauthin depths")) return null;
             if (excludeNetherworld && location.includes("netherworld")) return null;
 
-            // --- REFINED CLASS RESTRICTION MAPPING ---
             let allowedBySpecialTag = false;
             let restrictedBySpecialTag = false;
 
-            // Fighter
             if (info.includes("only fighters can use it")) {
                 if (isFighter) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-
-            // Ranger
             if (info.includes("only forest rangers can use it")) {
                 if (isRanger) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Knight
             if (info.includes("only knights can use it") && !info.includes("outcast knights")) {
                 if (isKnight) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Outcast
             if (info.includes("only outcast knights can use it")) {
                 if (isOutcast) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Cleric
             if (info.includes("only priests can use it")) {
                 if (isCleric) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Invoker
             if (info.includes("only invokers can use it")) {
                 if (isInvoker) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Necromancer
             if (info.includes("only necromancers can use it")) {
                 if (isNecromancer) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Transmuter
             if (info.includes("only transmuters can use it")) {
                 if (isTransmuter) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
-            // Assassin
             if (info.includes("only assassins can use it")) {
                 if (isAssassin) allowedBySpecialTag = true; else restrictedBySpecialTag = true;
             }
 
             if (restrictedBySpecialTag && !allowedBySpecialTag) return null;
 
-            // General Class Loop
             if (!allowedBySpecialTag) {
                 let restrictedToOtherClass = false;
                 ALL_CLASSES.forEach(cls => {
@@ -530,7 +519,6 @@
                 if (restrictedToOtherClass) return null;
             }
 
-            // Race Restriction Logic
             let restrictedToOtherRace = false;
             for (let rcKey in RACE_DATA) {
                 const rcSingular = rcKey.toLowerCase().replace('_', '-');
@@ -559,7 +547,6 @@
             }
             if (restrictedToOtherRace) return null;
 
-            // Alignment / Soul Logic
             let antiGood = info.includes("anti-good") || info.includes("pure soul") || info.includes("cannot be used by good");
             let antiEvil = info.includes("anti-evil") || info.includes("darkened soul") || info.includes("cannot be used by evil");
             let antiNeutral = info.includes("anti-neutral") || info.includes("unbiased soul") || info.includes("cannot be used by neutral");
@@ -580,28 +567,41 @@
             lines.forEach(line => {
                 const trimmed = line.trim();
                 
-                const resMatch = trimmed.match(/(.*?) resistance:?\s*(-?\d+)/);
-                const namedResMatch = trimmed.match(/resistance to (.*?):?\s*(-?\d+)/);
-                const generalMatch = trimmed.match(/(?:modifies|modifying|affects) (.*?) by (-?\d+)/);
+                const generalMatch = trimmed.match(/(?:modifies|modifying|affects) (.*?) by (-?\d+)/i);
+                const resMatch = trimmed.match(/(.*?) resistance:?\s*(-?\d+)/i);
+                const namedResMatch = trimmed.match(/resistance to (.*?):?\s*(-?\d+)/i);
 
-                if (resMatch || namedResMatch) {
-                    const type = (resMatch ? resMatch[1] : namedResMatch[1]).trim();
-                    const val = parseInt(resMatch ? resMatch[2] : namedResMatch[2]);
-                    stats[`RES_${type.toUpperCase()}`] = (stats[`RES_${type.toUpperCase()}`] || 0) + val;
-                } else if (generalMatch) {
-                    let key = generalMatch[1].trim();
+                if (generalMatch) {
+                    let key = generalMatch[1].trim().toLowerCase();
                     const val = parseInt(generalMatch[2]);
                     
-                    for (let k in STAT_MAP) { if (key.includes(k)) { key = STAT_MAP[k]; break; } }
-                    
-                    const isPhysical = key.includes("bashing") || key.includes("piercing") || key.includes("slashing") || key.includes("physical");
-                    const isNamedResist = key.includes("resistance to");
+                    const isPhysical = key.includes("physical resistance") || key.includes("physical");
+                    const isNamedResist = key.includes("resistance to") || key.includes("resistance");
 
-                    if (isNamedResist || isPhysical) {
+                    if (isPhysical) {
+                        stats[`RES_PHYSICAL`] = (stats[`RES_PHYSICAL`] || 0) + val;
+                    } else if (isNamedResist) {
                         const cleanKey = key.replace("resistance to", "").replace("resistance", "").trim();
                         stats[`RES_${cleanKey.toUpperCase()}`] = (stats[`RES_${cleanKey.toUpperCase()}`] || 0) + val;
                     } else {
-                        stats[key] = (stats[key] || 0) + val;
+                        let mapped = false;
+                        for (let k in STAT_MAP) { 
+                            if (key === k || key.includes(k)) { 
+                                stats[STAT_MAP[k]] = (stats[STAT_MAP[k]] || 0) + val; 
+                                mapped = true;
+                                break; 
+                            } 
+                        }
+                        if (!mapped) stats[key.toUpperCase()] = (stats[key.toUpperCase()] || 0) + val;
+                    }
+                } else if (resMatch || namedResMatch) {
+                    const type = (resMatch ? resMatch[1] : namedResMatch[1]).trim();
+                    const val = parseInt(resMatch ? resMatch[2] : namedResMatch[2]);
+                    // Standardize physical resistance key
+                    if (type.toLowerCase() === "physical") {
+                        stats[`RES_PHYSICAL`] = (stats[`RES_PHYSICAL`] || 0) + val;
+                    } else {
+                        stats[`RES_${type.toUpperCase()}`] = (stats[`RES_${type.toUpperCase()}`] || 0) + val;
                     }
                 }
             });
@@ -645,22 +645,29 @@
             });
 
             const allSvs = setTotal["ALL_SVS"] || 0;
-            const priorities = ["DAMROLL", "HIT", "FORT", "WILL", "REF"];
+            const corePriorities = ["DAMROLL", "HIT", "FORT", "WILL", "REF"];
             
             setHtml += `</div><div class="summary-box">`;
             
+            // Core Stats Box
             setHtml += `<div><div class="summary-section-title">Stats summary</div><div class="stat-grid">`;
-            priorities.forEach(p => {
+            corePriorities.forEach(p => {
                 let val = setTotal[p] || 0;
                 if (["FORT", "WILL", "REF"].includes(p)) val += allSvs;
-                setHtml += `<div class="stat-val priority">${p.padEnd(8)}: <span class="accent-val">${val}</span></div>`;
+                
+                let label = p;
+                if (p === "HIT") label = "HP";
+
+                setHtml += `<div class="stat-val priority">${label.padEnd(8)}: <span class="accent-val">${val}</span></div>`;
             });
             Object.keys(setTotal).sort().forEach(s => {
-                if (priorities.includes(s) || s === "ALL_SVS" || s.startsWith("RES_")) return;
+                // Filter out core priorities, all svs base, and ALL resistances
+                if (corePriorities.includes(s) || s === "ALL_SVS" || s.startsWith("RES_")) return;
                 setHtml += `<div class="stat-val">${s.toUpperCase().padEnd(8)}: ${setTotal[s]}</div>`;
             });
             setHtml += `</div></div>`;
 
+            // Resistances Box
             setHtml += `<div><div class="summary-section-title">Resistances</div><div class="stat-grid">`;
             const resistances = Object.keys(setTotal).filter(s => s.startsWith("RES_")).sort();
             if (resistances.length > 0) {
