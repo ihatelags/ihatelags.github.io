@@ -465,16 +465,34 @@
 
             // Race Restriction Logic
             let restrictedToOtherRace = false;
-            ALL_RACES.forEach(rc => {
-                // Normalize "HALF_ELF" to "half-elf" for matching
-                const rcKey = rc.toLowerCase().replace('_', '-');
-                const isTargetRace = userRace.toLowerCase().replace('_', '-') === rcKey;
-                const restrictedStr = [`only for ${rcKey}`, `only be used by ${rcKey}`, `${rcKey} only`, `designed to be used by ${rcKey}`];
+            for (let rcKey in RACE_DATA) {
+                const rcSingular = rcKey.toLowerCase().replace('_', '-');
+                const rcPlural = RACE_DATA[rcKey].plural;
+                const isTargetRace = userRace === rcKey;
                 
-                if (restrictedStr.some(s => info.includes(s)) && !isTargetRace) {
-                    restrictedToOtherRace = true;
+                // Specific patterns to check
+                const restrictedPatterns = [
+                    `only for ${rcSingular}`, 
+                    `only be used by ${rcSingular}`, 
+                    `${rcSingular} only`, 
+                    `designed to be used by ${rcSingular}`,
+                    `only for ${rcPlural}`,
+                    `only be used by ${rcPlural}`,
+                    `${rcPlural} only`,
+                    `designed to be used by ${rcPlural}`
+                ];
+
+                // Special case for Kender
+                if (rcKey === "KENDER") {
+                    restrictedPatterns.push(`designed to be used by kenders and half-kenders`);
                 }
-            });
+                
+                // If the info contains any restriction pattern for a race that ISN'T ours
+                if (restrictedPatterns.some(p => info.includes(p)) && !isTargetRace) {
+                    restrictedToOtherRace = true;
+                    break;
+                }
+            }
             if (restrictedToOtherRace) return null;
 
             // Alignment / Soul Logic
