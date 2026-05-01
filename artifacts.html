@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artifacts armory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --panel: #1a202c;
+            --text: #e2e8f0;
+            --accent: #f6ad55;
+            --border: #2d3748;
+            --header-bg: #171923;
+            --input-bg: #0f172a;
+            --muted: #718096;
+        }
+
+        body { 
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .terminal-container {
+            border: 1px solid var(--border);
+        }
+
+        .slot-name { 
+            color: var(--muted); 
+            width: 180px; 
+            flex-shrink: 0; 
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            margin-right: 1rem;
+        }
+
+        .gear-slot-row {
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .gear-slot-row:hover {
+            background: rgba(246, 173, 85, 0.05);
+        }
+
+        .slot-conflict {
+            background: rgba(220, 38, 38, 0.15) !important;
+            border-left: 2px solid #ef4444;
+        }
+
+        .stat-badge {
+            font-size: 0.6rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); }
+
+        .inventory-item {
+            border: 1px solid var(--border);
+        }
+        
+        .inventory-item:hover {
+            border: 1px solid var(--accent);
+            background: rgba(246, 173, 85, 0.1);
+        }
+        
+        .active-row {
+            background: rgba(246, 173, 85, 0.03);
+        }
+
+        .equipped-indicator {
+            background: #10b981;
+            color: #000;
+            font-size: 0.5rem;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 flex justify-center">
+    <div class="terminal-container w-full max-w-6xl bg-[#1a202c] rounded overflow-hidden shadow-2xl">
+        <header class="bg-[#171923] px-6 py-4 border-b border-[#2d3748] flex justify-between items-center">
+            <div>
+                <h1 class="text-[#f6ad55] font-bold uppercase tracking-widest text-sm">Gear Planner</h1>
+            </div>
+            <div class="flex gap-3">
+                <label class="cursor-pointer bg-[#f6ad55] hover:bg-[#ed8936] text-[#1a202c] px-3 py-1.5 rounded text-xs font-black uppercase transition-colors">
+                    Upload .txt
+                    <input type="file" id="fileInput" accept=".txt" class="hidden">
+                </label>
+                <button id="resetBtn" class="bg-red-900/30 hover:bg-red-900/50 text-red-400 border border-red-900/50 px-3 py-1.5 rounded text-xs font-black uppercase transition-colors">
+                    Clear Loadout
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+            <div class="lg:col-span-7 p-6 border-r border-[#2d3748]">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Equipment Slots</h2>
+                    <div id="handWarning" class="hidden text-[0.6rem] bg-red-600 text-white px-2 py-0.5 rounded animate-pulse">HAND CONFLICT: TOO MANY ITEMS</div>
+                </div>
+                <div id="gearGrid" class="space-y-1"></div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col h-[700px]">
+                <div class="p-6 border-b border-[#2d3748] bg-[#0f172a]/30">
+                    <h2 class="text-[0.65rem] text-[#718096] uppercase font-black mb-4 tracking-wider">Total Stats Summary</h2>
+                    <div id="statsDisplay" class="grid grid-cols-2 gap-2 max-h-[150px] overflow-y-auto pr-2"></div>
+                </div>
+
+                <div class="p-6 flex-1 flex flex-col bg-[#1a202c] overflow-hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Inventory</h2>
+                        <span id="itemCount" class="text-[0.6rem] text-[#f6ad55]">0 ITEMS</span>
+                    </div>
+                    <p class="text-[0.6rem] text-[#718096] mb-2 uppercase italic">Click an item to equip it. Every item is unique.</p>
+                    <input type="text" id="itemSearch" placeholder="Filter items..." class="w-full bg-[#0f172a] border border-[#2d3748] text-[#f6ad55] text-xs p-2 rounded outline-none mb-4 focus:border-[#f6ad55]">
+                    <div id="inventoryList" class="overflow-y-auto flex-1 space-y-1 pr-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1a202c] w-full max-w-lg rounded border border-[#2d3748] max-h-[85vh] flex flex-col">
+            <div class="bg-[#171923] p-4 border-b border-[#2d3748] flex justify-between items-center">
+                <h3 id="modalTitle" class="text-[#f6ad55] text-xs font-black uppercase">Select Item</h3>
+                <button onclick="closeModal()" class="text-[#718096] text-xl hover:text-white">&times;</button>
+            </div>
+            <div id="modalList" class="overflow-y-auto p-4 space-y-2 bg-[#0a0e14]"></div>
+            <div class="p-4 bg-[#171923] border-t border-[#2d3748]">
+                <button id="modalUnequipBtn" class="w-full bg-red-900/20 text-red-400 border border-red-900/40 p-2 rounded text-[0.65rem] font-black uppercase hover:bg-red-900/40 transition-colors">Unequip</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SLOTS = [
+            "<worn on finger>", "<worn on finger>", "<worn around neck>", "<worn around neck>",
+            "<worn on torso>", "<worn on head>", "<worn on legs>", "<worn on feet>",
+            "<worn on hands>", "<worn on arms>", "<worn on body>", "<worn on waist>",
+            "<worn around wrist>", "<worn around wrist>", "<wielded>", "<worn as shield>",
+            "<dual wielded>", "<held>", "<used as light>"
+        ];
+
+        const HAND_SLOTS = [14, 15, 16, 17, 18]; 
+
+        let inventory = [];
+        let equipped = {}; // Map of slotIndex -> item object reference
+        let activeSlotIndex = null;
+
+        const gearGrid = document.getElementById('gearGrid');
+        const inventoryList = document.getElementById('inventoryList');
+        const statsDisplay = document.getElementById('statsDisplay');
+        const fileInput = document.getElementById('fileInput');
+        const itemSearch = document.getElementById('itemSearch');
+        const resetBtn = document.getElementById('resetBtn');
+        const itemCount = document.getElementById('itemCount');
+        const handWarning = document.getElementById('handWarning');
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function initSlots() {
+            gearGrid.innerHTML = '';
+            SLOTS.forEach((slot, index) => {
+                const div = document.createElement('div');
+                div.className = 'gear-slot-row flex items-start p-2 rounded';
+                div.id = `slot-${index}`;
+                div.onclick = () => openSlotSelection(index);
+                div.innerHTML = `
+                    <div class="flex w-full">
+                        <span class="slot-name">${escapeHtml(slot)}</span>
+                        <div class="flex-grow">
+                            <div class="item-name text-xs text-[#4a5568] italic truncate">-- empty --</div>
+                            <div class="item-stats-container flex flex-wrap gap-1 mt-1"></div>
+                        </div>
+                    </div>
+                `;
+                gearGrid.appendChild(div);
+            });
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => parseItems(event.target.result);
+            reader.readAsText(file);
+        });
+
+        function parseItems(text) {
+            inventory = [];
+            // Split by the start of a new item block
+            const blocks = text.split(/\r?\n\r?\n\.\.\s*this/i);
+            
+            blocks.forEach((block, idx) => {
+                const lines = block.split(/\r?\n/);
+                let textToProcess = idx === 0 ? block : ".. this" + block;
+                const nameMatch = textToProcess.match(/\.\.\s*this\s*object,\s*(.*?),\s*is/i);
+                if (!nameMatch) return;
+                
+                let name = nameMatch[1].trim();
+                let stats = {};
+                let slotType = "";
+                const cleanBlock = textToProcess.toLowerCase();
+
+                // Assign slot categories based on text description
+                if (cleanBlock.includes("is a weapon") || cleanBlock.includes("you can wield it")) {
+                    slotType = "wielded";
+                } else if (cleanBlock.includes("worn as a shield")) {
+                    slotType = "shield";
+                } else if (cleanBlock.includes("you can hold it")) {
+                    slotType = "held";
+                } else if (cleanBlock.includes("used as a light")) {
+                    slotType = "light";
+                } else {
+                    const wearMatch = cleanBlock.match(/wear it (?:on|around|as)\s+(?:your\s+)?(.*?)\./i);
+                    if (wearMatch) {
+                        slotType = wearMatch[1].trim();
+                    }
+                }
+
+                lines.forEach(line => {
+                    const trimmed = line.trim();
+                    const resMatch = trimmed.match(/resistance\s+to\s+(.*?)\s+by\s+(-?\d+)/i);
+                    const modMatch = trimmed.match(/modifies\s+(.*?)\s+by\s+(-?\d+)/i);
+                    const pctMatch = trimmed.match(/(?:modifies|boosts)\s+(.*?)\s+by\s+(-?\d+)%/i);
+                    const acMatch = trimmed.match(/Armor\s+class\s+bonus:\s*(-?\d+)/i);
+                    const colonMatch = trimmed.match(/^([a-z\s]+):\s*(-?\d+)/i);
+
+                    if (resMatch) statsMapping(stats, "RES_" + resMatch[1].toUpperCase(), parseInt(resMatch[2], 10));
+                    else if (modMatch) statsMapping(stats, modMatch[1].toUpperCase(), parseInt(modMatch[2], 10));
+                    else if (pctMatch) statsMapping(stats, pctMatch[1].toUpperCase() + "%", parseInt(pctMatch[2], 10));
+                    else if (acMatch) statsMapping(stats, "AC_BONUS", parseInt(acMatch[1], 10));
+                    else if (colonMatch) statsMapping(stats, colonMatch[1].toUpperCase(), parseInt(colonMatch[2], 10));
+                });
+
+                inventory.push({ 
+                    id: crypto.randomUUID(), 
+                    name, 
+                    stats, 
+                    slotType, 
+                    raw: block.toUpperCase() 
+                });
+            });
+
+            itemCount.innerText = `${inventory.length} ITEMS`;
+            renderInventory();
+        }
+
+        function statsMapping(statsObj, key, val) {
+            key = key.trim();
+            if (key.includes("HIT ROLL")) key = "HIT";
+            if (key.includes("DAM ROLL")) key = "DAMROLL";
+            statsObj[key] = (statsObj[key] || 0) + val;
+        }
+
+        function renderInventory() {
+            const query = itemSearch.value.toUpperCase().trim();
+            inventoryList.innerHTML = '';
+            
+            const filtered = inventory.filter(item => {
+                const nameMatch = item.name.toUpperCase().includes(query);
+                const rawMatch = item.raw && item.raw.includes(query);
+                return nameMatch || rawMatch;
+            });
+
+            filtered.forEach((item) => {
+                const isEquipped = Object.values(equipped).some(ei => ei.id === item.id);
+                const div = document.createElement('div');
+                div.className = 'inventory-item p-2 bg-[#0f172a] rounded mb-1 cursor-pointer transition-all hover:bg-[#1e293b]';
+                
+                div.onclick = () => autoEquip(item);
+                
+                let statsHtml = Object.entries(item.stats).map(([k, v]) => 
+                    `<span class="stat-badge">${v > 0 ? '+' : ''}${v}${k.includes('%')?'%':''} ${k.replace('%','')}</span>`
+                ).join('');
+
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-1 pointer-events-none">
+                        <div class="text-xs font-bold ${isEquipped ? 'text-green-400' : 'text-[#e2e8f0]'}">${escapeHtml(item.name)}</div>
+                        <div class="flex gap-2">
+                            ${isEquipped ? '<span class="equipped-indicator">EQUIPPED</span>' : ''}
+                            <div class="text-[0.6rem] text-[#f6ad55] font-black px-1 border border-[#f6ad55]/30 rounded">${escapeHtml(item.slotType || '??')}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-1 pointer-events-none">${statsHtml}</div>
+                `;
+                inventoryList.appendChild(div);
+            });
+        }
+
+        function autoEquip(item) {
+            if (!item.slotType) return;
+            
+            // Rule: Unique items. If already equipped, remove from old slot first.
+            let previousSlotIndex = -1;
+            for (let slotIdx in equipped) {
+                if (equipped[slotIdx].id === item.id) {
+                    previousSlotIndex = parseInt(slotIdx);
+                    break;
+                }
+            }
+
+            const type = item.slotType.toLowerCase();
+            const validIndices = [];
+            SLOTS.forEach((s, i) => {
+                if (s.toLowerCase().includes(type)) validIndices.push(i);
+            });
+
+            // Special case for weapons
+            if (type.includes("wielded") && !validIndices.includes(14)) validIndices.push(14);
+
+            if (validIndices.length === 0) return;
+
+            // Find an empty slot among valid ones
+            const emptySlot = validIndices.find(idx => !equipped[idx]);
+            
+            if (emptySlot !== undefined) {
+                if (previousSlotIndex !== -1) {
+                    delete equipped[previousSlotIndex];
+                    updateSlotUI(previousSlotIndex);
+                }
+                equipToSlot(emptySlot, item);
+            } else {
+                // If all matching slots are full, open replacement modal
+                openSlotSelectionForReplacement(validIndices, item);
+            }
+        }
+
+        function equipToSlot(index, item) {
+            // Check if THIS specific item is already anywhere else and remove it (Uniqueness)
+            for (let sIdx in equipped) {
+                if (equipped[sIdx].id === item.id) {
+                    const oldIdx = parseInt(sIdx);
+                    delete equipped[oldIdx];
+                    updateSlotUI(oldIdx);
+                }
+            }
+
+            equipped[index] = item;
+            updateSlotUI(index);
+            calculateStats();
+            checkHandConflicts();
+            renderInventory(); // Refresh list for equipped indicator
+            closeModal();
+        }
+
+        function openSlotSelectionForReplacement(validIndices, itemToEquip) {
+            const modal = document.getElementById('modal');
+            const modalList = document.getElementById('modalList');
+            document.getElementById('modalTitle').innerText = `REPLACE SLOT (${itemToEquip.slotType})`;
+            modal.classList.replace('hidden', 'flex');
+            
+            modalList.innerHTML = '<p class="text-[0.65rem] text-[#718096] mb-2 px-1 uppercase font-bold">All matching slots full. Choose item to replace:</p>';
+            
+            validIndices.forEach(idx => {
+                const currentItem = equipped[idx];
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-[#1a202c] border border-[#2d3748] rounded cursor-pointer hover:bg-[#2d3748] hover:border-[#f6ad55] mb-2 transition-all';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                         <div>
+                            <div class="text-[0.6rem] text-[#718096] uppercase font-black">Slot ${idx + 1}</div>
+                            <div class="text-xs font-bold text-[#f6ad55]">${escapeHtml(currentItem.name)}</div>
+                         </div>
+                         <div class="text-[0.5rem] bg-[#f6ad55] text-black px-1 font-black rounded">REPLACE</div>
+                    </div>
+                `;
+                div.onclick = () => equipToSlot(idx, itemToEquip);
+                modalList.appendChild(div);
+            });
+
+            document.getElementById('modalUnequipBtn').onclick = () => { closeModal(); };
+        }
+
+        function openSlotSelection(index) {
+            activeSlotIndex = index;
+            const modal = document.getElementById('modal');
+            const modalList = document.getElementById('modalList');
+            const slotLabel = SLOTS[index].toLowerCase();
+            
+            document.getElementById('modalTitle').innerText = `Slot: ${SLOTS[index].trim()}`;
+            modal.classList.replace('hidden', 'flex');
+            
+            const compatibleItems = inventory.filter(item => {
+                if (!item.slotType) return false;
+                return slotLabel.includes(item.slotType.toLowerCase());
+            });
+
+            modalList.innerHTML = compatibleItems.length ? '' : '<div class="text-center text-xs py-4 text-[#718096]">No compatible items found.</div>';
+            
+            compatibleItems.forEach(item => {
+                const isWornElsewhere = Object.entries(equipped).some(([idx, ei]) => ei.id === item.id && parseInt(idx) !== index);
+                const div = document.createElement('div');
+                div.className = 'p-2 bg-[#1a202c] border border-[#2d3748] rounded cursor-pointer hover:bg-[#2d3748] mb-1';
+                let statsStr = Object.entries(item.stats).map(([k, v]) => `${v > 0 ? '+' : ''}${v}${k.includes('%')?'%':''} ${k.replace('%','')}`).join(', ');
+                div.innerHTML = `
+                    <div class="flex justify-between">
+                        <div class="text-xs font-bold text-[#f6ad55]">${escapeHtml(item.name)}</div>
+                        ${isWornElsewhere ? '<span class="text-[0.5rem] text-red-400">ALREADY WORN</span>' : ''}
+                    </div>
+                    <div class="text-[0.6rem] text-[#718096] truncate">${escapeHtml(statsStr)}</div>
+                `;
+                div.onclick = () => equipToSlot(index, item);
+                modalList.appendChild(div);
+            });
+
+            document.getElementById('modalUnequipBtn').onclick = () => { 
+                delete equipped[index]; 
+                updateSlotUI(index); 
+                calculateStats(); 
+                checkHandConflicts(); 
+                renderInventory();
+                closeModal(); 
+            };
+        }
+
+        function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
+
+        function updateSlotUI(index) {
+            const row = document.getElementById(`slot-${index}`);
+            if (!row) return;
+            const item = equipped[index];
+            const nameEl = row.querySelector('.item-name');
+            const statsContainer = row.querySelector('.item-stats-container');
+            if (item) {
+                nameEl.innerText = item.name;
+                nameEl.classList.remove('text-[#4a5568]', 'italic');
+                nameEl.classList.add('text-[#f6ad55]', 'font-bold');
+                statsContainer.innerHTML = Object.entries(item.stats).map(([k, v]) => `<span class="stat-badge">${v > 0 ? '+' : ''}${v}${k.includes('%')?'%':''} ${k.replace('%','')}</span>`).join('');
+                row.classList.add('active-row');
+            } else {
+                nameEl.innerText = "-- empty --";
+                nameEl.classList.remove('text-[#f6ad55]', 'font-bold');
+                nameEl.classList.add('text-[#4a5568]', 'italic');
+                statsContainer.innerHTML = '';
+                row.classList.remove('active-row');
+            }
+        }
+
+        function checkHandConflicts() {
+            let usedHands = 0;
+            HAND_SLOTS.forEach(idx => { if (equipped[idx]) usedHands++; });
+            const hasConflict = usedHands > 2;
+            handWarning.classList.toggle('hidden', !hasConflict);
+            HAND_SLOTS.forEach(idx => {
+                const row = document.getElementById(`slot-${idx}`);
+                if (!row) return;
+                if (hasConflict && equipped[idx]) row.classList.add('slot-conflict');
+                else row.classList.remove('slot-conflict');
+            });
+        }
+
+        function calculateStats() {
+            const totals = {};
+            Object.values(equipped).forEach(item => {
+                Object.entries(item.stats).forEach(([s, v]) => totals[s] = (totals[s] || 0) + v);
+            });
+            const sortedEntries = Object.entries(totals).sort((a, b) => a[0].localeCompare(b[0]));
+            statsDisplay.innerHTML = sortedEntries.map(([s, v]) => `
+                <div class="flex justify-between bg-[#0a0e14] p-1.5 px-3 rounded border border-[#2d3748]">
+                    <span class="text-[0.65rem] text-[#718096] uppercase">${escapeHtml(s)}</span>
+                    <span class="text-xs text-[#f6ad55] font-bold">${v > 0 ? '+' : ''}${v}${s.includes('%')?'%':''}</span>
+                </div>
+            `).join('') || '<div class="text-[0.7rem] text-[#4a5568] italic col-span-2 text-center py-4">No gear equipped.</div>';
+        }
+
+        itemSearch.addEventListener('input', renderInventory);
+        resetBtn.onclick = () => { 
+            equipped = {}; 
+            SLOTS.forEach((_, i) => updateSlotUI(i)); 
+            calculateStats(); 
+            checkHandConflicts(); 
+            renderInventory();
+        };
+        initSlots();
+        calculateStats();
+    </script>
+</body>
+</html>
