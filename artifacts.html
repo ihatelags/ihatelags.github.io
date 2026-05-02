@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artifacts Armory</title>
+    <title>RPG Gear Optimizer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -109,7 +109,7 @@
 
     <div class="terminal-container w-full max-w-7xl bg-[#1a202c] rounded overflow-hidden shadow-2xl flex flex-col">
         <header class="bg-[#171923] px-6 py-3 border-b border-[#2d3748] flex justify-between items-center">
-            <h1 class="text-[#f6ad55] font-bold uppercase tracking-widest text-sm">Artifacts Armory</h1>
+            <h1 class="text-[#f6ad55] font-bold uppercase tracking-widest text-sm">Gear Optimizer</h1>
             <div class="flex gap-3">
                 <label class="cursor-pointer bg-[#f6ad55] hover:bg-[#ed8936] text-[#1a202c] px-3 py-1.5 rounded text-xs font-black uppercase transition-colors">
                     Upload New TXT
@@ -121,29 +121,25 @@
             </div>
         </header>
 
-        <!-- PLAIN TEXT SUMMARY FRAME -->
         <div class="p-4 bg-[#0a0e14] border-b border-[#2d3748]">
             <div class="flex justify-between items-center mb-2">
-                <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Total Stats (A-Z Columns)</h2>
+                <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Total Stats</h2>
                 <div id="handWarning" class="hidden text-[0.6rem] bg-red-600 text-white px-2 py-0.5 rounded animate-pulse uppercase font-black">Hand Conflict!</div>
             </div>
             <div id="statsDisplay" class="grid grid-cols-3 gap-x-8 gap-y-0 text-[#e2e8f0]">
-                <div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Loading gear or idents.txt...</div>
+                <div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Upload a file to begin...</div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 flex-1 overflow-hidden">
-            <!-- MAIN TABLE -->
             <div class="lg:col-span-7 p-4 border-r border-[#2d3748] flex flex-col overflow-hidden">
                 <div id="gearGrid" class="flex-1 overflow-y-auto mb-4 pr-2 space-y-0.5"></div>
-
                 <div class="mt-auto border-t border-[#2d3748] pt-4">
                     <h2 class="text-[0.65rem] text-[#718096] uppercase font-black mb-3 tracking-wider">Equipped Keywords</h2>
                     <div id="keywordList" class="flex flex-wrap gap-2 overflow-y-auto max-h-[100px] pr-2"></div>
                 </div>
             </div>
 
-            <!-- INVENTORY -->
             <div class="lg:col-span-5 flex flex-col bg-[#111827] overflow-hidden">
                 <div class="p-4 flex flex-col h-full">
                     <div class="flex justify-between items-center mb-3">
@@ -207,17 +203,8 @@
         const handWarning = document.getElementById('handWarning');
         const showAllBtn = document.getElementById('showAllBtn');
 
-        window.addEventListener('DOMContentLoaded', async () => {
+        window.addEventListener('DOMContentLoaded', () => {
             initSlots();
-            try {
-                const response = await fetch('idents.txt');
-                if (response.ok) {
-                    const text = await response.text();
-                    parseItems(text);
-                }
-            } catch (err) {
-                console.log("No idents.txt found at root, waiting for upload.");
-            }
         });
 
         function showToast(msg) {
@@ -272,7 +259,7 @@
         function parseItems(text) {
             inventory = [];
             const blocks = text.split(/\.\.\s*this\s*object/i);
-            const nameCount = {}; // Track duplicate names
+            const nameCount = {}; 
             
             blocks.forEach((block) => {
                 if (!block.trim()) return;
@@ -281,8 +268,6 @@
                 if (!nameMatch) return;
                 
                 let name = nameMatch[1].trim();
-                
-                // Handle duplicate names
                 if (nameCount[name]) {
                     nameCount[name]++;
                     name = `${name}_${nameCount[name]}`;
@@ -291,40 +276,28 @@
                 }
 
                 let stats = {};
-                let slotType = "";
+                let slotType = "??";
                 let keywords = "";
                 
-                const cleanBlock = textToProcess.toLowerCase();
+                // Detection using precise identification strings provided
+                if (textToProcess.includes("Its attacks take the form")) { slotType = "wielded"; }
+                else if (textToProcess.includes("You can use it as a shield.")) { slotType = "shield"; }
+                else if (textToProcess.includes("You can wear it on your hands.")) { slotType = "hands"; }
+                else if (textToProcess.includes("You can wear it on your head.")) { slotType = "head"; }
+                else if (textToProcess.includes("You can wear it around your neck.")) { slotType = "neck"; }
+                else if (textToProcess.includes("You can wear it about your waist.")) { slotType = "waist"; }
+                else if (textToProcess.includes("You can wear it on your legs.")) { slotType = "legs"; }
+                else if (textToProcess.includes("You can wear it on your arms.")) { slotType = "arms"; }
+                else if (textToProcess.includes("You can wear it around your wrist.")) { slotType = "wrist"; }
+                else if (textToProcess.includes("You can wear it on your finger.")) { slotType = "finger"; }
+                else if (textToProcess.includes("You can wear it on your torso.")) { slotType = "torso"; }
+                else if (textToProcess.includes("You can wear it around your body.")) { slotType = "body"; }
+                else if (textToProcess.includes("You can wear it on your feet.")) { slotType = "feet"; }
+                else if (textToProcess.includes("you can hold it")) { slotType = "held"; }
+                else if (textToProcess.includes("used as a light")) { slotType = "light"; }
 
                 const keywordMatch = textToProcess.match(/can be referred to as '(.*?)'/i);
-                if (keywordMatch) {
-                    keywords = `'${keywordMatch[1]}'`;
-                }
-
-                if (cleanBlock.includes("is a weapon") || cleanBlock.includes("can wield it") || cleanBlock.includes("wield it.")) {
-                    slotType = "wielded";
-                } else if (cleanBlock.includes("use it as a shield") || cleanBlock.includes("worn as a shield")) {
-                    slotType = "shield";
-                } else if (cleanBlock.includes("you can hold it")) {
-                    slotType = "held";
-                } else if (cleanBlock.includes("used as a light")) {
-                    slotType = "light";
-                } else {
-                    const wearMatch = cleanBlock.match(/wear it (?:on|around|as)\s+(?:your\s+)?(.*?)\./i);
-                    if (wearMatch) {
-                        slotType = wearMatch[1].trim();
-                    } else if (cleanBlock.includes("worn on finger")) slotType = "finger";
-                    else if (cleanBlock.includes("worn around neck")) slotType = "neck";
-                    else if (cleanBlock.includes("worn on torso")) slotType = "torso";
-                    else if (cleanBlock.includes("worn on head")) slotType = "head";
-                    else if (cleanBlock.includes("worn on legs")) slotType = "legs";
-                    else if (cleanBlock.includes("worn on feet")) slotType = "feet";
-                    else if (cleanBlock.includes("worn on hands")) slotType = "hands";
-                    else if (cleanBlock.includes("worn on arms")) slotType = "arms";
-                    else if (cleanBlock.includes("worn on body")) slotType = "body";
-                    else if (cleanBlock.includes("worn on waist")) slotType = "waist";
-                    else if (cleanBlock.includes("worn around wrist")) slotType = "wrist";
-                }
+                if (keywordMatch) keywords = `'${keywordMatch[1]}'`;
 
                 const lines = textToProcess.split(/\n/);
                 lines.forEach(line => {
@@ -347,7 +320,7 @@
 
                 inventory.push({ 
                     id: crypto.randomUUID(), 
-                    name, stats, slotType: slotType || "??", keywords,
+                    name, stats, slotType, keywords,
                     raw: textToProcess.toUpperCase() 
                 });
             });
@@ -396,11 +369,11 @@
                 ).join('');
 
                 div.innerHTML = `
-                    <div class="flex justify-between items-start mb-1 pointer-events-none">
+                    <div class="flex justify-between items-start mb-1">
                         <div class="text-[0.75rem] font-bold ${isEquipped ? 'text-green-400' : 'text-[#e2e8f0]'}">${escapeHtml(item.name)}</div>
                         <div class="text-[0.55rem] text-[#f6ad55] font-black px-1 border border-[#f6ad55]/30 rounded uppercase">${escapeHtml(item.slotType)}</div>
                     </div>
-                    <div class="flex flex-wrap gap-1 pointer-events-none">${statsHtml}</div>
+                    <div class="flex flex-wrap gap-1">${statsHtml}</div>
                 `;
                 inventoryList.appendChild(div);
             });
@@ -552,19 +525,11 @@
             }
 
             const rowCount = Math.ceil(sorted.length / 3);
-            const columns = [[], [], []];
-            
-            for (let i = 0; i < sorted.length; i++) {
-                const columnIndex = Math.floor(i / rowCount);
-                if (columnIndex < 3) {
-                    columns[columnIndex].push(sorted[i]);
-                }
-            }
-
             let html = '';
             for (let r = 0; r < rowCount; r++) {
                 for (let c = 0; c < 3; c++) {
-                    const entry = columns[c][r];
+                    const idx = r + (c * rowCount);
+                    const entry = sorted[idx];
                     if (entry) {
                         const [s, v] = entry;
                         html += `
