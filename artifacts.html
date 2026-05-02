@@ -135,7 +135,12 @@
             <div class="lg:col-span-7 p-4 border-r border-[#2d3748] flex flex-col overflow-hidden">
                 <div id="gearGrid" class="flex-1 overflow-y-auto mb-4 pr-2 space-y-0.5"></div>
                 <div class="mt-auto border-t border-[#2d3748] pt-4">
-                    <h2 class="text-[0.65rem] text-[#718096] uppercase font-black mb-3 tracking-wider">Equipped Keywords</h2>
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Equipped Keywords</h2>
+                        <button id="copyAllFetchBtn" class="text-[0.6rem] bg-[#f6ad55] hover:bg-[#ed8936] text-[#1a202c] px-2 py-1 rounded font-black uppercase transition-colors">
+                            Copy All Fetch
+                        </button>
+                    </div>
                     <div id="keywordList" class="flex flex-wrap gap-2 overflow-y-auto max-h-[100px] pr-2"></div>
                 </div>
             </div>
@@ -146,7 +151,7 @@
                         <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Inventory Archive</h2>
                         <span id="itemCount" class="text-[0.6rem] text-[#f6ad55]">0 ITEMS</span>
                     </div>
-                    <input type="text" id="itemSearch" placeholder="Search..." class="w-full bg-[#0f172a] border border-[#2d3748] text-[#f6ad55] text-xs p-2.5 rounded outline-none mb-3">
+                    <input type="text" id="itemSearch" placeholder="Search (example: 'find,damage roll')..." class="w-full bg-[#0f172a] border border-[#2d3748] text-[#f6ad55] text-xs p-2.5 rounded outline-none mb-3">
                     
                     <div id="inventoryContainer" class="flex-1 flex flex-col overflow-hidden">
                         <div id="inventoryList" class="overflow-y-auto flex-1 space-y-1 pr-2"></div>
@@ -202,6 +207,7 @@
         const itemCount = document.getElementById('itemCount');
         const handWarning = document.getElementById('handWarning');
         const showAllBtn = document.getElementById('showAllBtn');
+        const copyAllFetchBtn = document.getElementById('copyAllFetchBtn');
 
         window.addEventListener('DOMContentLoaded', () => {
             initSlots();
@@ -237,7 +243,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            showToast(`COPIED: ${text}`);
+            showToast(`COPIED TO CLIPBOARD`);
         }
 
         function escapeHtml(text) {
@@ -295,7 +301,6 @@
                 let slotType = "??";
                 let keywords = "";
                 
-                // Detection using precise identification strings provided
                 if (textToProcess.includes("Its attacks take the form")) { slotType = "wielded"; }
                 else if (textToProcess.includes("You can use it as a shield.")) { slotType = "shield"; }
                 else if (textToProcess.includes("You can wear it on your hands.")) { slotType = "hands"; }
@@ -313,6 +318,7 @@
                 else if (textToProcess.includes("used as a light")) { slotType = "light"; }
 
                 const keywordMatch = textToProcess.match(/can be referred to as '(.*?)'/i);
+                // Extract keywords and keep the quotes for the storage object
                 if (keywordMatch) keywords = `'${keywordMatch[1]}'`;
 
                 const lines = textToProcess.split(/\n/);
@@ -357,14 +363,22 @@
         }
 
         function renderInventory() {
-            const query = itemSearch.value.toUpperCase().trim();
+            const queryRaw = itemSearch.value.toUpperCase().trim();
+            const criteria = queryRaw.split(',').map(c => c.trim()).filter(c => c !== "");
+            
             inventoryList.innerHTML = '';
             
-            const filtered = inventory.filter(item => 
-                item.name.toUpperCase().includes(query) || 
-                item.raw.includes(query) || 
-                (item.keywords && item.keywords.toUpperCase().includes(query))
-            );
+            let filtered = inventory.filter(item => {
+                if (criteria.length === 0) return true;
+                return criteria.every(crit => 
+                    item.name.toUpperCase().includes(crit) || 
+                    item.raw.includes(crit) || 
+                    (item.keywords && item.keywords.toUpperCase().includes(crit)) ||
+                    item.slotType.toUpperCase().includes(crit)
+                );
+            });
+
+            filtered.sort((a, b) => a.slotType.localeCompare(b.slotType));
 
             const itemsToDisplay = isShowingAll ? filtered : filtered.slice(0, INITIAL_LIMIT);
             if (filtered.length > INITIAL_LIMIT && !isShowingAll) {
@@ -405,11 +419,20 @@
             [...new Set(equippedItems.map(i => i.keywords))].sort().forEach(kw => {
                 const span = document.createElement('span');
                 span.className = 'keyword-chip text-[0.65rem] bg-[#0a0e14] border border-[#2d3748] text-[#f6ad55] px-2 py-1 rounded cursor-pointer hover:border-[#f6ad55]';
-                span.innerText = kw;
+                span.innerText = kw; // Keywords are stored with quotes in parseItems
                 span.onclick = () => copyToClipboard(kw);
                 keywordList.appendChild(span);
             });
         }
+
+        copyAllFetchBtn.onclick = () => {
+            const equippedItems = Object.values(equipped).filter(i => i.keywords);
+            if (equippedItems.length === 0) return;
+            
+            // i.keywords already contains the single quotes (e.g. 'broad sword')
+            const commands = equippedItems.map(item => `get ${item.keywords} %1;`).join('\n');
+            copyToClipboard(commands);
+        };
 
         function autoEquip(item) {
             const type = item.slotType.toLowerCase();
