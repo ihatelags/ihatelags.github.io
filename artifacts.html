@@ -127,7 +127,7 @@
                 <div id="handWarning" class="hidden text-[0.6rem] bg-red-600 text-white px-2 py-0.5 rounded animate-pulse uppercase font-black">Hand Conflict!</div>
             </div>
             <div id="statsDisplay" class="grid grid-cols-3 gap-x-8 gap-y-0 text-[#e2e8f0]">
-                <div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Upload a file to begin...</div>
+                <div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Loading data...</div>
             </div>
         </div>
 
@@ -205,7 +205,23 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initSlots();
+            loadDefaultFile();
         });
+
+        async function loadDefaultFile() {
+            try {
+                const response = await fetch('idents.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    parseItems(text);
+                } else {
+                    statsDisplay.innerHTML = '<div class="text-[0.7rem] text-[#4a5568] italic col-span-3">No default idents.txt found. Upload a file to begin.</div>';
+                }
+            } catch (err) {
+                console.warn("Could not load idents.txt automatically.");
+                statsDisplay.innerHTML = '<div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Upload a file to begin...</div>';
+            }
+        }
 
         function showToast(msg) {
             const toast = document.getElementById('copyToast');
