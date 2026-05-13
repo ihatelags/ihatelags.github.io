@@ -1,59 +1,45 @@
-.. this object, empowered bronze bracelet of bovine brutality, is treasure,
-   and can be referred to as 'bronze bracelet empowered bovine brutality'.
-It is of 1st level, weighs 0 pounds, and is worth 15 gold and 35 silver.
-You can wear it around your wrist.
+.. this object, perfected steel amulet of focus, is treasure,
+   and can be referred to as 'steel amulet perfected focus'.
+It is of 1st level, weighs 0 pounds, and is worth 15 gold and 27 silver.
+You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   boosts your sweep attack damage by 16%
-   modifies damage against draconians by 19%
-   modifies artifact find by 16
-   modifies damage against minotaurs by 24%
-   modifies will spellforce by 2
-   modifies resistance to fire by 10
+   modifies armor class by -10
+   modifies mana regeneration by 3
+   boosts your tsunami damage by 32%
+   modifies damage against gnomes by 1%
+   modifies reflex spellforce by 1
+   modifies intelligence by 1
+   modifies moves by 16
 
-.. this object, gangrenous bone leggings of supremacy, is armor,
-   and can be referred to as 'bone leggings gangrenous supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 18 gold and 60 silver.
+.. this object, perfected leather leggings of the magus, is armor,
+   and can be referred to as 'leather leggings perfected the magus'.
+It is of 1st level, weighs 1 pound, and is worth 27 gold and 15 silver.
 You can wear it on your legs.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   boosts your geyser damage by 34%
-   modifies disease-based spell damage by 9%
-   modifies will save by 5
-   modifies mana by 31
-   modifies damage against gnomes by 6%
+   modifies mana regeneration by 2
+   boosts your incendiary cloud damage by 29%
+   modifies resistance to acid by 14
+   modifies resistance to sound by 15
+   modifies damage against humans by 14%
+   modifies moves by 15
 
-.. this object, diamond bronze amulet of dominion, is treasure,
-   and can be referred to as 'bronze amulet diamond dominion'.
-It is of 1st level, weighs 0 pounds, and is worth 23 gold and 60 silver.
-You can wear it around your neck.
+.. this object, marble iron ring of dampening, is treasure,
+   and can be referred to as 'iron ring marble dampening'.
+It is of 1st level, weighs 0 pounds, and is worth 12 gold and 35 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies damage in the Abyss by 8%
-   modifies earth-based spell damage by 15%
-   modifies damage against elves by 15%
-   modifies damage against minotaurs by 25%
-   modifies dexterity by 4
-   modifies intelligence by 4
-
-.. this object, diamond bone shield of wyrmlord's nemesis, is armor,
-   and can be referred to as 'bone shield diamond wyrmlord's nemesis'.
-It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
-You can use it as a shield.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies earth-based spell damage by 14%
-   modifies damage against draconians by 24%
-   modifies resistance to earth by 11
-   modifies damage against gnomes by 13%
-   modifies damage roll by 1
-   modifies fortitude save by 5
+   modifies sound-based spell damage by 5%
+   modifies artifact find by 16
+   modifies earth-based spell damage by 7%
+   modifies resistance to lightning by 5
+   modifies Abyss resistance by 3%
 
 .. this object, jet bronze amulet of supremacy, is treasure,
    and can be referred to as 'bronze amulet jet supremacy'.
@@ -68,7 +54,6 @@ When worn, it
    modifies negative-based spell damage by 13%
    modifies resistance to drowning by 3
    modifies wisdom by 1
-The crackling shield around you dissipates.
 
 .. this object, stanch iron ring of avulsed wounds, is treasure,
    and can be referred to as 'iron ring stanch avulsed wounds'.
@@ -82,6 +67,184 @@ When worn, it
    modifies fortitude save by 5
    modifies will save by 4
    boosts your hurricane damage by 10%
+
+.. this object, unshakable steel bracelet of supremacy, is treasure,
+   and can be referred to as 'steel bracelet unshakable supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 18 gold.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   boosts your improved magic missile damage by 29%
+   modifies will save by 5
+   modifies reflex spellforce by 5
+   modifies mana by 1
+   modifies resistance to poison by 9
+
+.. this object, perfected bronze amulet of the magus, is treasure,
+   and can be referred to as 'bronze amulet perfected the magus'.
+It is of 1st level, weighs 0 pounds, and is worth 34 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies mana regeneration by 2
+   modifies reflex save by 4
+   boosts your firechain damage by 25%
+   modifies sound-based spell damage by 9%
+   modifies acid-based spell damage by 11%
+   modifies damage against humans by 7%
+
+.. this object, caustic leather armor of supremacy, is armor,
+   and can be referred to as 'leather armor caustic supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies resistance to lightning by 15
+   modifies damage against humans by 21%
+   boosts your bow damage by 33%
+   modifies acid-based spell damage by 9%
+   modifies earth-based spell damage by 5%
+   modifies artifact find by 33
+
+.. this object, woolen robe of light, is armor,
+   and can be referred to as 'woolen robe light'.
+It is of 1st level, weighs 1 pound, and is worth 9 gold and 10 silver.
+You can wear it on your torso.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against undead by 23%
+   modifies damage against elves by 11%
+   modifies artifact find by 18
+
+.. this object, annihilating iron axe of supremacy, is an axe,
+   and can be referred to as 'iron axe annihilating supremacy'.
+It is of 1st level, weighs 6 pounds, and is worth 23 gold and 10 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 2d20 damage (averaging at 21).
+Its attacks take the form of negative power.
+When worn, it
+   modifies poison-based spell damage by 10%
+   modifies fortitude spellforce by 6
+   boosts your fireball damage by 34%
+   modifies constitution by 4
+   modifies air-based spell damage by 4%
+
+.. this object, ruinous bronze sleeves of supremacy, is armor,
+   and can be referred to as 'bronze sleeves ruinous supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 35 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies reflex spellforce by 4
+   boosts your ring of lightning damage by 34%
+   modifies damage against humans by 24%
+   modifies poison-based spell damage by 8%
+   modifies damage against draconians by 1%
+
+.. this object, ruinous leather armor of perfect sundering, is armor,
+   and can be referred to as 'leather armor ruinous perfect sundering'.
+It is of 1st level, weighs 1 pound, and is worth 17 gold and 85 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies fortitude spellforce by 11
+   modifies damage against minotaurs by 11%
+   boosts your flog damage by 8%
+   modifies negative-based spell damage by 7%
+
+.. this object, unyielding bronze ring of supremacy, is treasure,
+   and can be referred to as 'bronze ring unyielding supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 31 gold and 60 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies holy-based spell damage by 7%
+   modifies damage in the Abyss by 7%
+   modifies fortitude spellforce by 4
+   modifies reflex save by 4
+   boosts your lightning bolt damage by 26%
+   modifies will save by 6
+
+.. this object, immovable bone ring of psychic annihilation, is treasure,
+   and can be referred to as 'bone ring immovable psychic annihilation'.
+It is of 1st level, weighs 0 pounds, and is worth 31 gold and 60 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies Abyss resistance by 8%
+   modifies mental-based spell damage by 11%
+   modifies damage against humans by 25%
+   modifies fortitude save by 6
+   modifies earth-based spell damage by 9%
+   modifies resistance to sound by 13
+
+.. this object, submerging silver amulet of supremacy, is treasure,
+   and can be referred to as 'silver amulet submerging supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 20 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies resistance to earth by 15
+   modifies resistance to drowning by 15
+   modifies drowning-based spell damage by 10%
+   boosts your fireball damage by 34%
+   modifies damage against elves by 5%
+   modifies resistance to sound by 2
+
+.. this object, untouchable silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring untouchable supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies strength by 4
+   modifies reflex save by 6
+   boosts your fireball damage by 25%
+   modifies resistance to lightning by 13
+   modifies damage against dragons and their riders by 2%
+
+.. this object, hallowed steel bracelet of mind annihilation, is treasure,
+   and can be referred to as 'steel bracelet hallowed mind annihilation'.
+It is of 1st level, weighs 0 pounds, and is worth 18 gold and 95 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   modifies earth-based spell damage by 4%
+   modifies will spellforce by 12
+   modifies moves by 20
+   modifies damage against undead by 17%
+
+.. this object, empowered bronze bracelet of bovine brutality, is treasure,
+   and can be referred to as 'bronze bracelet empowered bovine brutality'.
+It is of 1st level, weighs 0 pounds, and is worth 15 gold and 35 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your sweep attack damage by 16%
+   modifies damage against draconians by 19%
+   modifies artifact find by 16
+   modifies damage against minotaurs by 24%
+   modifies will spellforce by 2
+   modifies resistance to fire by 10
 
 .. this object, ego-shattering bronze sword of supremacy, is a sword,
    and can be referred to as 'bronze sword ego-shattering supremacy'.
@@ -195,189 +358,6 @@ When worn, it
    modifies artifact find by 37
    boosts your fork lightning damage by 25%
 
-.. this object, cruel iron armor of supremacy, is armor,
-   and can be referred to as 'iron armor cruel supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 20 gold and 35 silver.
-You can wear it around your body.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage against kenders by 20%
-   modifies acid-based spell damage by 6%
-   boosts your meteor swarm damage by 25%
-   modifies wisdom by 4
-   modifies damage roll by 6
-
-.. this object, perfected steel amulet of focus, is treasure,
-   and can be referred to as 'steel amulet perfected focus'.
-It is of 1st level, weighs 0 pounds, and is worth 15 gold and 27 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   modifies mana regeneration by 3
-   boosts your tsunami damage by 32%
-   modifies damage against gnomes by 1%
-   modifies reflex spellforce by 1
-   modifies intelligence by 1
-   modifies moves by 16
-
-.. this object, earsplitting bone-handled whip of archon, is a whip,
-   and can be referred to as 'bone-handled whip earsplitting archon'.
-It is of 1st level, weighs 7 pounds, and is worth 22 gold and 60 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 6d5 damage (averaging at 18).
-Its attacks take the form of a blast.
-When worn, it
-   modifies artifact find by 37
-   modifies holy-based spell damage by 14%
-   modifies sound-based spell damage by 11%
-   modifies hit roll by 1
-   modifies drowning-based spell damage by 5%
-
-.. this object, ruinous bronze sleeves of supremacy, is armor,
-   and can be referred to as 'bronze sleeves ruinous supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 20 gold and 35 silver.
-You can wear it on your arms.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies reflex spellforce by 4
-   boosts your ring of lightning damage by 34%
-   modifies damage against humans by 24%
-   modifies poison-based spell damage by 8%
-   modifies damage against draconians by 1%
-
-.. this object, pale blue bronze bracelet of untiring stride, is treasure,
-   and can be referred to as 'bronze bracelet pale blue untiring stride'.
-It is of 1st level, weighs 0 pounds, and is worth 17 gold and 35 silver.
-You can wear it around your wrist.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies reflex save by 4
-   modifies health by 42
-   modifies move regeneration by 2
-   boosts your meteor swarm damage by 16%
-   modifies fortitude spellforce by 3
-
-.. this object, diamond silver belt of supremacy, is armor,
-   and can be referred to as 'silver belt diamond supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 10 silver.
-You can wear it about your waist.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   modifies damage against minotaurs by 14%
-   boosts your concussion strike damage by 32%
-   modifies damage against kenders by 14%
-   modifies earth-based spell damage by 20%
-   modifies fortitude save by 1
-
-.. this object, holy steel leggings of dawn, is armor,
-   and can be referred to as 'steel leggings holy dawn'.
-It is of 1st level, weighs 1 pound, and is worth 15 gold and 20 silver.
-You can wear it on your legs.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
-When worn, it
-   modifies armor class by -66
-   modifies damage against dwarves by 13%
-   modifies damage against undead by 20%
-   boosts your wrist chop damage by 15%
-   modifies artifact find by 16
-   modifies fortitude save by 2
-
-.. this object, unyielding bronze ring of supremacy, is treasure,
-   and can be referred to as 'bronze ring unyielding supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 31 gold and 60 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies holy-based spell damage by 7%
-   modifies damage in the Abyss by 7%
-   modifies fortitude spellforce by 4
-   modifies reflex save by 4
-   boosts your lightning bolt damage by 26%
-   modifies will save by 6
-
-.. this object, unshakable steel bracelet of supremacy, is treasure,
-   and can be referred to as 'steel bracelet unshakable supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 18 gold.
-You can wear it around your wrist.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   boosts your improved magic missile damage by 29%
-   modifies will save by 5
-   modifies reflex spellforce by 5
-   modifies mana by 1
-   modifies resistance to poison by 9
-
-.. this object, ruinous silver boots of supremacy, is armor,
-   and can be referred to as 'silver boots ruinous supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 24 gold and 60 silver.
-You can wear it on your feet.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   boosts your ring of lightning damage by 35%
-   modifies armor class by -65
-   modifies artifact find by 30
-   modifies reflex spellforce by 5
-   modifies damage against dragons and their riders by 22%
-   modifies damage against minotaurs by 4%
-
-.. this object, perfected bronze amulet of the magus, is treasure,
-   and can be referred to as 'bronze amulet perfected the magus'.
-It is of 1st level, weighs 0 pounds, and is worth 34 gold and 35 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies mana regeneration by 2
-   modifies reflex save by 4
-   boosts your firechain damage by 25%
-   modifies sound-based spell damage by 9%
-   modifies acid-based spell damage by 11%
-   modifies damage against humans by 7%
-
-.. this object, caustic leather armor of supremacy, is armor,
-   and can be referred to as 'leather armor caustic supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
-You can wear it around your body.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies resistance to lightning by 15
-   modifies damage against humans by 21%
-   boosts your bow damage by 33%
-   modifies acid-based spell damage by 9%
-   modifies earth-based spell damage by 5%
-   modifies artifact find by 33
-
-.. this object, woolen robe of light, is armor,
-   and can be referred to as 'woolen robe light'.
-It is of 1st level, weighs 1 pound, and is worth 9 gold and 10 silver.
-You can wear it on your torso.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage against undead by 23%
-   modifies damage against elves by 11%
-   modifies artifact find by 18
-
 .. this object, sodden iron armor of supremacy, is armor,
    and can be referred to as 'iron armor sodden supremacy'.
 It is of 1st level, weighs 1 pound, and is worth 16 gold and 35 silver.
@@ -420,21 +400,6 @@ When worn, it
    modifies dexterity by 2
    modifies acid-based spell damage by 11%
 
-.. this object, necrotic bronze sword of focus, is a sword,
-   and can be referred to as 'bronze sword necrotic focus'.
-It is of 1st level, weighs 4 pounds, and is worth 38 gold and 35 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 6d5 damage (averaging at 18).
-Its attacks take the form of a slash.
-When worn, it
-   modifies damage against elves by 20%
-   modifies damage against draconians by 16%
-   modifies mana regeneration by 3
-   modifies will spellforce by 6
-   modifies disease-based spell damage by 14%
-   modifies fortitude spellforce by 3
-
 .. this object, marble bronze amulet of gore, is treasure,
    and can be referred to as 'bronze amulet marble gore'.
 It is of 1st level, weighs 0 pounds, and is worth 11 gold and 35 silver.
@@ -461,98 +426,62 @@ When worn, it
    modifies damage roll by 4
    modifies hit roll by 2
 
-.. this object, untouchable silver ring of supremacy, is treasure,
-   and can be referred to as 'silver ring untouchable supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 19 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies strength by 4
-   modifies reflex save by 6
-   boosts your fireball damage by 25%
-   modifies resistance to lightning by 13
-   modifies damage against dragons and their riders by 2%
-
-.. this object, submerging silver amulet of supremacy, is treasure,
-   and can be referred to as 'silver amulet submerging supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 20 gold and 10 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies resistance to earth by 15
-   modifies resistance to drowning by 15
-   modifies drowning-based spell damage by 10%
-   boosts your fireball damage by 34%
-   modifies damage against elves by 5%
-   modifies resistance to sound by 2
-
-.. this object, annihilating iron axe of supremacy, is an axe,
-   and can be referred to as 'iron axe annihilating supremacy'.
-It is of 1st level, weighs 6 pounds, and is worth 23 gold and 10 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 2d20 damage (averaging at 21).
-Its attacks take the form of negative power.
-When worn, it
-   modifies poison-based spell damage by 10%
-   modifies fortitude spellforce by 6
-   boosts your fireball damage by 34%
-   modifies constitution by 4
-   modifies air-based spell damage by 4%
-
-.. this object, reviving steel ring of focus, is treasure,
-   and can be referred to as 'steel ring reviving focus'.
-It is of 1st level, weighs 0 pounds, and is worth 36 gold and 55 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   modifies mana regeneration by 3
-   modifies health regeneration by 4
-   modifies strength by 1
-   modifies dexterity by 2
-
-.. this object, ruinous leather armor of perfect sundering, is armor,
-   and can be referred to as 'leather armor ruinous perfect sundering'.
-It is of 1st level, weighs 1 pound, and is worth 17 gold and 85 silver.
-You can wear it around your body.
+.. this object, netherforged bronze belt of regrowth, is armor,
+   and can be referred to as 'bronze belt netherforged regrowth'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
+You can wear it about your waist.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies fortitude spellforce by 11
-   modifies damage against minotaurs by 11%
-   boosts your flog damage by 8%
-   modifies negative-based spell damage by 7%
+   modifies damage in the Abyss by 8%
+   modifies mental-based spell damage by 7%
+   modifies will save by 5
+   modifies health regeneration by 2
+   modifies air-based spell damage by 4%
 
-.. this object, diamond bronze amulet of dominion, is treasure,
-   and can be referred to as 'bronze amulet diamond dominion'.
-It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
-You can wear it around your neck.
+.. this object, thrumming leather leggings of luck, is armor,
+   and can be referred to as 'leather leggings thrumming luck'.
+It is of 1st level, weighs 1 pound, and is worth 13 gold and 35 silver.
+You can wear it on your legs.
 It sheds a magical aura.
 It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies damage against undead by 18%
-   modifies air-based spell damage by 7%
-   modifies damage in the Abyss by 6%
-   modifies damage against draconians by 21%
-   modifies earth-based spell damage by 29%
-
-.. this object, marble iron ring of dampening, is treasure,
-   and can be referred to as 'iron ring marble dampening'.
-It is of 1st level, weighs 0 pounds, and is worth 12 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
+   boosts your strike damage by 21%
+   modifies damage against kenders by 18%
+   modifies artifact find by 38
    modifies sound-based spell damage by 5%
-   modifies artifact find by 16
-   modifies earth-based spell damage by 7%
-   modifies resistance to lightning by 5
-   modifies Abyss resistance by 3%
+   modifies poison-based spell damage by 1%
+
+.. this object, diamond steel gauntlets of supremacy, is armor,
+   and can be referred to as 'steel gauntlets diamond supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 20 silver.
+You can wear it on your hands.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
+When worn, it
+   modifies damage against elves by 22%
+   modifies artifact find by 11
+   modifies earth-based spell damage by 15%
+   boosts your ring of air damage by 27%
+   modifies damage roll by 6
+
+.. this object, necrotic bronze sword of focus, is a sword,
+   and can be referred to as 'bronze sword necrotic focus'.
+It is of 1st level, weighs 4 pounds, and is worth 38 gold and 35 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 6d5 damage (averaging at 18).
+Its attacks take the form of a slash.
+When worn, it
+   modifies damage against elves by 20%
+   modifies damage against draconians by 16%
+   modifies mana regeneration by 3
+   modifies will spellforce by 6
+   modifies disease-based spell damage by 14%
+   modifies fortitude spellforce by 3
 
 .. this object, cruel steel amulet of dominion, is treasure,
    and can be referred to as 'steel amulet cruel dominion'.
@@ -625,20 +554,6 @@ When worn, it
    modifies resistance to cold by 12
    modifies damage against minotaurs by 3%
 
-.. this object, diamond steel gauntlets of supremacy, is armor,
-   and can be referred to as 'steel gauntlets diamond supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 20 silver.
-You can wear it on your hands.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
-When worn, it
-   modifies damage against elves by 22%
-   modifies artifact find by 11
-   modifies earth-based spell damage by 15%
-   boosts your ring of air damage by 27%
-   modifies damage roll by 6
-
 .. this object, serene bone sleeves of luck, is armor,
    and can be referred to as 'bone sleeves serene luck'.
 It is of 1st level, weighs 1 pound, and is worth 13 gold and 35 silver.
@@ -668,15 +583,173 @@ When worn, it
    modifies reflex save by 3
    modifies mana by 32
 
-.. this object, lapis bronze bracelet of fortune, is treasure,
-   and can be referred to as 'bronze bracelet lapis fortune'.
-It is of 1st level, weighs 0 pounds, and is worth 2 gold and 61 silver.
-You can wear it around your wrist.
+.. this object, earsplitting bone-handled whip of archon, is a whip,
+   and can be referred to as 'bone-handled whip earsplitting archon'.
+It is of 1st level, weighs 7 pounds, and is worth 22 gold and 60 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 6d5 damage (averaging at 18).
+Its attacks take the form of a blast.
+When worn, it
+   modifies artifact find by 37
+   modifies holy-based spell damage by 14%
+   modifies sound-based spell damage by 11%
+   modifies hit roll by 1
+   modifies drowning-based spell damage by 5%
+
+.. this object, holy steel leggings of dawn, is armor,
+   and can be referred to as 'steel leggings holy dawn'.
+It is of 1st level, weighs 1 pound, and is worth 15 gold and 20 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
+When worn, it
+   modifies armor class by -66
+   modifies damage against dwarves by 13%
+   modifies damage against undead by 20%
+   boosts your wrist chop damage by 15%
+   modifies artifact find by 16
+   modifies fortitude save by 2
+
+.. this object, perfected bone ring of lich, is treasure,
+   and can be referred to as 'bone ring perfected lich'.
+It is of 1st level, weighs 0 pounds, and is worth 20 gold and 60 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies resistance to cold by 7
-   modifies artifact find by 20
+   modifies health regeneration by 1
+   modifies negative-based spell damage by 14%
+   modifies strength by 4
+   boosts your windwall damage by 26%
+   modifies wisdom by 3
+
+.. this object, tingling iron ring of supremacy, is treasure,
+   and can be referred to as 'iron ring tingling supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 17 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your airbolt damage by 25%
+   modifies mana by 51
+   modifies resistance to lightning by 13
+   modifies holy-based spell damage by 3%
+   modifies damage in the Abyss by 4%
+
+.. this object, divine iron ring of supremacy, is treasure,
+   and can be referred to as 'iron ring divine supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 22 gold and 10 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against undead by 23%
+   boosts your improved magic missile damage by 26%
+   modifies damage against elves by 20%
+   modifies damage against gnomes by 20%
+   modifies damage roll by 2
+   modifies damage against humans by 20%
+
+.. this object, sacred bone ring of wyrmlord's nemesis, is treasure,
+   and can be referred to as 'bone ring sacred wyrmlord's nemesis'.
+It is of 1st level, weighs 0 pounds, and is worth 11 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against undead by 15%
+   boosts your fork lightning damage by 20%
+   modifies earth-based spell damage by 4%
+   modifies damage against draconians by 21%
+   modifies artifact find by 8
+
+.. this object, mercenary's bronze ring of supremacy, is treasure,
+   and can be referred to as 'bronze ring mercenary's supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 15 gold and 60 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies poison-based spell damage by 4%
+   boosts your fork lightning damage by 27%
+   modifies damage against gnomes by 13%
+   modifies damage against kenders by 5%
+   modifies damage against humans by 15%
+
+.. this object, divine iron leggings of supremacy, is armor,
+   and can be referred to as 'iron leggings divine supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 22 gold and 85 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   boosts your shock sphere damage by 27%
+   modifies damage against dwarves by 11%
+   modifies damage against draconians by 15%
+   modifies damage against undead by 22%
+   modifies drowning-based spell damage by 5%
+   modifies earth-based spell damage by 9%
+
+.. this object, netherforged iron leggings of supremacy, is armor,
+   and can be referred to as 'iron leggings netherforged supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage roll by 10
+   modifies damage against draconians by 25%
+   modifies damage in the Abyss by 6%
+   boosts your airbolt damage by 25%
+
+.. this object, abyssal silver belt of supremacy, is armor,
+   and can be referred to as 'silver belt abyssal supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   boosts your frostbolt damage by 34%
+   modifies damage against dwarves by 22%
+   modifies damage against kenders by 17%
+   modifies damage against draconians by 20%
+   modifies Abyss resistance by 3%
+   modifies resistance to cold by 2
+
+.. this object, perfected silver leggings of psychic annihilation, is armor,
+   and can be referred to as 'silver leggings perfected psychic annihilation'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies mental-based spell damage by 12%
+   modifies damage against draconians by 13%
+   boosts your earthmaw damage by 33%
+   modifies damage against gnomes by 16%
+   modifies poison-based spell damage by 5%
+   modifies reflex spellforce by 1
+
+.. this object, blinding iron shield of focus, is armor,
+   and can be referred to as 'iron shield blinding focus'.
+It is of 1st level, weighs 1 pound, and is worth 39 gold and 85 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies holy-based spell damage by 11%
+   boosts your cone of cold damage by 32%
+   modifies mana regeneration by 3
+   modifies poison-based spell damage by 12%
+   modifies fortitude spellforce by 1
+   modifies resistance to cold by 4
 
 .. this object, sombre iron shield of twister clouds, is armor,
    and can be referred to as 'iron shield sombre twister clouds'.
@@ -736,117 +809,198 @@ When worn, it
    modifies resistance to mental by 2
    modifies acid-based spell damage by 9%
 
-.. this object, netherforged bronze belt of regrowth, is armor,
-   and can be referred to as 'bronze belt netherforged regrowth'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
-You can wear it about your waist.
+.. this object, cruel steel armor of supremacy, is armor,
+   and can be referred to as 'steel armor cruel supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 45 silver.
+You can wear it around your body.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
 When worn, it
-   modifies damage in the Abyss by 8%
-   modifies mental-based spell damage by 7%
-   modifies will save by 5
-   modifies health regeneration by 2
-   modifies air-based spell damage by 4%
+   modifies damage roll by 6
+   modifies reflex spellforce by 4
+   modifies damage against minotaurs by 12%
+   boosts your vapour chain damage by 25%
+   modifies armor class by -26
+   modifies constitution by 1
 
-.. this object, thrumming leather leggings of luck, is armor,
-   and can be referred to as 'leather leggings thrumming luck'.
-It is of 1st level, weighs 1 pound, and is worth 13 gold and 35 silver.
-You can wear it on your legs.
+.. this object, unshakable silver bracelet of supremacy, is treasure,
+   and can be referred to as 'silver bracelet unshakable supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 26 gold and 85 silver.
+You can wear it around your wrist.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   boosts your strike damage by 21%
-   modifies damage against kenders by 18%
-   modifies artifact find by 38
-   modifies sound-based spell damage by 5%
-   modifies poison-based spell damage by 1%
+   modifies armor class by -15
+   boosts your repel evil damage by 32%
+   modifies will save by 4
+   modifies reflex save by 4
+   modifies resistance to acid by 13
+   modifies health by 55
+   modifies damage against elves by 25%
 
-.. this object, netherforged silver amulet of supremacy, is treasure,
-   and can be referred to as 'silver amulet netherforged supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 24 gold and 60 silver.
+.. this object, unyielding silver amulet of mastery, is treasure,
+   and can be referred to as 'silver amulet unyielding mastery'.
+It is of 1st level, weighs 0 pounds, and is worth 2 gold and 67 silver.
 You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
    modifies armor class by -15
-   boosts your chain lightning damage by 32%
-   modifies damage in the Abyss by 8%
-   modifies reflex save by 6
-   modifies health regeneration by 1
-   modifies damage roll by 5
-   modifies hit roll by 3
+   boosts your shock sphere damage by 23%
+   modifies constitution by 4
+   modifies drowning-based spell damage by 1%
+   modifies strength by 1
 
-.. this object, earsplitting leather cap of supremacy, is armor,
-   and can be referred to as 'leather cap earsplitting supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 21 gold and 15 silver.
-You can wear it on your head.
+.. this object, seer's bronze bracelet of mastery, is treasure,
+   and can be referred to as 'bronze bracelet seer's mastery'.
+It is of 1st level, weighs 0 pounds, and is worth 2 gold and 4 silver.
+You can wear it around your wrist.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   boosts your airbolt damage by 31%
-   modifies sound-based spell damage by 14%
-   modifies resistance to drowning by 12
-   modifies moves by 12
-   modifies dexterity by 4
+   boosts your vapour chain damage by 22%
+   modifies wisdom by 4
+   modifies moves by 9
+   modifies constitution by 1
 
-.. this object, delicate bronze amulet of supremacy, is treasure,
-   and can be referred to as 'bronze amulet delicate supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 60 silver.
+.. this object, withering silver amulet of mastery, is treasure,
+   and can be referred to as 'silver amulet withering mastery'.
+It is of 1st level, weighs 0 pounds, and is worth 3 gold and 21 silver.
 You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies damage against minotaurs by 17%
-   modifies damage against elves by 25%
-   modifies resistance to earth by 15
-   boosts your improved magic missile damage by 34%
-   modifies damage against dragons and their riders by 16%
+   modifies armor class by -15
+   modifies reflex spellforce by 3
+   boosts your vapour chain damage by 15%
+   modifies constitution by 4
 
-.. this object, cruel bone amulet of supremacy, is treasure,
-   and can be referred to as 'bone amulet cruel supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against dwarves by 13%
-   boosts your frostbolt damage by 34%
-   modifies poison-based spell damage by 7%
-   modifies damage roll by 6
-   modifies damage in the Abyss by 3%
-
-.. this object, dominating iron gloves of supremacy, is armor,
-   and can be referred to as 'iron gloves dominating supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 22 gold and 60 silver.
+.. this object, divine steel gauntlets of supremacy, is armor,
+   and can be referred to as 'steel gauntlets divine supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 19 gold and 70 silver.
 You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
 When worn, it
-   modifies will spellforce by 6
-   boosts your lightning bolt damage by 28%
-   modifies resistance to drowning by 13
-   modifies damage against undead by 20%
-   modifies damage roll by 4
+   modifies damage roll by 5
+   boosts your earthmaw damage by 25%
+   modifies damage against undead by 21%
+   modifies mental-based spell damage by 6%
+   modifies constitution by 4
 
-.. this object, blinding iron shield of focus, is armor,
-   and can be referred to as 'iron shield blinding focus'.
-It is of 1st level, weighs 1 pound, and is worth 39 gold and 85 silver.
+.. this object, black silver amulet of deluge, is treasure,
+   and can be referred to as 'silver amulet black deluge'.
+It is of 1st level, weighs 0 pounds, and is worth 20 gold and 85 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies drowning-based spell damage by 8%
+   modifies damage against elves by 17%
+   modifies damage against draconians by 24%
+   modifies negative-based spell damage by 10%
+   boosts your cone of fire damage by 24%
+   modifies resistance to negative by 12
+
+.. this object, necrotic wooden club of supremacy, is a mace,
+   and can be referred to as 'wooden club necrotic supremacy'.
+It is of 1st level, weighs 7 pounds, and is worth 27 gold and 35 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 6d5 damage (averaging at 18).
+Its attacks take the form of a smash.
+When worn, it
+   boosts your chain lightning damage by 32%
+   modifies damage in the Abyss by 8%
+   modifies disease-based spell damage by 13%
+   modifies damage against elves by 24%
+   modifies wisdom by 2
+   modifies damage against humans by 7%
+
+.. this object, perfected bronze amulet of maelstrom, is treasure,
+   and can be referred to as 'bronze amulet perfected maelstrom'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 85 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies drowning-based spell damage by 15%
+   boosts your improved magic missile damage by 29%
+   modifies air-based spell damage by 7%
+   modifies sound-based spell damage by 3%
+   modifies move regeneration by 1
+
+.. this object, caustic iron amulet of supremacy, is treasure,
+   and can be referred to as 'iron amulet caustic supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 60 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies acid-based spell damage by 8%
+   modifies damage against humans by 18%
+   modifies damage against minotaurs by 25%
+   boosts your cone of cold damage by 30%
+   modifies damage against undead by 1%
+
+.. this object, infected bone axe of supremacy, is an axe,
+   and can be referred to as 'bone axe infected supremacy'.
+It is of 1st level, weighs 5 pounds, and is worth 14 gold and 10 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 2d20 damage (averaging at 21).
+Its attacks take the form of shock.
+When worn, it
+   boosts your sheet lightning damage by 26%
+   modifies disease-based spell damage by 5%
+   modifies artifact find by 16
+   modifies damage roll by 3
+
+.. this object, pale blue bronze shield of dominion, is armor,
+   and can be referred to as 'bronze shield pale blue dominion'.
+It is of 1st level, weighs 1 pound, and is worth 19 gold and 10 silver.
 You can use it as a shield.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies holy-based spell damage by 11%
-   boosts your cone of cold damage by 32%
-   modifies mana regeneration by 3
-   modifies poison-based spell damage by 12%
-   modifies fortitude spellforce by 1
-   modifies resistance to cold by 4
+   modifies strength by 4
+   modifies damage in the Abyss by 8%
+   modifies damage against minotaurs by 11%
+   modifies health by 46
+   boosts your earthquake damage by 15%
+   modifies damage against dragons and their riders by 20%
+
+.. this object, ruinous iron shield of dominion, is armor,
+   and can be referred to as 'iron shield ruinous dominion'.
+It is of 1st level, weighs 1 pound, and is worth 19 gold and 45 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies resistance to cold by 15
+   modifies damage in the Abyss by 7%
+   modifies reflex spellforce by 5
+   modifies damage against elves by 11%
+   modifies damage roll by 5
+   modifies moves by 29
+
+.. this object, psychic bronze shield of protection, is armor,
+   and can be referred to as 'bronze shield psychic protection'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 10 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies mental-based spell damage by 6%
+   modifies physical resistance by 5
+   modifies damage against dwarves by 20%
+   modifies resistance to negative by 14
+   modifies will spellforce by 3
 
 .. this object, acidic silver shield of iron constitution, is armor,
    and can be referred to as 'silver shield acidic iron constitution'.
@@ -934,19 +1088,6 @@ When worn, it
    modifies drowning-based spell damage by 5%
    modifies damage against undead by 8%
 
-.. this object, unyielding leather cap of supremacy, is armor,
-   and can be referred to as 'leather cap unyielding supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 22 gold and 10 silver.
-You can wear it on your head.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   boosts your sheet lightning damage by 25%
-   modifies damage roll by 6
-   modifies will save by 6
-   modifies resistance to cold by 13
-
 .. this object, sacred bone amulet of forge-master's spite, is treasure,
    and can be referred to as 'bone amulet sacred forge-master's spite'.
 It is of 1st level, weighs 0 pounds, and is worth 13 gold and 35 silver.
@@ -988,21 +1129,6 @@ When worn, it
    modifies health by 58
    modifies resistance to holy by 11
    modifies damage against minotaurs by 8%
-
-.. this object, lethal silver sleeves of supremacy, is armor,
-   and can be referred to as 'silver sleeves lethal supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 28 gold and 85 silver.
-You can wear it on your arms.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   modifies fortitude spellforce by 6
-   modifies reflex spellforce by 5
-   boosts your cone of cold damage by 35%
-   modifies poison-based spell damage by 12%
-   modifies damage against dragons and their riders by 8%
-   modifies reflex save by 3
 
 .. this object, netherforged bone amulet of twister clouds, is treasure,
    and can be referred to as 'bone amulet netherforged twister clouds'.
@@ -1075,391 +1201,74 @@ When worn, it
    modifies resistance to energy by 11
    modifies hit roll by 4
 
-.. this object, cruel steel armor of supremacy, is armor,
-   and can be referred to as 'steel armor cruel supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 20 gold and 45 silver.
-You can wear it around your body.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
-When worn, it
-   modifies damage roll by 6
-   modifies reflex spellforce by 4
-   modifies damage against minotaurs by 12%
-   boosts your vapour chain damage by 25%
-   modifies armor class by -26
-   modifies constitution by 1
-
-.. this object, cruel iron cap of supremacy, is armor,
-   and can be referred to as 'iron cap cruel supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 19 gold and 85 silver.
-You can wear it on your head.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   boosts your sheet lightning damage by 30%
-   modifies damage roll by 6
-   modifies damage against kenders by 23%
-   modifies resistance to piercing by 3
-   modifies damage against dwarves by 1%
-   modifies drowning-based spell damage by 3%
-
-.. this object, unshakable silver bracelet of supremacy, is treasure,
-   and can be referred to as 'silver bracelet unshakable supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 26 gold and 85 silver.
-You can wear it around your wrist.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   boosts your repel evil damage by 32%
-   modifies will save by 4
-   modifies reflex save by 4
-   modifies resistance to acid by 13
-   modifies health by 55
-   modifies damage against elves by 25%
-
-.. this object, unyielding silver amulet of mastery, is treasure,
-   and can be referred to as 'silver amulet unyielding mastery'.
-It is of 1st level, weighs 0 pounds, and is worth 2 gold and 67 silver.
+.. this object, netherforged silver amulet of supremacy, is treasure,
+   and can be referred to as 'silver amulet netherforged supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 24 gold and 60 silver.
 You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
    modifies armor class by -15
-   boosts your shock sphere damage by 23%
-   modifies constitution by 4
-   modifies drowning-based spell damage by 1%
-   modifies strength by 1
-
-.. this object, seer's bronze bracelet of mastery, is treasure,
-   and can be referred to as 'bronze bracelet seer's mastery'.
-It is of 1st level, weighs 0 pounds, and is worth 2 gold and 4 silver.
-You can wear it around your wrist.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   boosts your vapour chain damage by 22%
-   modifies wisdom by 4
-   modifies moves by 9
-   modifies constitution by 1
-
-.. this object, withering silver amulet of mastery, is treasure,
-   and can be referred to as 'silver amulet withering mastery'.
-It is of 1st level, weighs 0 pounds, and is worth 3 gold and 21 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   modifies reflex spellforce by 3
-   boosts your vapour chain damage by 15%
-   modifies constitution by 4
-
-.. this object, divine steel gauntlets of supremacy, is armor,
-   and can be referred to as 'steel gauntlets divine supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 19 gold and 70 silver.
-You can wear it on your hands.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
-When worn, it
-   modifies damage roll by 5
-   boosts your earthmaw damage by 25%
-   modifies damage against undead by 21%
-   modifies mental-based spell damage by 6%
-   modifies constitution by 4
-
-.. this object, empowered leather robe of antisepsis, is armor,
-   and can be referred to as 'leather robe empowered antisepsis'.
-It is of 1st level, weighs 1 pound, and is worth 1 gold.
-You can wear it on your torso.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   boosts your meteor swarm damage by 24%
-   modifies intelligence by 4
-   modifies resistance to disease by 5
-
-.. this object, black silver amulet of deluge, is treasure,
-   and can be referred to as 'silver amulet black deluge'.
-It is of 1st level, weighs 0 pounds, and is worth 20 gold and 85 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies drowning-based spell damage by 8%
-   modifies damage against elves by 17%
-   modifies damage against draconians by 24%
-   modifies negative-based spell damage by 10%
-   boosts your cone of fire damage by 24%
-   modifies resistance to negative by 12
-
-.. this object, perfected bronze cap of the magus, is armor,
-   and can be referred to as 'bronze cap perfected the magus'.
-It is of 1st level, weighs 1 pound, and is worth 32 gold and 85 silver.
-You can wear it on your head.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   boosts your magic missile damage by 30%
-   modifies Abyss resistance by 8%
-   modifies mana regeneration by 3
-   modifies drowning-based spell damage by 10%
-   modifies mana by 53
-
-.. this object, necrotic wooden club of supremacy, is a mace,
-   and can be referred to as 'wooden club necrotic supremacy'.
-It is of 1st level, weighs 7 pounds, and is worth 27 gold and 35 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 6d5 damage (averaging at 18).
-Its attacks take the form of a smash.
-When worn, it
    boosts your chain lightning damage by 32%
    modifies damage in the Abyss by 8%
-   modifies disease-based spell damage by 13%
-   modifies damage against elves by 24%
-   modifies wisdom by 2
-   modifies damage against humans by 7%
+   modifies reflex save by 6
+   modifies health regeneration by 1
+   modifies damage roll by 5
+   modifies hit roll by 3
 
-.. this object, vortical bronze amulet of supremacy, is treasure,
-   and can be referred to as 'bronze amulet vortical supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 28 gold and 10 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies reflex save by 5
-   boosts your meteor swarm damage by 34%
-   modifies air-based spell damage by 14%
-   modifies resistance to cold by 11
-   modifies damage in the Abyss by 3%
-   modifies damage against elves by 19%
-
-.. this object, perfected bronze amulet of maelstrom, is treasure,
-   and can be referred to as 'bronze amulet perfected maelstrom'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 85 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies drowning-based spell damage by 15%
-   boosts your improved magic missile damage by 29%
-   modifies air-based spell damage by 7%
-   modifies sound-based spell damage by 3%
-   modifies move regeneration by 1
-
-.. this object, caustic iron amulet of supremacy, is treasure,
-   and can be referred to as 'iron amulet caustic supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 19 gold and 60 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies acid-based spell damage by 8%
-   modifies damage against humans by 18%
-   modifies damage against minotaurs by 25%
-   boosts your cone of cold damage by 30%
-   modifies damage against undead by 1%
-
-.. this object, endless iron cap of supremacy, is armor,
-   and can be referred to as 'iron cap endless supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 35 silver.
+.. this object, earsplitting leather cap of supremacy, is armor,
+   and can be referred to as 'leather cap earsplitting supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 15 silver.
 You can wear it on your head.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies drowning-based spell damage by 8%
-   modifies mana by 47
-   modifies move regeneration by 2
-   boosts your sheet lightning damage by 28%
-   modifies acid-based spell damage by 5%
-   modifies damage against humans by 2%
+   boosts your airbolt damage by 31%
+   modifies sound-based spell damage by 14%
+   modifies resistance to drowning by 12
+   modifies moves by 12
+   modifies dexterity by 4
 
-.. this object, infected bone axe of supremacy, is an axe,
-   and can be referred to as 'bone axe infected supremacy'.
-It is of 1st level, weighs 5 pounds, and is worth 14 gold and 10 silver.
+.. this object, delicate bronze amulet of supremacy, is treasure,
+   and can be referred to as 'bronze amulet delicate supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 60 silver.
+You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
-It deals 2d20 damage (averaging at 21).
-Its attacks take the form of shock.
 When worn, it
-   boosts your sheet lightning damage by 26%
-   modifies disease-based spell damage by 5%
-   modifies artifact find by 16
-   modifies damage roll by 3
+   modifies damage against minotaurs by 17%
+   modifies damage against elves by 25%
+   modifies resistance to earth by 15
+   boosts your improved magic missile damage by 34%
+   modifies damage against dragons and their riders by 16%
 
-.. this object, annihilating bone dagger of supremacy, is a dagger,
-   and can be referred to as 'bone dagger annihilating supremacy'.
-It is of 1st level, weighs 4 pounds, and is worth 22 gold and 60 silver.
+.. this object, cruel bone amulet of supremacy, is treasure,
+   and can be referred to as 'bone amulet cruel supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
+You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
-It deals 6d5 damage (averaging at 18).
-Its attacks take the form of a stab.
 When worn, it
-   modifies will spellforce by 4
-   modifies fortitude spellforce by 7
-   modifies damage against humans by 19%
-   boosts your fork lightning damage by 27%
-   modifies negative-based spell damage by 2%
+   modifies damage against dwarves by 13%
+   boosts your frostbolt damage by 34%
+   modifies poison-based spell damage by 7%
+   modifies damage roll by 6
+   modifies damage in the Abyss by 3%
 
-.. this object, lethal silver-plated whip of supremacy, is a whip,
-   and can be referred to as 'silver-plated whip lethal supremacy'.
-It is of 1st level, weighs 5 pounds, and is worth 23 gold and 95 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 7d5 damage (averaging at 21).
-Its attacks take the form of decay.
-When worn, it
-   boosts your meteor swarm damage by 29%
-   modifies poison-based spell damage by 13%
-   modifies damage against undead by 25%
-   modifies health by 8
-
-.. this object, annihilating silver gauntlets of supremacy, is armor,
-   and can be referred to as 'silver gauntlets annihilating supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 25 gold and 85 silver.
+.. this object, dominating iron gloves of supremacy, is armor,
+   and can be referred to as 'iron gloves dominating supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 22 gold and 60 silver.
 You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   boosts your lightning bolt damage by 25%
-   modifies Abyss resistance by 5%
-   modifies earth-based spell damage by 6%
-   modifies damage against elves by 23%
-   modifies reflex spellforce by 6
-   modifies resistance to earth by 5
-
-.. this object, pale blue bronze shield of dominion, is armor,
-   and can be referred to as 'bronze shield pale blue dominion'.
-It is of 1st level, weighs 1 pound, and is worth 19 gold and 10 silver.
-You can use it as a shield.
-It sheds a magical aura.
-It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies strength by 4
-   modifies damage in the Abyss by 8%
-   modifies damage against minotaurs by 11%
-   modifies health by 46
-   boosts your earthquake damage by 15%
-   modifies damage against dragons and their riders by 20%
-
-.. this object, ruinous iron shield of dominion, is armor,
-   and can be referred to as 'iron shield ruinous dominion'.
-It is of 1st level, weighs 1 pound, and is worth 19 gold and 45 silver.
-You can use it as a shield.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies resistance to cold by 15
-   modifies damage in the Abyss by 7%
-   modifies reflex spellforce by 5
-   modifies damage against elves by 11%
-   modifies damage roll by 5
-   modifies moves by 29
-
-.. this object, psychic bronze shield of protection, is armor,
-   and can be referred to as 'bronze shield psychic protection'.
-It is of 1st level, weighs 1 pound, and is worth 20 gold and 10 silver.
-You can use it as a shield.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies mental-based spell damage by 6%
-   modifies physical resistance by 5
-   modifies damage against dwarves by 20%
-   modifies resistance to negative by 14
-   modifies will spellforce by 3
-
-.. this object, perfected bone ring of lich, is treasure,
-   and can be referred to as 'bone ring perfected lich'.
-It is of 1st level, weighs 0 pounds, and is worth 20 gold and 60 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies health regeneration by 1
-   modifies negative-based spell damage by 14%
-   modifies strength by 4
-   boosts your windwall damage by 26%
-   modifies wisdom by 3
-
-.. this object, tingling iron ring of supremacy, is treasure,
-   and can be referred to as 'iron ring tingling supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 17 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   boosts your airbolt damage by 25%
-   modifies mana by 51
-   modifies resistance to lightning by 13
-   modifies holy-based spell damage by 3%
-   modifies damage in the Abyss by 4%
-
-.. this object, divine iron ring of supremacy, is treasure,
-   and can be referred to as 'iron ring divine supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 22 gold and 10 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against undead by 23%
-   boosts your improved magic missile damage by 26%
-   modifies damage against elves by 20%
-   modifies damage against gnomes by 20%
-   modifies damage roll by 2
-   modifies damage against humans by 20%
-
-.. this object, sacred bone ring of wyrmlord's nemesis, is treasure,
-   and can be referred to as 'bone ring sacred wyrmlord's nemesis'.
-It is of 1st level, weighs 0 pounds, and is worth 11 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against undead by 15%
-   boosts your fork lightning damage by 20%
-   modifies earth-based spell damage by 4%
-   modifies damage against draconians by 21%
-   modifies artifact find by 8
-
-.. this object, mercenary's bronze ring of supremacy, is treasure,
-   and can be referred to as 'bronze ring mercenary's supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 15 gold and 60 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies poison-based spell damage by 4%
-   boosts your fork lightning damage by 27%
-   modifies damage against gnomes by 13%
-   modifies damage against kenders by 5%
-   modifies damage against humans by 15%
-
-.. this object, divine iron leggings of supremacy, is armor,
-   and can be referred to as 'iron leggings divine supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 22 gold and 85 silver.
-You can wear it on your legs.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   boosts your shock sphere damage by 27%
-   modifies damage against dwarves by 11%
-   modifies damage against draconians by 15%
-   modifies damage against undead by 22%
-   modifies drowning-based spell damage by 5%
-   modifies earth-based spell damage by 9%
+   modifies will spellforce by 6
+   boosts your lightning bolt damage by 28%
+   modifies resistance to drowning by 13
+   modifies damage against undead by 20%
+   modifies damage roll by 4
 
 .. this object, godly bone leggings of perfect evasion, is armor,
    and can be referred to as 'bone leggings godly perfect evasion'.
@@ -1476,523 +1285,545 @@ When worn, it
    boosts your meteor swarm damage by 14%
    modifies drowning-based spell damage by 3%
 
-.. this object, perfected leather leggings of the magus, is armor,
-   and can be referred to as 'leather leggings perfected the magus'.
-It is of 1st level, weighs 1 pound, and is worth 27 gold and 15 silver.
-You can wear it on your legs.
+.. this object, perfected bronze cap of the magus, is armor,
+   and can be referred to as 'bronze cap perfected the magus'.
+It is of 1st level, weighs 1 pound, and is worth 32 gold and 85 silver.
+You can wear it on your head.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies mana regeneration by 2
-   boosts your incendiary cloud damage by 29%
-   modifies resistance to acid by 14
-   modifies resistance to sound by 15
-   modifies damage against humans by 14%
-   modifies moves by 15
+   boosts your magic missile damage by 30%
+   modifies Abyss resistance by 8%
+   modifies mana regeneration by 3
+   modifies drowning-based spell damage by 10%
+   modifies mana by 53
 
-.. this object, netherforged iron leggings of supremacy, is armor,
-   and can be referred to as 'iron leggings netherforged supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
-You can wear it on your legs.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage roll by 10
-   modifies damage against draconians by 25%
-   modifies damage in the Abyss by 6%
-   boosts your airbolt damage by 25%
-
-.. this object, abyssal silver belt of supremacy, is armor,
-   and can be referred to as 'silver belt abyssal supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
-You can wear it about your waist.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   boosts your frostbolt damage by 34%
-   modifies damage against dwarves by 22%
-   modifies damage against kenders by 17%
-   modifies damage against draconians by 20%
-   modifies Abyss resistance by 3%
-   modifies resistance to cold by 2
-
-.. this object, immovable bone ring of psychic annihilation, is treasure,
-   and can be referred to as 'bone ring immovable psychic annihilation'.
-It is of 1st level, weighs 0 pounds, and is worth 31 gold and 60 silver.
+.. this object, annihilating bronze ring of perfect unmaking, is treasure,
+   and can be referred to as 'bronze ring annihilating perfect unmaking'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
 You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies Abyss resistance by 8%
-   modifies mental-based spell damage by 11%
-   modifies damage against humans by 25%
-   modifies fortitude save by 6
-   modifies earth-based spell damage by 9%
-   modifies resistance to sound by 13
+   modifies damage against humans by 24%
+   modifies reflex spellforce by 6
+   modifies damage against dwarves by 17%
+   modifies fortitude spellforce by 6
+   modifies hit roll by 1
+   modifies resistance to lightning by 1
 
-.. this object, kingslayer's silver axe of clockwork carnage, is an axe,
-   and can be referred to as 'silver axe kingslayer's clockwork carnage'.
-It is of 1st level, weighs 4 pounds, and is worth 11 gold and 10 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 7d5 damage (averaging at 21).
-Its attacks take the form of a chop.
-When worn, it
-   boosts your firechain damage by 18%
-   modifies damage against humans by 18%
-   modifies damage against gnomes by 24%
-   modifies damage against kenders by 5%
-   modifies damage against undead by 5%
-
-.. this object, venomous leather whip of supremacy, is a whip,
-   and can be referred to as 'leather whip venomous supremacy'.
-It is of 1st level, weighs 3 pounds, and is worth 16 gold and 10 silver.
-It sheds a magical aura.
-It cannot be located by magical means.
-It deals 2d20 damage (averaging at 21).
-Its attacks take the form of a poisonous bite.
-When worn, it
-   boosts your fork lightning damage by 25%
-   modifies damage against draconians by 23%
-   modifies hit roll by 4
-   modifies damage roll by 4
-
-.. this object, perfected silver leggings of psychic annihilation, is armor,
-   and can be referred to as 'silver leggings perfected psychic annihilation'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
-You can wear it on your legs.
+.. this object, infected silver helmet of regeneration, is armor,
+   and can be referred to as 'silver helmet infected regeneration'.
+It is of 1st level, weighs 1 pound, and is worth 10 gold and 35 silver.
+You can wear it on your head.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies mental-based spell damage by 12%
-   modifies damage against draconians by 13%
-   boosts your earthmaw damage by 33%
-   modifies damage against gnomes by 16%
-   modifies poison-based spell damage by 5%
-   modifies reflex spellforce by 1
+   modifies disease-based spell damage by 5%
+   boosts your vapour chain damage by 18%
+   modifies fortitude save by 3
+   modifies health regeneration by 1
+   modifies resistance to energy by 2
+   modifies damage against minotaurs by 1%
 
-.. this object, netherforged silver amulet of supremacy, is treasure,
-   and can be referred to as 'silver amulet netherforged supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 35 silver.
-You can wear it around your neck.
+.. this object, abyssal wave iron ring of supremacy, is treasure,
+   and can be referred to as 'iron ring abyssal wave supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 26 gold and 35 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies armor class by -15
-   modifies damage against minotaurs by 24%
-   modifies Abyss resistance by 3%
-   modifies damage in the Abyss by 6%
-   boosts your hell ball damage by 32%
-   modifies strength by 3
-   modifies damage against gnomes by 22%
-
-.. this object, endless iron amulet of adamant will, is treasure,
-   and can be referred to as 'iron amulet endless adamant will'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies will save by 6
-   modifies earth-based spell damage by 9%
-   modifies move regeneration by 2
-   modifies damage roll by 5
-   boosts your caltraps damage by 20%
-
-.. this object, diamond steel amulet of supremacy, is treasure,
-   and can be referred to as 'steel amulet diamond supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 45 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   boosts your cause critical damage by 26%
-   modifies earth-based spell damage by 11%
-   modifies air-based spell damage by 9%
-   modifies drowning-based spell damage by 9%
-   modifies mana by 16
-   modifies will save by 3
-
-.. this object, netherforged silver amulet of pandemic, is treasure,
-   and can be referred to as 'silver amulet netherforged pandemic'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 60 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   modifies damage against draconians by 19%
-   modifies disease-based spell damage by 15%
-   modifies health by 53
-   modifies damage roll by 6
-   modifies damage in the Abyss by 8%
-
-.. this object, vortical iron amulet of regrowth, is treasure,
-   and can be referred to as 'iron amulet vortical regrowth'.
-It is of 1st level, weighs 0 pounds, and is worth 30 gold and 10 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies air-based spell damage by 13%
-   boosts your bleed damage by 32%
-   modifies artifact find by 20
-   modifies health regeneration by 2
-   modifies drowning-based spell damage by 1%
-   modifies health by 32
-
-.. this object, lightfoot silver amulet of pandemic, is treasure,
-   and can be referred to as 'silver amulet lightfoot pandemic'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 10 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies disease-based spell damage by 14%
-   modifies reflex save by 5
-   modifies damage against elves by 20%
-   modifies resistance to lightning by 12
-   modifies damage against humans by 11%
+   boosts your bash damage by 29%
+   modifies fortitude save by 6
+   modifies health by 58
+   modifies drowning-based spell damage by 13%
    modifies resistance to mental by 1
 
-.. this object, diamond bronze amulet of supremacy, is treasure,
-   and can be referred to as 'bronze amulet diamond supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 20 gold and 20 silver.
+.. this object, perfected iron ring of focus, is treasure,
+   and can be referred to as 'iron ring perfected focus'.
+It is of 1st level, weighs 0 pounds, and is worth 34 gold and 60 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage roll by 5
+   boosts your enhanced fireball damage by 27%
+   modifies mana regeneration by 3
+   modifies damage against humans by 9%
+   modifies will save by 6
+
+.. this object, perfected silver amulet of pestilence, is treasure,
+   and can be referred to as 'silver amulet perfected pestilence'.
+It is of 1st level, weighs 0 pounds, and is worth 28 gold and 35 silver.
 You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies damage against minotaurs by 12%
-   modifies earth-based spell damage by 13%
-   boosts your vampiric touch damage by 29%
-   modifies dexterity by 4
-   modifies mana by 14
+   modifies armor class by -15
+   modifies reflex save by 4
+   modifies damage against humans by 19%
+   modifies poison-based spell damage by 12%
+   boosts your earthmaw damage by 35%
+   modifies resistance to holy by 15
+   modifies mana by 60
 
-.. this object, diamond bronze amulet of contagion, is treasure,
-   and can be referred to as 'bronze amulet diamond contagion'.
-It is of 1st level, weighs 0 pounds, and is worth 22 gold and 10 silver.
+.. this object, netherforged leather sash of supremacy, is armor,
+   and can be referred to as 'leather sash netherforged supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 18 gold and 60 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage in the Abyss by 6%
+   modifies reflex save by 5
+   boosts your earthmaw damage by 33%
+   modifies resistance to air by 2
+   modifies damage against kenders by 1%
+
+.. this object, eddy silver amulet of supremacy, is treasure,
+   and can be referred to as 'silver amulet eddy supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 18 gold and 35 silver.
 You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies damage against elves by 25%
+   boosts your firechain damage by 33%
+   modifies air-based spell damage by 4%
+   modifies damage against draconians by 16%
+
+.. this object, drowned silver mace of supremacy, is a mace,
+   and can be referred to as 'silver mace drowned supremacy'.
+It is of 1st level, weighs 5 pounds, and is worth 27 gold and 85 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 7d5 damage (averaging at 21).
+Its attacks take the form of drowning.
+When worn, it
+   modifies acid-based spell damage by 9%
+   modifies damage against draconians by 21%
+   boosts your sheet lightning damage by 34%
+   modifies damage against dwarves by 9%
+   modifies damage against elves by 19%
+
+.. this object, vortical silver amulet of dissolution, is treasure,
+   and can be referred to as 'silver amulet vortical dissolution'.
+It is of 1st level, weighs 0 pounds, and is worth 26 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies acid-based spell damage by 15%
+   modifies damage against undead by 20%
+   modifies reflex spellforce by 6
+   modifies air-based spell damage by 14%
+   modifies damage against minotaurs by 2%
+   modifies intelligence by 3
+
+.. this object, lethal silver-plated whip of supremacy, is a whip,
+   and can be referred to as 'silver-plated whip lethal supremacy'.
+It is of 1st level, weighs 5 pounds, and is worth 23 gold and 95 silver.
+It sheds a magical aura.
+It cannot be located by magical means.
+It deals 7d5 damage (averaging at 21).
+Its attacks take the form of decay.
+When worn, it
+   boosts your meteor swarm damage by 29%
+   modifies poison-based spell damage by 13%
+   modifies damage against undead by 25%
+   modifies health by 8
+
+.. this object, diamond bone shield of wyrmlord's nemesis, is armor,
+   and can be referred to as 'bone shield diamond wyrmlord's nemesis'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies earth-based spell damage by 14%
+   modifies damage against draconians by 24%
+   modifies resistance to earth by 11
+   modifies damage against gnomes by 13%
+   modifies damage roll by 1
+   modifies fortitude save by 5
+
+.. this object, pale blue bronze bracelet of untiring stride, is treasure,
+   and can be referred to as 'bronze bracelet pale blue untiring stride'.
+It is of 1st level, weighs 0 pounds, and is worth 17 gold and 35 silver.
+You can wear it around your wrist.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
    modifies reflex save by 4
-   modifies mana by 41
-   modifies disease-based spell damage by 10%
-   modifies earth-based spell damage by 13%
-   modifies negative-based spell damage by 5%
-   modifies move regeneration by 1
+   modifies health by 42
+   modifies move regeneration by 2
+   boosts your meteor swarm damage by 16%
+   modifies fortitude spellforce by 3
 
-.. this object, immovable bronze amulet of pandemic, is treasure,
-   and can be referred to as 'bronze amulet immovable pandemic'.
-It is of 1st level, weighs 0 pounds, and is worth 23 gold and 85 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies fortitude save by 6
-   modifies disease-based spell damage by 15%
-   modifies dexterity by 4
-   modifies damage against minotaurs by 14%
-   modifies sound-based spell damage by 10%
-   boosts your harpoon damage by 8%
-
-.. this object, necrotic bronze amulet of maelstrom, is treasure,
-   and can be referred to as 'bronze amulet necrotic maelstrom'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 85 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies drowning-based spell damage by 12%
-   modifies resistance to sound by 13
-   modifies disease-based spell damage by 12%
-   modifies holy-based spell damage by 7%
-   modifies damage against kenders by 18%
-
-.. this object, annihilating silver amulet of iron constitution, is treasure,
-   and can be referred to as 'silver amulet annihilating iron constitution'.
-It is of 1st level, weighs 0 pounds, and is worth 24 gold and 10 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   modifies air-based spell damage by 8%
-   modifies fortitude save by 6
-   modifies Abyss resistance by 7%
-   modifies fortitude spellforce by 6
-   modifies holy-based spell damage by 2%
-
-.. this object, sombre steel amulet of lich, is treasure,
-   and can be referred to as 'steel amulet sombre lich'.
-It is of 1st level, weighs 0 pounds, and is worth 23 gold and 45 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   modifies negative-based spell damage by 15%
-   modifies damage against minotaurs by 16%
-   modifies health regeneration by 1
-   modifies damage against dragons and their riders by 24%
-   modifies damage against undead by 11%
-   modifies resistance to negative by 11
-
-.. this object, unshakable bone amulet of concussive blast, is treasure,
-   and can be referred to as 'bone amulet unshakable concussive blast'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 60 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against gnomes by 20%
-   modifies sound-based spell damage by 14%
-   modifies air-based spell damage by 4%
-   modifies will save by 5
-   modifies fortitude save by 5
-
-.. this object, stanch iron armor of perfect unmaking, is armor,
-   and can be referred to as 'iron armor stanch perfect unmaking'.
-It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
+.. this object, cruel iron armor of supremacy, is armor,
+   and can be referred to as 'iron armor cruel supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 35 silver.
 You can wear it around your body.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies damage against minotaurs by 22%
-   modifies damage against draconians by 24%
-   modifies damage against dragons and their riders by 17%
-   modifies reflex spellforce by 6
-   modifies fortitude save by 5
+   modifies damage against kenders by 20%
+   modifies acid-based spell damage by 6%
+   boosts your meteor swarm damage by 25%
+   modifies wisdom by 4
+   modifies damage roll by 6
 
-.. this object, endless silver amulet of attenuation, is treasure,
-   and can be referred to as 'silver amulet endless attenuation'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
-You can wear it around your neck.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   modifies Abyss resistance by 8%
-   modifies move regeneration by 2
-   modifies reflex spellforce by 5
-   modifies intelligence by 4
-   modifies damage against dwarves by 23%
-
-.. this object, tingling leather shield of clockwork carnage, is armor,
-   and can be referred to as 'leather shield tingling clockwork carnage'.
-It is of 1st level, weighs 1 pound, and is worth 17 gold and 85 silver.
-You can use it as a shield.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage against gnomes by 23%
-   modifies resistance to lightning by 29
-   modifies drowning-based spell damage by 5%
-   modifies hit roll by 3
-   modifies damage against dragons and their riders by 24%
-
-.. this object, keen silver shield of mind annihilation, is armor,
-   and can be referred to as 'silver shield keen mind annihilation'.
-It is of 1st level, weighs 1 pound, and is worth 20 gold and 85 silver.
-You can use it as a shield.
+.. this object, diamond silver belt of supremacy, is armor,
+   and can be referred to as 'silver belt diamond supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 10 silver.
+You can wear it about your waist.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies damage against elves by 17%
-   modifies damage against minotaurs by 21%
-   modifies will spellforce by 12
-   modifies hit roll by 2
+   modifies damage against minotaurs by 14%
+   boosts your concussion strike damage by 32%
+   modifies damage against kenders by 14%
+   modifies earth-based spell damage by 20%
+   modifies fortitude save by 1
 
-.. this object, perfected bronze ring of maelstrom, is treasure,
-   and can be referred to as 'bronze ring perfected maelstrom'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 35 silver.
-You can wear it on your finger.
+.. this object, lethal silver sleeves of supremacy, is armor,
+   and can be referred to as 'silver sleeves lethal supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 28 gold and 85 silver.
+You can wear it on your arms.
 It sheds a magical aura.
 It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies damage against undead by 17%
-   modifies drowning-based spell damage by 13%
-   modifies resistance to sound by 13
-   boosts your rage of the wolverine damage by 34%
-   modifies resistance to cold by 11
-
-.. this object, diamond bronze ring of twister clouds, is treasure,
-   and can be referred to as 'bronze ring diamond twister clouds'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 85 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies resistance to acid by 15
-   modifies air-based spell damage by 13%
-   modifies damage against kenders by 24%
-   modifies damage against elves by 20%
-   modifies earth-based spell damage by 11%
-
-.. this object, perfected silver ring of maelstrom, is treasure,
-   and can be referred to as 'silver ring perfected maelstrom'.
-It is of 1st level, weighs 0 pounds, and is worth 32 gold and 10 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies will save by 6
-   modifies will spellforce by 5
-   modifies drowning-based spell damage by 13%
    modifies fortitude spellforce by 6
-   boosts your leaf blades damage by 61%
+   modifies reflex spellforce by 5
+   boosts your cone of cold damage by 35%
+   modifies poison-based spell damage by 12%
+   modifies damage against dragons and their riders by 8%
+   modifies reflex save by 3
 
-.. this object, venomous bronze ring of supremacy, is treasure,
-   and can be referred to as 'bronze ring venomous supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 20 gold and 10 silver.
-You can wear it on your finger.
+.. this object, annihilating silver gauntlets of supremacy, is armor,
+   and can be referred to as 'silver gauntlets annihilating supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 25 gold and 85 silver.
+You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies damage against humans by 46%
-   boosts your leaping strike damage by 31%
-   modifies poison-based spell damage by 5%
-   modifies resistance to poison by 9
-
-.. this object, marble steel ring of attenuation, is treasure,
-   and can be referred to as 'steel ring marble attenuation'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 20 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   modifies damage against humans by 22%
-   modifies Abyss resistance by 6%
-   modifies earth-based spell damage by 8%
-   modifies resistance to fire by 13
-   modifies resistance to air by 14
-
-.. this object, necrotic silver ring of supremacy, is treasure,
-   and can be referred to as 'silver ring necrotic supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -15
-   boosts your chill touch damage by 31%
+   boosts your lightning bolt damage by 25%
+   modifies Abyss resistance by 5%
+   modifies earth-based spell damage by 6%
+   modifies damage against elves by 23%
    modifies reflex spellforce by 6
-   modifies disease-based spell damage by 13%
-   modifies will save by 5
-   modifies damage against humans by 24%
-   modifies dexterity by 4
+   modifies resistance to earth by 5
 
-.. this object, unyielding silver ring of concussive blast, is treasure,
-   and can be referred to as 'silver ring unyielding concussive blast'.
-It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
-You can wear it on your finger.
+.. this object, ruinous silver boots of supremacy, is armor,
+   and can be referred to as 'silver boots ruinous supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 24 gold and 60 silver.
+You can wear it on your feet.
 It sheds a magical aura.
 It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies armor class by -15
-   modifies will save by 6
-   modifies reflex save by 4
-   modifies drowning-based spell damage by 8%
-   modifies sound-based spell damage by 11%
-   modifies will spellforce by 6
-   modifies damage against draconians by 24%
-
-.. this object, netherforged iron leggings of lich, is armor,
-   and can be referred to as 'iron leggings netherforged lich'.
-It is of 1st level, weighs 1 pound, and is worth 21 gold and 35 silver.
-You can wear it on your legs.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage against kenders by 15%
-   modifies earth-based spell damage by 4%
-   modifies damage in the Abyss by 7%
-   modifies negative-based spell damage by 13%
-   modifies reflex save by 2
-   modifies resistance to cold by 10
-
-.. this object, black bone leggings of protection, is armor,
-   and can be referred to as 'bone leggings black protection'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
-You can wear it on your legs.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies damage against kenders by 17%
-   modifies physical resistance by 4
+   boosts your ring of lightning damage by 35%
    modifies armor class by -65
-   modifies negative-based spell damage by 8%
-   modifies dexterity by 4
-   modifies resistance to lightning by 12
+   modifies artifact find by 30
+   modifies reflex spellforce by 5
+   modifies damage against dragons and their riders by 22%
+   modifies damage against minotaurs by 4%
 
-.. this object, sanative leather leggings of lich, is armor,
-   and can be referred to as 'leather leggings sanative lich'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
-You can wear it on your legs.
+.. this object, lethal bone gloves of sturdiness, is armor,
+   and can be referred to as 'bone gloves lethal sturdiness'.
+It is of 1st level, weighs 1 pound, and is worth 34 gold and 90 silver.
+You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies negative-based spell damage by 11%
-   modifies physical resistance by 3
-   modifies damage roll by 6
-   modifies earth-based spell damage by 2%
-   modifies armor class by -105
+   modifies physical resistance by 8
+   modifies poison-based spell damage by 15%
+   boosts your shadowfire damage by 30%
+   modifies mental-based spell damage by 6%
+   modifies earth-based spell damage by 3%
+   modifies mana by 1
 
-.. this object, perfected steel leggings of pandemic, is armor,
-   and can be referred to as 'steel leggings perfected pandemic'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 95 silver.
-You can wear it on your legs.
+.. this object, unshakable bone sleeves of adamant will, is armor,
+   and can be referred to as 'bone sleeves unshakable adamant will'.
+It is of 1st level, weighs 1 pound, and is worth 17 gold and 60 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies negative-based spell damage by 5%
+   modifies damage against humans by 14%
+   modifies will save by 11
+   modifies reflex spellforce by 2
+   modifies intelligence by 3
+
+.. this object, rejuvenating steel sleeves of avulsed wounds, is armor,
+   and can be referred to as 'steel sleeves rejuvenating avulsed wounds'.
+It is of 1st level, weighs 1 pound, and is worth 15 gold and 45 silver.
+You can wear it on your arms.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
 When worn, it
-   modifies disease-based spell damage by 15%
-   modifies will spellforce by 5
-   modifies holy-based spell damage by 8%
-   boosts your repel evil damage by 30%
-   modifies artifact find by 11
-   modifies moves by 58
+   modifies damage against minotaurs by 21%
+   modifies disease-based spell damage by 5%
+   modifies health regeneration by 1
+   boosts your ground control damage by 24%
+   modifies damage roll by 6
 
-.. this object, virulent bronze belt of focus, is armor,
-   and can be referred to as 'bronze belt virulent focus'.
-It is of 1st level, weighs 1 pound, and is worth 12 gold and 99 silver.
-You can wear it about your waist.
+.. this object, nether bone gloves of supremacy, is armor,
+   and can be referred to as 'bone gloves nether supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 18 gold and 85 silver.
+You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies poison-based spell damage by 9%
-   modifies mana regeneration by 3
-   boosts your frost fingers damage by 11%
-   modifies damage against elves by 3%
-   modifies moves by 4
+   modifies Abyss resistance by 6%
+   modifies damage against humans by 22%
+   boosts your sweep kick damage by 27%
+   modifies will spellforce by 1
+   modifies poison-based spell damage by 2%
 
-.. this object, sanative bronze belt of supremacy, is armor,
-   and can be referred to as 'bronze belt sanative supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 60 silver.
-You can wear it about your waist.
+.. this object, kingslayer's silver ring of draconicide, is treasure,
+   and can be referred to as 'silver ring kingslayer's draconicide'.
+It is of 1st level, weighs 0 pounds, and is worth 16 gold and 35 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   boosts your ring of earth damage by 27%
-   modifies acid-based spell damage by 10%
+   modifies damage against dragons and their riders by 23%
+   modifies Abyss resistance by 2%
+   modifies damage against gnomes by 14%
+   modifies damage against humans by 17%
+   boosts your shield bash damage by 15%
+   modifies fortitude save by 3
+
+.. this object, psychic iron ring of supremacy, is treasure,
+   and can be referred to as 'iron ring psychic supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies mental-based spell damage by 8%
+   modifies artifact find by 26
+   boosts your viper strike damage by 31%
+   modifies resistance to sound by 11
+   modifies resistance to lightning by 8
+
+.. this object, annihilating steel bracelet of concussive blast, is treasure,
+   and can be referred to as 'steel bracelet annihilating concussive blast'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 45 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   modifies will save by 4
+   modifies damage against elves by 14%
+   modifies fortitude spellforce by 6
+   modifies sound-based spell damage by 13%
+   modifies damage roll by 5
+   boosts your throw damage by 21%
+
+.. this object, netherforged silver bracelet of supremacy, is treasure,
+   and can be referred to as 'silver bracelet netherforged supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 23 gold and 85 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies resistance to acid by 12
+   modifies damage against dragons and their riders by 24%
+   boosts your energy drain damage by 33%
+   modifies damage in the Abyss by 8%
+   modifies acid-based spell damage by 2%
+   modifies damage against elves by 9%
+
+.. this object, cruel bronze ring of perfect unmaking, is treasure,
+   and can be referred to as 'bronze ring cruel perfect unmaking'.
+It is of 1st level, weighs 0 pounds, and is worth 16 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage roll by 6
+   modifies resistance to cold by 12
+   modifies reflex spellforce by 6
+   modifies hit roll by 4
+   modifies resistance to mental by 10
+
+.. this object, dominating iron ring of dissolution, is treasure,
+   and can be referred to as 'iron ring dominating dissolution'.
+It is of 1st level, weighs 0 pounds, and is worth 30 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against undead by 23%
+   modifies will spellforce by 6
    modifies reflex spellforce by 4
-   modifies physical resistance by 5
-   modifies damage against undead by 19%
-   modifies damage roll by 1
+   modifies acid-based spell damage by 14%
+   modifies fortitude save by 6
+   modifies damage against kenders by 9%
+
+.. this object, swirling iron ring of vitriol, is treasure,
+   and can be referred to as 'iron ring swirling vitriol'.
+It is of 1st level, weighs 0 pounds, and is worth 16 gold and 60 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies acid-based spell damage by 10%
+   modifies air-based spell damage by 10%
+   modifies mana regeneration by 1
+   modifies poison-based spell damage by 5%
+   boosts your tackle damage by 19%
+   modifies resistance to acid by 9
+
+.. this object, ruinous iron ring of demon, is treasure,
+   and can be referred to as 'iron ring ruinous demon'.
+It is of 1st level, weighs 0 pounds, and is worth 16 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against dragons and their riders by 14%
+   modifies negative-based spell damage by 8%
+   modifies reflex spellforce by 5
+   modifies damage against gnomes by 15%
+   modifies mana regeneration by 1
+   modifies resistance to acid by 4
+
+.. this object, cruel silver gauntlets of supremacy, is armor,
+   and can be referred to as 'silver gauntlets cruel supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 18 gold and 35 silver.
+You can wear it on your hands.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies damage in the Abyss by 2%
+   modifies damage roll by 6
+   boosts your flog damage by 35%
+   modifies dexterity by 4
+   modifies health by 23
+
+.. this object, perfected silver helmet of twister clouds, is armor,
+   and can be referred to as 'silver helmet perfected twister clouds'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
+You can wear it on your head.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies Abyss resistance by 7%
+   modifies air-based spell damage by 15%
+   modifies holy-based spell damage by 6%
+   boosts your wrath damage by 27%
+   modifies strength by 2
+   modifies disease-based spell damage by 1%
+
+.. this object, diamond woolen robe of pestilence, is armor,
+   and can be referred to as 'woolen robe diamond pestilence'.
+It is of 1st level, weighs 1 pound, and is worth 30 gold and 35 silver.
+You can wear it on your torso.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies reflex spellforce by 6
+   modifies acid-based spell damage by 6%
+   modifies earth-based spell damage by 12%
+   modifies poison-based spell damage by 14%
+   modifies resistance to lightning by 3
+   modifies damage against minotaurs by 22%
+
+.. this object, unshakable steel armor of perfect sundering, is armor,
+   and can be referred to as 'steel armor unshakable perfect sundering'.
+It is of 1st level, weighs 1 pound, and is worth 19 gold and 20 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
+When worn, it
+   modifies Abyss resistance by 2%
+   modifies health regeneration by 1
+   modifies damage against gnomes by 16%
+   modifies fortitude spellforce by 6
+   modifies will save by 5
+
+.. this object, earsplitting iron armor of twister clouds, is armor,
+   and can be referred to as 'iron armor earsplitting twister clouds'.
+It is of 1st level, weighs 1 pound, and is worth 22 gold and 85 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies air-based spell damage by 11%
+   modifies sound-based spell damage by 13%
+   modifies acid-based spell damage by 6%
+   modifies mana by 58
+   modifies damage against elves by 1%
+   modifies moves by 17
+
+.. this object, sombre steel sleeves of sturdiness, is armor,
+   and can be referred to as 'steel sleeves sombre sturdiness'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 20 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
+When worn, it
+   modifies physical resistance by 9
+   modifies damage against humans by 15%
+   modifies resistance to negative by 15
+   boosts your swipe damage by 15%
+   modifies constitution by 4
+
+.. this object, ornate leather sleeves of body sundering, is armor,
+   and can be referred to as 'leather sleeves ornate body sundering'.
+It is of 1st level, weighs 1 pound, and is worth 13 gold and 15 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies fortitude spellforce by 5
+   modifies damage against elves by 20%
+   modifies mana regeneration by 1
+   modifies damage against gnomes by 13%
+   modifies moves by 12
+   boosts your concussion strike damage by 9%
+
+.. this object, marble leather armor of body sundering, is armor,
+   and can be referred to as 'leather armor marble body sundering'.
+It is of 1st level, weighs 1 pound, and is worth 15 gold and 85 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies mana by 60
+   modifies damage against dragons and their riders by 15%
+   modifies fortitude spellforce by 4
+   modifies earth-based spell damage by 8%
+   modifies resistance to cold by 8
+   modifies health by 23
 
 .. this object, annihilating bone amulet of twister clouds, is treasure,
    and can be referred to as 'bone amulet annihilating twister clouds'.
@@ -2192,317 +2023,913 @@ When worn, it
    modifies damage against dwarves by 21%
    modifies resistance to fire by 14
 
-.. this object, annihilating steel bracelet of concussive blast, is treasure,
-   and can be referred to as 'steel bracelet annihilating concussive blast'.
-It is of 1st level, weighs 0 pounds, and is worth 25 gold and 45 silver.
-You can wear it around your wrist.
+.. this object, keen silver shield of mind annihilation, is armor,
+   and can be referred to as 'silver shield keen mind annihilation'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 85 silver.
+You can use it as a shield.
 It sheds a magical aura.
 It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies armor class by -10
-   modifies will save by 4
-   modifies damage against elves by 14%
-   modifies fortitude spellforce by 6
-   modifies sound-based spell damage by 13%
-   modifies damage roll by 5
-   boosts your throw damage by 21%
-
-.. this object, hallowed steel bracelet of mind annihilation, is treasure,
-   and can be referred to as 'steel bracelet hallowed mind annihilation'.
-It is of 1st level, weighs 0 pounds, and is worth 18 gold and 95 silver.
-You can wear it around your wrist.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies armor class by -10
-   modifies earth-based spell damage by 4%
+   modifies damage against elves by 17%
+   modifies damage against minotaurs by 21%
    modifies will spellforce by 12
-   modifies moves by 20
-   modifies damage against undead by 17%
+   modifies hit roll by 2
 
-.. this object, netherforged silver bracelet of supremacy, is treasure,
-   and can be referred to as 'silver bracelet netherforged supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 23 gold and 85 silver.
-You can wear it around your wrist.
+.. this object, perfected bronze ring of maelstrom, is treasure,
+   and can be referred to as 'bronze ring perfected maelstrom'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 35 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against undead by 17%
+   modifies drowning-based spell damage by 13%
+   modifies resistance to sound by 13
+   boosts your rage of the wolverine damage by 34%
+   modifies resistance to cold by 11
+
+.. this object, diamond bronze ring of twister clouds, is treasure,
+   and can be referred to as 'bronze ring diamond twister clouds'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies resistance to acid by 15
+   modifies air-based spell damage by 13%
+   modifies damage against kenders by 24%
+   modifies damage against elves by 20%
+   modifies earth-based spell damage by 11%
+
+.. this object, perfected silver ring of maelstrom, is treasure,
+   and can be referred to as 'silver ring perfected maelstrom'.
+It is of 1st level, weighs 0 pounds, and is worth 32 gold and 10 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies will save by 6
+   modifies will spellforce by 5
+   modifies drowning-based spell damage by 13%
+   modifies fortitude spellforce by 6
+   boosts your leaf blades damage by 61%
+
+.. this object, venomous bronze ring of supremacy, is treasure,
+   and can be referred to as 'bronze ring venomous supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 20 gold and 10 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against humans by 46%
+   boosts your leaping strike damage by 31%
+   modifies poison-based spell damage by 5%
+   modifies resistance to poison by 9
+
+.. this object, marble steel ring of attenuation, is treasure,
+   and can be referred to as 'steel ring marble attenuation'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 20 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   modifies damage against humans by 22%
+   modifies Abyss resistance by 6%
+   modifies earth-based spell damage by 8%
+   modifies resistance to fire by 13
+   modifies resistance to air by 14
+
+.. this object, necrotic silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring necrotic supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
    modifies armor class by -15
-   modifies resistance to acid by 12
-   modifies damage against dragons and their riders by 24%
-   boosts your energy drain damage by 33%
-   modifies damage in the Abyss by 8%
-   modifies acid-based spell damage by 2%
-   modifies damage against elves by 9%
-
-.. this object, cruel bronze ring of perfect unmaking, is treasure,
-   and can be referred to as 'bronze ring cruel perfect unmaking'.
-It is of 1st level, weighs 0 pounds, and is worth 16 gold and 85 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage roll by 6
-   modifies resistance to cold by 12
+   boosts your chill touch damage by 31%
    modifies reflex spellforce by 6
-   modifies hit roll by 4
-   modifies resistance to mental by 10
-
-.. this object, dominating iron ring of dissolution, is treasure,
-   and can be referred to as 'iron ring dominating dissolution'.
-It is of 1st level, weighs 0 pounds, and is worth 30 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against undead by 23%
-   modifies will spellforce by 6
-   modifies reflex spellforce by 4
-   modifies acid-based spell damage by 14%
-   modifies fortitude save by 6
-   modifies damage against kenders by 9%
-
-.. this object, swirling iron ring of vitriol, is treasure,
-   and can be referred to as 'iron ring swirling vitriol'.
-It is of 1st level, weighs 0 pounds, and is worth 16 gold and 60 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies acid-based spell damage by 10%
-   modifies air-based spell damage by 10%
-   modifies mana regeneration by 1
-   modifies poison-based spell damage by 5%
-   boosts your tackle damage by 19%
-   modifies resistance to acid by 9
-
-.. this object, ruinous iron ring of demon, is treasure,
-   and can be referred to as 'iron ring ruinous demon'.
-It is of 1st level, weighs 0 pounds, and is worth 16 gold and 35 silver.
-You can wear it on your finger.
-It sheds a magical aura.
-It cannot be located by magical means.
-When worn, it
-   modifies damage against dragons and their riders by 14%
-   modifies negative-based spell damage by 8%
-   modifies reflex spellforce by 5
-   modifies damage against gnomes by 15%
-   modifies mana regeneration by 1
-   modifies resistance to acid by 4
-
-.. this object, cruel silver gauntlets of supremacy, is armor,
-   and can be referred to as 'silver gauntlets cruel supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 18 gold and 35 silver.
-You can wear it on your hands.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
-When worn, it
-   modifies damage in the Abyss by 2%
-   modifies damage roll by 6
-   boosts your flog damage by 35%
+   modifies disease-based spell damage by 13%
+   modifies will save by 5
+   modifies damage against humans by 24%
    modifies dexterity by 4
-   modifies health by 23
 
-.. this object, perfected silver helmet of twister clouds, is armor,
-   and can be referred to as 'silver helmet perfected twister clouds'.
-It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
-You can wear it on your head.
+.. this object, unyielding silver ring of concussive blast, is treasure,
+   and can be referred to as 'silver ring unyielding concussive blast'.
+It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
+You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
 When worn, it
-   modifies Abyss resistance by 7%
-   modifies air-based spell damage by 15%
-   modifies holy-based spell damage by 6%
-   boosts your wrath damage by 27%
-   modifies strength by 2
-   modifies disease-based spell damage by 1%
+   modifies armor class by -15
+   modifies will save by 6
+   modifies reflex save by 4
+   modifies drowning-based spell damage by 8%
+   modifies sound-based spell damage by 11%
+   modifies will spellforce by 6
+   modifies damage against draconians by 24%
 
-.. this object, diamond woolen robe of pestilence, is armor,
-   and can be referred to as 'woolen robe diamond pestilence'.
-It is of 1st level, weighs 1 pound, and is worth 30 gold and 35 silver.
+.. this object, netherforged iron leggings of lich, is armor,
+   and can be referred to as 'iron leggings netherforged lich'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 35 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against kenders by 15%
+   modifies earth-based spell damage by 4%
+   modifies damage in the Abyss by 7%
+   modifies negative-based spell damage by 13%
+   modifies reflex save by 2
+   modifies resistance to cold by 10
+
+.. this object, black bone leggings of protection, is armor,
+   and can be referred to as 'bone leggings black protection'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 85 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against kenders by 17%
+   modifies physical resistance by 4
+   modifies armor class by -65
+   modifies negative-based spell damage by 8%
+   modifies dexterity by 4
+   modifies resistance to lightning by 12
+
+.. this object, sanative leather leggings of lich, is armor,
+   and can be referred to as 'leather leggings sanative lich'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 35 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies negative-based spell damage by 11%
+   modifies physical resistance by 3
+   modifies damage roll by 6
+   modifies earth-based spell damage by 2%
+   modifies armor class by -105
+
+.. this object, perfected steel leggings of pandemic, is armor,
+   and can be referred to as 'steel leggings perfected pandemic'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 95 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
+When worn, it
+   modifies disease-based spell damage by 15%
+   modifies will spellforce by 5
+   modifies holy-based spell damage by 8%
+   boosts your repel evil damage by 30%
+   modifies artifact find by 11
+   modifies moves by 58
+
+.. this object, virulent bronze belt of focus, is armor,
+   and can be referred to as 'bronze belt virulent focus'.
+It is of 1st level, weighs 1 pound, and is worth 12 gold and 99 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies poison-based spell damage by 9%
+   modifies mana regeneration by 3
+   boosts your frost fingers damage by 11%
+   modifies damage against elves by 3%
+   modifies moves by 4
+
+.. this object, sanative bronze belt of supremacy, is armor,
+   and can be referred to as 'bronze belt sanative supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 26 gold and 60 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   boosts your ring of earth damage by 27%
+   modifies acid-based spell damage by 10%
+   modifies reflex spellforce by 4
+   modifies physical resistance by 5
+   modifies damage against undead by 19%
+   modifies damage roll by 1
+
+.. this object, diamond steel amulet of supremacy, is treasure,
+   and can be referred to as 'steel amulet diamond supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 45 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   boosts your cause critical damage by 26%
+   modifies earth-based spell damage by 11%
+   modifies air-based spell damage by 9%
+   modifies drowning-based spell damage by 9%
+   modifies mana by 16
+   modifies will save by 3
+
+.. this object, netherforged silver amulet of pandemic, is treasure,
+   and can be referred to as 'silver amulet netherforged pandemic'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 60 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies damage against draconians by 19%
+   modifies disease-based spell damage by 15%
+   modifies health by 53
+   modifies damage roll by 6
+   modifies damage in the Abyss by 8%
+
+.. this object, vortical iron amulet of regrowth, is treasure,
+   and can be referred to as 'iron amulet vortical regrowth'.
+It is of 1st level, weighs 0 pounds, and is worth 30 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies air-based spell damage by 13%
+   boosts your bleed damage by 32%
+   modifies artifact find by 20
+   modifies health regeneration by 2
+   modifies drowning-based spell damage by 1%
+   modifies health by 32
+
+.. this object, lightfoot silver amulet of pandemic, is treasure,
+   and can be referred to as 'silver amulet lightfoot pandemic'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies disease-based spell damage by 14%
+   modifies reflex save by 5
+   modifies damage against elves by 20%
+   modifies resistance to lightning by 12
+   modifies damage against humans by 11%
+   modifies resistance to mental by 1
+
+.. this object, diamond bronze amulet of supremacy, is treasure,
+   and can be referred to as 'bronze amulet diamond supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 20 gold and 20 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against minotaurs by 12%
+   modifies earth-based spell damage by 13%
+   boosts your vampiric touch damage by 29%
+   modifies dexterity by 4
+   modifies mana by 14
+
+.. this object, diamond bronze amulet of contagion, is treasure,
+   and can be referred to as 'bronze amulet diamond contagion'.
+It is of 1st level, weighs 0 pounds, and is worth 22 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies reflex save by 4
+   modifies mana by 41
+   modifies disease-based spell damage by 10%
+   modifies earth-based spell damage by 13%
+   modifies negative-based spell damage by 5%
+   modifies move regeneration by 1
+
+.. this object, immovable bronze amulet of pandemic, is treasure,
+   and can be referred to as 'bronze amulet immovable pandemic'.
+It is of 1st level, weighs 0 pounds, and is worth 23 gold and 85 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies fortitude save by 6
+   modifies disease-based spell damage by 15%
+   modifies dexterity by 4
+   modifies damage against minotaurs by 14%
+   modifies sound-based spell damage by 10%
+   boosts your harpoon damage by 8%
+
+.. this object, necrotic bronze amulet of maelstrom, is treasure,
+   and can be referred to as 'bronze amulet necrotic maelstrom'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 85 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies drowning-based spell damage by 12%
+   modifies resistance to sound by 13
+   modifies disease-based spell damage by 12%
+   modifies holy-based spell damage by 7%
+   modifies damage against kenders by 18%
+
+.. this object, annihilating silver amulet of iron constitution, is treasure,
+   and can be referred to as 'silver amulet annihilating iron constitution'.
+It is of 1st level, weighs 0 pounds, and is worth 24 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies air-based spell damage by 8%
+   modifies fortitude save by 6
+   modifies Abyss resistance by 7%
+   modifies fortitude spellforce by 6
+   modifies holy-based spell damage by 2%
+
+.. this object, sombre steel amulet of lich, is treasure,
+   and can be referred to as 'steel amulet sombre lich'.
+It is of 1st level, weighs 0 pounds, and is worth 23 gold and 45 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   modifies negative-based spell damage by 15%
+   modifies damage against minotaurs by 16%
+   modifies health regeneration by 1
+   modifies damage against dragons and their riders by 24%
+   modifies damage against undead by 11%
+   modifies resistance to negative by 11
+
+.. this object, unshakable bone amulet of concussive blast, is treasure,
+   and can be referred to as 'bone amulet unshakable concussive blast'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 60 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against gnomes by 20%
+   modifies sound-based spell damage by 14%
+   modifies air-based spell damage by 4%
+   modifies will save by 5
+   modifies fortitude save by 5
+
+.. this object, stanch iron armor of perfect unmaking, is armor,
+   and can be referred to as 'iron armor stanch perfect unmaking'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 85 silver.
+You can wear it around your body.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against minotaurs by 22%
+   modifies damage against draconians by 24%
+   modifies damage against dragons and their riders by 17%
+   modifies reflex spellforce by 6
+   modifies fortitude save by 5
+
+.. this object, endless silver amulet of attenuation, is treasure,
+   and can be referred to as 'silver amulet endless attenuation'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies Abyss resistance by 8%
+   modifies move regeneration by 2
+   modifies reflex spellforce by 5
+   modifies intelligence by 4
+   modifies damage against dwarves by 23%
+
+.. this object, tingling leather shield of clockwork carnage, is armor,
+   and can be referred to as 'leather shield tingling clockwork carnage'.
+It is of 1st level, weighs 1 pound, and is worth 17 gold and 85 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against gnomes by 23%
+   modifies resistance to lightning by 29
+   modifies drowning-based spell damage by 5%
+   modifies hit roll by 3
+   modifies damage against dragons and their riders by 24%
+
+.. this object, netherforged silver amulet of supremacy, is treasure,
+   and can be referred to as 'silver amulet netherforged supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies damage against minotaurs by 24%
+   modifies Abyss resistance by 3%
+   modifies damage in the Abyss by 6%
+   boosts your hell ball damage by 32%
+   modifies strength by 3
+   modifies damage against gnomes by 22%
+
+.. this object, endless iron amulet of adamant will, is treasure,
+   and can be referred to as 'iron amulet endless adamant will'.
+It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies will save by 6
+   modifies earth-based spell damage by 9%
+   modifies move regeneration by 2
+   modifies damage roll by 5
+   boosts your caltraps damage by 20%
+
+.. this object, reviving leather boots of the magus, is armor,
+   and can be referred to as 'leather boots reviving the magus'.
+It is of 1st level, weighs 1 pound, and is worth 29 gold and 60 silver.
+You can wear it on your feet.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies mana regeneration by 2
+   modifies earth-based spell damage by 6%
+   modifies health regeneration by 2
+   modifies damage against draconians by 22%
+   modifies negative-based spell damage by 3%
+   modifies resistance to cold by 3
+
+.. this object, perfected leather boots of concussive blast, is armor,
+   and can be referred to as 'leather boots perfected concussive blast'.
+It is of 1st level, weighs 1 pound, and is worth 31 gold and 35 silver.
+You can wear it on your feet.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies sound-based spell damage by 14%
+   modifies reflex spellforce by 6
+   modifies damage against humans by 24%
+   boosts your magic missile damage by 31%
+   modifies artifact find by 29
+
+.. this object, empowered leather robe of antisepsis, is armor,
+   and can be referred to as 'leather robe empowered antisepsis'.
+It is of 1st level, weighs 1 pound, and is worth 1 gold.
 You can wear it on your torso.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies reflex spellforce by 6
-   modifies acid-based spell damage by 6%
-   modifies earth-based spell damage by 12%
-   modifies poison-based spell damage by 14%
-   modifies resistance to lightning by 3
-   modifies damage against minotaurs by 22%
+   boosts your meteor swarm damage by 24%
+   modifies intelligence by 4
+   modifies resistance to disease by 5
 
-.. this object, unshakable steel armor of perfect sundering, is armor,
-   and can be referred to as 'steel armor unshakable perfect sundering'.
-It is of 1st level, weighs 1 pound, and is worth 19 gold and 20 silver.
-You can wear it around your body.
+.. this object, vortical bronze amulet of supremacy, is treasure,
+   and can be referred to as 'bronze amulet vortical supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 28 gold and 10 silver.
+You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
 When worn, it
-   modifies Abyss resistance by 2%
-   modifies health regeneration by 1
-   modifies damage against gnomes by 16%
-   modifies fortitude spellforce by 6
-   modifies will save by 5
+   modifies reflex save by 5
+   boosts your meteor swarm damage by 34%
+   modifies air-based spell damage by 14%
+   modifies resistance to cold by 11
+   modifies damage in the Abyss by 3%
+   modifies damage against elves by 19%
 
-.. this object, earsplitting iron armor of twister clouds, is armor,
-   and can be referred to as 'iron armor earsplitting twister clouds'.
-It is of 1st level, weighs 1 pound, and is worth 22 gold and 85 silver.
-You can wear it around your body.
+.. this object, diamond bronze amulet of dominion, is treasure,
+   and can be referred to as 'bronze amulet diamond dominion'.
+It is of 1st level, weighs 0 pounds, and is worth 32 gold and 35 silver.
+You can wear it around your neck.
 It sheds a magical aura.
 It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies air-based spell damage by 11%
-   modifies sound-based spell damage by 13%
-   modifies acid-based spell damage by 6%
-   modifies mana by 58
-   modifies damage against elves by 1%
-   modifies moves by 17
+   modifies damage against undead by 18%
+   modifies air-based spell damage by 7%
+   modifies damage in the Abyss by 6%
+   modifies damage against draconians by 21%
+   modifies earth-based spell damage by 29%
 
-.. this object, sombre steel sleeves of sturdiness, is armor,
-   and can be referred to as 'steel sleeves sombre sturdiness'.
-It is of 1st level, weighs 1 pound, and is worth 23 gold and 20 silver.
-You can wear it on your arms.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
-When worn, it
-   modifies physical resistance by 9
-   modifies damage against humans by 15%
-   modifies resistance to negative by 15
-   boosts your swipe damage by 15%
-   modifies constitution by 4
-
-.. this object, ornate leather sleeves of body sundering, is armor,
-   and can be referred to as 'leather sleeves ornate body sundering'.
-It is of 1st level, weighs 1 pound, and is worth 13 gold and 15 silver.
-You can wear it on your arms.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies fortitude spellforce by 5
-   modifies damage against elves by 20%
-   modifies mana regeneration by 1
-   modifies damage against gnomes by 13%
-   modifies moves by 12
-   boosts your concussion strike damage by 9%
-
-.. this object, marble leather armor of body sundering, is armor,
-   and can be referred to as 'leather armor marble body sundering'.
-It is of 1st level, weighs 1 pound, and is worth 15 gold and 85 silver.
-You can wear it around your body.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies mana by 60
-   modifies damage against dragons and their riders by 15%
-   modifies fortitude spellforce by 4
-   modifies earth-based spell damage by 8%
-   modifies resistance to cold by 8
-   modifies health by 23
-
-.. this object, lethal bone gloves of sturdiness, is armor,
-   and can be referred to as 'bone gloves lethal sturdiness'.
-It is of 1st level, weighs 1 pound, and is worth 34 gold and 90 silver.
+.. this object, divine bronze gloves of keg-smasher's fury, is armor,
+   and can be referred to as 'bronze gloves divine keg-smasher's fury'.
+It is of 1st level, weighs 1 pound, and is worth 18 gold and 10 silver.
 You can wear it on your hands.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
 When worn, it
-   modifies physical resistance by 8
-   modifies poison-based spell damage by 15%
-   boosts your shadowfire damage by 30%
-   modifies mental-based spell damage by 6%
-   modifies earth-based spell damage by 3%
-   modifies mana by 1
+   modifies damage against draconians by 17%
+   modifies damage against dwarves by 25%
+   modifies damage against undead by 25%
+   modifies reflex spellforce by 5
+   boosts your cause critical damage by 22%
 
-.. this object, unshakable bone sleeves of adamant will, is armor,
-   and can be referred to as 'bone sleeves unshakable adamant will'.
-It is of 1st level, weighs 1 pound, and is worth 17 gold and 60 silver.
-You can wear it on your arms.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies negative-based spell damage by 5%
-   modifies damage against humans by 14%
-   modifies will save by 11
-   modifies reflex spellforce by 2
-   modifies intelligence by 3
-
-.. this object, rejuvenating steel sleeves of avulsed wounds, is armor,
-   and can be referred to as 'steel sleeves rejuvenating avulsed wounds'.
-It is of 1st level, weighs 1 pound, and is worth 15 gold and 45 silver.
-You can wear it on your arms.
+.. this object, submerging steel helmet of supremacy, is armor,
+   and can be referred to as 'steel helmet submerging supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 45 silver.
+You can wear it on your head.
 It sheds a magical aura.
 It cannot be located by magical means.
 Armor class bonus: 6 vs pierce, 6 vs bash, 6 vs slash, and 6 vs magic.
 When worn, it
-   modifies damage against minotaurs by 21%
-   modifies disease-based spell damage by 5%
-   modifies health regeneration by 1
-   boosts your ground control damage by 24%
-   modifies damage roll by 6
+   modifies damage against dragons and their riders by 18%
+   modifies drowning-based spell damage by 8%
+   modifies health by 42
+   boosts your tsunami damage by 26%
+   modifies resistance to mental by 9
+   modifies damage against undead by 3%
 
-.. this object, nether bone gloves of supremacy, is armor,
-   and can be referred to as 'bone gloves nether supremacy'.
-It is of 1st level, weighs 1 pound, and is worth 18 gold and 85 silver.
-You can wear it on your hands.
-It sheds a magical aura.
-It cannot be located by magical means.
-Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
-When worn, it
-   modifies Abyss resistance by 6%
-   modifies damage against humans by 22%
-   boosts your sweep kick damage by 27%
-   modifies will spellforce by 1
-   modifies poison-based spell damage by 2%
-
-.. this object, kingslayer's silver ring of draconicide, is treasure,
-   and can be referred to as 'silver ring kingslayer's draconicide'.
-It is of 1st level, weighs 0 pounds, and is worth 16 gold and 35 silver.
+.. this object, savage silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring savage supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 22 gold and 35 silver.
 You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies damage against dragons and their riders by 23%
-   modifies Abyss resistance by 2%
-   modifies damage against gnomes by 14%
-   modifies damage against humans by 17%
-   boosts your shield bash damage by 15%
-   modifies fortitude save by 3
+   boosts your chill touch damage by 30%
+   modifies damage against elves by 21%
+   modifies damage against dragons and their riders by 31%
+   modifies damage against gnomes by 17%
+   modifies damage roll by 4
 
-.. this object, annihilating bronze ring of perfect unmaking, is treasure,
-   and can be referred to as 'bronze ring annihilating perfect unmaking'.
+.. this object, perfected silver sleeves of psychic annihilation, is armor,
+   and can be referred to as 'silver sleeves perfected psychic annihilation'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 60 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies mental-based spell damage by 14%
+   boosts your impale damage by 33%
+   modifies health by 42
+   modifies resistance to sound by 10
+   modifies reflex spellforce by 1
+
+.. this object, dominating silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring dominating supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 28 gold and 10 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies will spellforce by 6
+   modifies resistance to energy by 14
+   modifies move regeneration by 2
+   modifies air-based spell damage by 7%
+   boosts your ambush damage by 34%
+   modifies moves by 25
+
+.. this object, abyssal wave silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring abyssal wave supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your acid arrow damage by 60%
+   modifies drowning-based spell damage by 12%
+   modifies sound-based spell damage by 5%
+   modifies dexterity by 3
+   modifies damage against undead by 6%
+
+.. this object, empowered iron ring of twister clouds, is treasure,
+   and can be referred to as 'iron ring empowered twister clouds'.
+It is of 1st level, weighs 0 pounds, and is worth 17 gold and 45 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against dragons and their riders by 16%
+   modifies damage against kenders by 17%
+   modifies air-based spell damage by 12%
+   boosts your shadowfire damage by 22%
+   modifies moves by 38
+   modifies resistance to energy by 5
+
+.. this object, thought-etched silver boots of archon, is armor,
+   and can be referred to as 'silver boots thought-etched archon'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 10 silver.
+You can wear it on your feet.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies mental-based spell damage by 5%
+   modifies holy-based spell damage by 11%
+   modifies damage against dwarves by 24%
+   modifies poison-based spell damage by 5%
+   modifies damage against humans by 8%
+   boosts your viper strike damage by 23%
+
+.. this object, netherforged silver amulet of supremacy, is treasure,
+   and can be referred to as 'silver amulet netherforged supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 23 gold and 10 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies damage in the Abyss by 7%
+   boosts your crush damage by 31%
+   modifies damage against kenders by 16%
+   modifies damage against gnomes by 14%
+   modifies resistance to acid by 11
+
+.. this object, purified silver belt of wyrmlord's nemesis, is armor,
+   and can be referred to as 'silver belt purified wyrmlord's nemesis'.
+It is of 1st level, weighs 1 pound, and is worth 15 gold and 85 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 10 vs pierce, 10 vs bash, 10 vs slash, and 10 vs magic.
+When worn, it
+   modifies damage against dwarves by 19%
+   modifies damage against draconians by 23%
+   modifies strength by 4
+   modifies resistance to piercing by 7
+   modifies resistance to holy by 15
+
+.. this object, netherforged silver ring of supremacy, is treasure,
+   and can be referred to as 'silver ring netherforged supremacy'.
 It is of 1st level, weighs 0 pounds, and is worth 21 gold and 35 silver.
 You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies damage against humans by 24%
-   modifies reflex spellforce by 6
-   modifies damage against dwarves by 17%
-   modifies fortitude spellforce by 6
-   modifies hit roll by 1
-   modifies resistance to lightning by 1
+   modifies armor class by -15
+   modifies damage in the Abyss by 7%
+   boosts your tackle damage by 35%
+   modifies resistance to sound by 15
+   modifies sound-based spell damage by 5%
+   modifies fortitude save by 2
 
-.. this object, psychic iron ring of supremacy, is treasure,
-   and can be referred to as 'iron ring psychic supremacy'.
-It is of 1st level, weighs 0 pounds, and is worth 21 gold and 85 silver.
+.. this object, stanch bronze bracelet of supremacy, is treasure,
+   and can be referred to as 'bronze bracelet stanch supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 23 gold and 10 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your meteor swarm damage by 31%
+   modifies fortitude save by 4
+   modifies resistance to sound by 14
+   modifies poison-based spell damage by 9%
+   modifies air-based spell damage by 6%
+
+.. this object, unshakable silver bracelet of supremacy, is treasure,
+   and can be referred to as 'silver bracelet unshakable supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 22 gold and 10 silver.
+You can wear it around your wrist.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies damage against draconians by 17%
+   modifies will save by 4
+   boosts your magic missile damage by 28%
+   modifies resistance to energy by 14
+   modifies constitution by 4
+   modifies acid-based spell damage by 4%
+
+.. this object, perfected silver amulet of regrowth, is treasure,
+   and can be referred to as 'silver amulet perfected regrowth'.
+It is of 1st level, weighs 0 pounds, and is worth 30 gold and 35 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies health regeneration by 2
+   modifies resistance to negative by 14
+   modifies will save by 4
+   modifies damage against humans by 20%
+   boosts your chain lightning damage by 35%
+   modifies health by 35
+
+.. this object, marble bronze ring of sonic boom, is treasure,
+   and can be referred to as 'bronze ring marble sonic boom'.
+It is of 1st level, weighs 0 pounds, and is worth 16 gold and 35 silver.
 You can wear it on your finger.
 It sheds a magical aura.
 It cannot be located by magical means.
 When worn, it
-   modifies mental-based spell damage by 8%
-   modifies artifact find by 26
-   boosts your viper strike damage by 31%
-   modifies resistance to sound by 11
-   modifies resistance to lightning by 8
+   modifies sound-based spell damage by 7%
+   modifies earth-based spell damage by 7%
+   modifies damage against dragons and their riders by 21%
+   modifies damage against draconians by 13%
+   modifies fortitude save by 3
 
+.. this object, diamond bone ring of supremacy, is treasure,
+   and can be referred to as 'bone ring diamond supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 31 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your dagger damage by 33%
+   modifies will spellforce by 6
+   modifies earth-based spell damage by 14%
+   modifies fortitude spellforce by 6
+   modifies reflex save by 3
+   modifies mana regeneration by 1
+
+.. this object, gangrenous bone cap of attenuation, is armor,
+   and can be referred to as 'bone cap gangrenous attenuation'.
+It is of 1st level, weighs 1 pound, and is worth 22 gold and 35 silver.
+You can wear it on your head.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies disease-based spell damage by 9%
+   modifies damage against draconians by 21%
+   modifies damage against humans by 33%
+   modifies Abyss resistance by 7%
+   modifies resistance to holy by 8
+
+.. this object, caustic bone shield of concussive blast, is armor,
+   and can be referred to as 'bone shield caustic concussive blast'.
+It is of 1st level, weighs 1 pound, and is worth 20 gold and 60 silver.
+You can use it as a shield.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against kenders by 16%
+   modifies sound-based spell damage by 15%
+   modifies damage against dwarves by 25%
+   modifies acid-based spell damage by 7%
+   modifies will spellforce by 3
+
+.. this object, soundless bone boots of maelstrom, is armor,
+   and can be referred to as 'bone boots soundless maelstrom'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 10 silver.
+You can wear it on your feet.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies resistance to sound by 12
+   modifies resistance to earth by 15
+   modifies resistance to acid by 14
+   modifies drowning-based spell damage by 15%
+   modifies acid-based spell damage by 4%
+   modifies damage against gnomes by 4%
+
+.. this object, hallowed leather leggings of supremacy, is armor,
+   and can be referred to as 'leather leggings hallowed supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 17 gold and 60 silver.
+You can wear it on your legs.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies damage against dragons and their riders by 18%
+   modifies damage against undead by 17%
+   boosts your lightning bolt damage by 27%
+   modifies moves by 19
+   modifies damage against draconians by 17%
+
+.. this object, beaming leather sleeves of sylvan death, is armor,
+   and can be referred to as 'leather sleeves beaming sylvan death'.
+It is of 1st level, weighs 1 pound, and is worth 11 gold and 10 silver.
+You can wear it on your arms.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   boosts your flail damage by 20%
+   modifies resistance to energy by 11
+   modifies damage against elves by 25%
+   modifies damage against dwarves by 3%
+   modifies damage against humans by 2%
+
+.. this object, gangrenous bone cap of supremacy, is armor,
+   and can be referred to as 'bone cap gangrenous supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 18 gold and 60 silver.
+You can wear it on your head.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies disease-based spell damage by 10%
+   boosts your razorwind damage by 27%
+   modifies damage against dwarves by 24%
+   modifies damage roll by 4
+   modifies constitution by 4
+
+.. this object, earsplitting iron amulet of supremacy, is treasure,
+   and can be referred to as 'iron amulet earsplitting supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 25 gold and 60 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your heat metal damage by 34%
+   modifies sound-based spell damage by 11%
+   modifies will save by 6
+   modifies damage against undead by 18%
+   modifies air-based spell damage by 1%
+
+.. this object, black silver amulet of avulsed wounds, is treasure,
+   and can be referred to as 'silver amulet black avulsed wounds'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 60 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies damage against humans by 35%
+   modifies Abyss resistance by 2%
+   modifies negative-based spell damage by 10%
+   modifies damage roll by 6
+   modifies will save by 2
+
+.. this object, gangrenous bronze ring of human purging, is treasure,
+   and can be referred to as 'bronze ring gangrenous human purging'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies resistance to sound by 11
+   modifies damage against humans by 22%
+   modifies disease-based spell damage by 10%
+   modifies mana regeneration by 1
+   modifies damage against draconians by 21%
+   modifies resistance to air by 8
+
+.. this object, beaming bone belt of supremacy, is armor,
+   and can be referred to as 'bone belt beaming supremacy'.
+It is of 1st level, weighs 1 pound, and is worth 21 gold and 10 silver.
+You can wear it about your waist.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies resistance to energy by 15
+   boosts your ring of fire damage by 26%
+   modifies resistance to air by 12
+   modifies damage against draconians by 13%
+   modifies drowning-based spell damage by 5%
+   modifies damage against dragons and their riders by 6%
+
+.. this object, vortical bronze ring of supremacy, is treasure,
+   and can be referred to as 'bronze ring vortical supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 28 gold and 85 silver.
+You can wear it on your finger.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   boosts your bow damage by 26%
+   modifies damage against kenders by 17%
+   modifies damage against undead by 21%
+   modifies damage against minotaurs by 16%
+   modifies air-based spell damage by 15%
+   modifies damage against dragons and their riders by 16%
+
+.. this object, cruel silver amulet of perfect sundering, is treasure,
+   and can be referred to as 'silver amulet cruel perfect sundering'.
+It is of 1st level, weighs 0 pounds, and is worth 18 gold and 95 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -15
+   modifies resistance to acid by 11
+   modifies fortitude spellforce by 6
+   modifies damage roll by 6
+   modifies moves by 29
+   modifies resistance to earth by 12
+
+.. this object, perfected woolen robe of psychic annihilation, is armor,
+   and can be referred to as 'woolen robe perfected psychic annihilation'.
+It is of 1st level, weighs 1 pound, and is worth 23 gold and 35 silver.
+You can wear it on your torso.
+It sheds a magical aura.
+It cannot be located by magical means.
+Armor class bonus: 2 vs pierce, 2 vs bash, 2 vs slash, and 2 vs magic.
+When worn, it
+   modifies resistance to air by 12
+   modifies resistance to drowning by 12
+   modifies mental-based spell damage by 14%
+   boosts your cause light damage by 57%
+   modifies fortitude spellforce by 1
+   modifies damage against dragons and their riders by 4%
+
+.. this object, consecrated steel amulet of supremacy, is treasure,
+   and can be referred to as 'steel amulet consecrated supremacy'.
+It is of 1st level, weighs 0 pounds, and is worth 19 gold and 95 silver.
+You can wear it around your neck.
+It sheds a magical aura.
+It cannot be located by magical means.
+When worn, it
+   modifies armor class by -10
+   modifies damage against kenders by 12%
+   modifies damage against dragons and their riders by 18%
+   boosts your shield bash damage by 28%
+   modifies artifact find by 11
+   modifies damage against minotaurs by 19%
+   modifies damage against undead by 4%
 
