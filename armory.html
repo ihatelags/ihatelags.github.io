@@ -3,207 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUD Item Bonus Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Solace MUD Equipment Bonus Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+        :root {
+            --bg: #0a0e14;
+            --panel: #1a202c;
+            --text: #e2e8f0;
+            --accent: #f6ad55;
+            --border: #2d3748;
+            --header-bg: #171923;
+            --danger: #fc8181;
+            --muted: #718096;
+            --input-bg: #0f172a;
         }
-        .table-container {
-            margin-bottom: 2rem;
+
+        body { 
+            font-family: 'Segoe UI', 'Consolas', 'Monaco', monospace; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
         }
-        th, td {
-            padding: 0.1rem 1rem;
+
+        .terminal {
+            width: 100%;
+            max-width: 1000px;
+            background: var(--panel);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
-        th {
-            background-color: #e5e7eb;
+
+        header {
+            background: var(--header-bg);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .table-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 0.5rem;
+
+        h1 { 
+            margin: 0; 
+            font-size: 0.9rem; 
+            color: var(--accent); 
+            letter-spacing: 2px; 
+            font-weight: 700;
+            text-transform: uppercase;
         }
+
+        .content { padding: 20px; }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 220px;
+            background: var(--input-bg);
+            color: #fff;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            resize: vertical;
+            outline: none;
+        }
+
+        textarea:focus { border-color: var(--accent); }
+
+        .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--input-bg);
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        button.btn-calculate {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #1a202c;
+            border: none;
+            font-weight: 800;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.2s;
+            margin-bottom: 20px;
+        }
+
+        button.btn-calculate:hover { opacity: 0.9; }
+
+        .results-panel {
+            background: var(--header-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .summary-section-title {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 6px;
+        }
+
+        .stat-val {
+            font-size: 0.8rem;
+            font-family: 'Consolas', monospace;
+        }
+
+        .unmatched-list {
+            grid-column: 1 / -1;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            font-size: 0.75rem;
+            color: var(--danger);
+        }
+
+        .error-msg { color: var(--danger); padding: 10px; border: 1px solid var(--danger); background: rgba(252, 129, 129, 0.1); border-radius: 4px; font-size: 0.85rem; }
     </style>
 </head>
-<body class="p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 sm:p-10 border border-gray-200">
-        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-2">MUD Item Bonus Calculator</h1>
-        <p class="text-center text-gray-500 mb-6">Paste your item descriptions below to calculate total bonuses.</p>
+<body>
 
-        <textarea
-            id="item-descriptions"
-            class="w-full h-80 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200 resize-y"
-            placeholder="Paste your item descriptions here..."
-        ></textarea>
+<div class="terminal">
+    <header>
+        <h1>Solace Equipment Calculator</h1>
+    </header>
 
-        <button
-            onclick="calculateBonuses()"
-            class="w-full mt-4 py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200"
-        >
-            Calculate Bonuses
-        </button>
-
-        <div id="results" class="mt-8">
-            <!-- Results will be displayed here in two tables -->
+    <div class="content">
+        <div class="file-input-wrapper">
+            <span>Data source: itemdb_solace.csv (Loaded automatically if present)</span>
+            <input type="file" id="csvFile" accept=".csv">
         </div>
+
+        <div class="input-group">
+            <label for="pasteInput">Paste Gear Output</label>
+            <textarea id="pasteInput" placeholder="<worn on finger>    (Glowing) (Humming) the Ring of Glory&#10;<worn on torso>     a suit of darkened platemail..."></textarea>
+        </div>
+
+        <button class="btn-calculate" onclick="calculateStats()">Calculate Bonuses</button>
+
+        <div id="output"></div>
     </div>
+</div>
 
-    <script>
-        function calculateBonuses() {
-            const descriptions = document.getElementById('item-descriptions').value.split(/\.\. this object,/);
-            
-            let totalAC = { pierce: 0, bash: 0, slash: 0, magic: 0 };
-            let totalModifiers = {};
+<script>
+    const CSV_URL = 'itemdb_solace.csv';
+    const STAT_MAP = {
+        "damage roll": "DAMROLL", "hit roll": "HITROLL", "health": "HIT", "hp": "HIT",
+        "fortitude save": "FORT", "will save": "WILL", "reflex save": "REF", "all save": "ALL_SVS",
+        "strength": "STR", "intelligence": "INT", "wisdom": "WIS", "dexterity": "DEX", "constitution": "CON",
+        "mana": "MANA", "moves": "MOVE", "armor class": "AC"
+    };
 
-            const acBonusRegex = /Armor class bonus: (\d+) vs pierce, (\d+) vs bash, (\d+) vs slash, and (\d+) vs magic\./;
-            const modifierRegex = /(modifies|resistance to)\s+(.+?)\s+by\s+(-?\d+)/g;
-            const noValueModifierRegex = /modifies\s+([a-zA-Z\s]+?)\s*$/gm;
+    function parseItemStats(infoText) {
+        const stats = {};
+        if (!infoText) return stats;
 
-            descriptions.forEach(desc => {
-                if (desc.trim() === '') return;
+        const lines = infoText.toLowerCase().split('\n');
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            const generalMatch = trimmed.match(/(?:modifies|modifying|affects) (.*?) by (-?\d+)/i);
+            const resMatch = trimmed.match(/(.*?) resistance:?\s*(-?\d+)/i);
+            const namedResMatch = trimmed.match(/resistance to (.*?):?\s*(-?\d+)/i);
+
+            if (generalMatch) {
+                let key = generalMatch[1].trim();
+                const val = parseInt(generalMatch[2]);
                 
-                // Match the specific Armor Class bonus line
-                const acMatch = desc.match(acBonusRegex);
-                if (acMatch) {
-                    totalAC.pierce += parseInt(acMatch[1] || 0);
-                    totalAC.bash += parseInt(acMatch[2] || 0);
-                    totalAC.slash += parseInt(acMatch[3] || 0);
-                    totalAC.magic += parseInt(acMatch[4] || 0);
-                }
+                const isPhysical = key.includes("physical resistance") || key.includes("physical");
+                const isNamedResist = key.includes("resistance to") || key.includes("resistance");
 
-                // Match modifiers with a number
-                let match;
-                while ((match = modifierRegex.exec(desc)) !== null) {
-                    const type = match[1];
-                    const name = match[2].trim();
-                    let value = parseInt(match[3]);
-
-                    if (type === 'modifies' && name === 'armor class') {
-                         if (!totalModifiers[name]) {
-                            totalModifiers[name] = 0;
-                        }
-                        totalModifiers[name] += value;
-                    } else if (type === 'resistance to') {
-                        const fullName = `resistance to ${name}`;
-                        if (!totalModifiers[fullName]) {
-                            totalModifiers[fullName] = 0;
-                        }
-                        totalModifiers[fullName] += value;
-                    } else {
-                        if (!totalModifiers[name]) {
-                            totalModifiers[name] = 0;
-                        }
-                        totalModifiers[name] += value;
-                    }
-                }
-
-                // Match modifiers without a value, like "modifies damage roll"
-                while ((match = noValueModifierRegex.exec(desc)) !== null) {
-                    const name = match[1].trim();
-                    if (!totalModifiers[name]) {
-                        totalModifiers[name] = 0;
-                    }
-                    totalModifiers[name] += 1;
-                }
-            });
-
-            displayResults(totalAC, totalModifiers);
-        }
-
-        function displayResults(ac, modifiers) {
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
-
-            const mainBonuses = [];
-            const otherBonuses = [];
-            const acBonuses = [];
-
-            const mainCategories = {
-                'reflex save': 'refl svs',
-                'will save': 'will svs',
-                'fortitude save': 'fort svs',
-                'damage roll': 'damroll',
-                'health': 'hp'
-            };
-
-            const resistanceCategories = {
-                'resistance to bashing': 'resist bashing',
-                'resistance to piercing': 'resist piercing',
-                'resistance to slashing': 'resist slashing',
-                'resistance to acid': 'resist acid',
-                'resistance to cold': 'resist cold',
-                'resistance to fire': 'resist fire',
-                'resistance to lightning': 'resist lightning',
-                'resistance to holy': 'resist holy',
-                'resistance to negative': 'resist negative',
-                'resistance to energy': 'resist energy',
-                'resistance to poison': 'resist poison',
-                'resistance to disease': 'resist disease',
-                'resistance to drowning': 'resist drowning',
-                'resistance to mental': 'resist mental',
-                'resistance to sound': 'resist sound'
-            };
-            
-            // Separate resistances from other modifiers
-            const resistances = [];
-            const other = [];
-
-            for (const name in modifiers) {
-                if (mainCategories[name]) {
-                    mainBonuses.push({ name: mainCategories[name], value: modifiers[name] });
-                } else if (resistanceCategories[name]) {
-                    resistances.push({ name: resistanceCategories[name], value: modifiers[name] });
+                if (isPhysical) {
+                    stats[`RES_PHYSICAL`] = (stats[`RES_PHYSICAL`] || 0) + val;
+                } else if (isNamedResist) {
+                    const cleanKey = key.replace("resistance to", "").replace("resistance", "").trim();
+                    stats[`RES_${cleanKey.toUpperCase()}`] = (stats[`RES_${cleanKey.toUpperCase()}`] || 0) + val;
                 } else {
-                    other.push({ name, value: modifiers[name] });
+                    let mapped = false;
+                    for (let k in STAT_MAP) { 
+                        if (key === k || key.includes(k)) { 
+                            stats[STAT_MAP[k]] = (stats[STAT_MAP[k]] || 0) + val; 
+                            mapped = true;
+                            break; 
+                        } 
+                    }
+                    if (!mapped) stats[key.toUpperCase()] = (stats[key.toUpperCase()] || 0) + val;
+                }
+            } else if (resMatch || namedResMatch) {
+                const type = (resMatch ? resMatch[1] : namedResMatch[1]).trim();
+                const val = parseInt(resMatch ? resMatch[2] : namedResMatch[2]);
+                if (type.toLowerCase() === "physical") {
+                    stats[`RES_PHYSICAL`] = (stats[`RES_PHYSICAL`] || 0) + val;
+                } else {
+                    stats[`RES_${type.toUpperCase()}`] = (stats[`RES_${type.toUpperCase()}`] || 0) + val;
                 }
             }
-            
-            for (const type in ac) {
-                if (ac[type] !== 0) {
-                    acBonuses.push({ name: `armor class vs. ${type}`, value: ac[type] });
-                }
-            }
+        });
+        return stats;
+    }
 
-            // Sort individual arrays
-            mainBonuses.sort((a, b) => a.name.localeCompare(b.name));
-            resistances.sort((a, b) => a.name.localeCompare(b.name));
-            other.sort((a, b) => a.name.localeCompare(b.name));
-            acBonuses.sort((a, b) => a.name.localeCompare(b.name));
-            
-            // Combine resistances and other into one array for the "Everything Else" table
-            otherBonuses.push(...resistances, ...other);
+    function cleanItemName(line) {
+        let name = line.replace(/<[^>]+>/g, ''); 
+        name = name.replace(/\([^)]+\)/g, ''); 
+        return name.trim().toLowerCase();
+    }
 
-            const createTableHtml = (title, bonuses) => {
-                if (bonuses.length === 0) return '';
-                let tableHtml = `<div class="table-container">
-                                    <h3 class="table-title">${title}</h3>
-                                    <table class="w-full text-left border-collapse rounded-lg overflow-hidden shadow">
-                                        <tbody>`;
+    function calculateStats() {
+        const text = document.getElementById('pasteInput').value;
+        const fileInput = document.getElementById('csvFile');
+        const output = document.getElementById('output');
 
-                bonuses.forEach(bonus => {
-                    tableHtml += `<tr class="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="capitalize">${bonus.name}</td>
-                                    <td>${bonus.value}</td>
-                                  </tr>`;
-                });
-
-                tableHtml += `</tbody></table></div>`;
-                return tableHtml;
-            };
-
-            const mainTableHtml = createTableHtml('Main Bonuses', mainBonuses);
-            const otherTableHtml = createTableHtml('Everything Else', otherBonuses);
-            const acTableHtml = createTableHtml('Armor Class Bonuses', acBonuses);
-
-            if (mainTableHtml === '' && otherTableHtml === '' && acTableHtml === '') {
-                resultsDiv.innerHTML = `<p class="text-center text-gray-500">No bonuses found in the provided text.</p>`;
-            } else {
-                resultsDiv.innerHTML = mainTableHtml + otherTableHtml + acTableHtml;
-            }
+        if (!text.trim()) {
+            output.innerHTML = '<div class="error-msg">Please paste equipment text first.</div>';
+            return;
         }
-    </script>
+
+        const parseConfig = {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                processEquipment(results.data, text);
+            },
+            error: function(err) {
+                output.innerHTML = `<div class="error-msg">Error: ${err.message}</div>`;
+            }
+        };
+
+        if (fileInput.files.length > 0) {
+            Papa.parse(fileInput.files[0], parseConfig);
+        } else {
+            Papa.parse(CSV_URL, { ...parseConfig, download: true });
+        }
+    }
+
+    function processEquipment(dbItems, rawText) {
+        const output = document.getElementById('output');
+        const lines = rawText.split('\n');
+        
+        const totals = {};
+        const unmatched = [];
+        let matchedCount = 0;
+
+        lines.forEach(line => {
+            if (!line.includes('>')) return;
+            const cleaned = cleanItemName(line);
+            if (!cleaned) return;
+
+            const dbMatch = dbItems.find(item => item.name && item.name.toLowerCase().trim() === cleaned);
+
+            if (dbMatch) {
+                matchedCount++;
+                const itemStats = parseItemStats(dbMatch.info);
+                for (let stat in itemStats) {
+                    totals[stat] = (totals[stat] || 0) + itemStats[stat];
+                }
+            } else {
+                unmatched.push(cleaned);
+            }
+        });
+
+        let html = `<div class="results-panel">`;
+
+        // Stats Column
+        html += `<div><div class="summary-section-title">Character Totals (${matchedCount} Items Matched)</div><div class="stat-grid">`;
+        const allSvs = totals['ALL_SVS'] || 0;
+        
+        const coreStats = ["DAMROLL", "HITROLL", "HIT", "FORT", "WILL", "REF", "STR", "INT", "WIS", "DEX", "CON", "AC"];
+        coreStats.forEach(s => {
+            let val = totals[s] || 0;
+            if (["FORT", "WILL", "REF"].includes(s)) val += allSvs;
+            let label = s === "HIT" ? "HP" : s;
+            html += `<div class="stat-val"><span style="color:var(--muted)">${label.padEnd(8)}:</span> <span style="color:var(--accent); font-weight:bold">${val}</span></div>`;
+        });
+
+        Object.keys(totals).sort().forEach(s => {
+            if (coreStats.includes(s) || s === "ALL_SVS" || s.startsWith("RES_")) return;
+            html += `<div class="stat-val"><span style="color:var(--muted)">${s.padEnd(8)}:</span> ${totals[s]}</div>`;
+        });
+        html += `</div></div>`;
+
+        // Resistances Column
+        html += `<div><div class="summary-section-title">Resistances Summary</div><div class="stat-grid">`;
+        const resList = Object.keys(totals).filter(s => s.startsWith("RES_")).sort();
+        if (resList.length > 0) {
+            resList.forEach(r => {
+                const name = r.replace("RES_", "").toLowerCase();
+                html += `<div class="stat-val"><span style="color:var(--muted)">${name.padEnd(10)}:</span> <span style="color:var(--accent); font-weight:bold">${totals[r]}</span></div>`;
+            });
+        } else {
+            html += `<div class="stat-val" style="color:var(--muted)">None</div>`;
+        }
+        html += `</div></div>`;
+
+        // Unmatched Items Notice
+        if (unmatched.length > 0) {
+            html += `<div class="unmatched-list"><strong>Items not found in database:</strong><br>` + 
+                    unmatched.map(u => `- ${u}`).join('<br>') + `</div>`;
+        }
+
+        html += `</div>`;
+        output.innerHTML = html;
+    }
+</script>
 </body>
 </html>
