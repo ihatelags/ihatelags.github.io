@@ -249,6 +249,38 @@
         return name.trim().toLowerCase();
     }
 
+    // Normalizer to equalize articles and whitespace
+    function normalizeString(str) {
+        if (!str) return '';
+        return str.toLowerCase()
+                  .replace(/^(a|an|the)\s+/i, '')
+                  .replace(/['']/g, '')
+                  .replace(/\s+/g, ' ')
+                  .trim();
+    }
+
+    function findDatabaseMatch(dbItems, rawCleanedName) {
+        const targetNormalized = normalizeString(rawCleanedName);
+
+        // 1. Direct exact match
+        let match = dbItems.find(item => item.name && item.name.toLowerCase().trim() === rawCleanedName);
+        if (match) return match;
+
+        // 2. Normalized match (stripping 'a', 'an', 'the')
+        match = dbItems.find(item => item.name && normalizeString(item.name) === targetNormalized);
+        if (match) return match;
+
+        // 3. Substring match (Handles randomized suffixes like "of chance")
+        const baseTarget = targetNormalized.replace(/\s+of\s+chance$/i, '');
+        match = dbItems.find(item => {
+            if (!item.name) return false;
+            const dbNorm = normalizeString(item.name);
+            return dbNorm.includes(baseTarget) || baseTarget.includes(dbNorm);
+        });
+
+        return match || null;
+    }
+
     function calculateStats() {
         const text = document.getElementById('pasteInput').value;
         const fileInput = document.getElementById('csvFile');
@@ -290,7 +322,7 @@
             const cleaned = cleanItemName(line);
             if (!cleaned) return;
 
-            const dbMatch = dbItems.find(item => item.name && item.name.toLowerCase().trim() === cleaned);
+            const dbMatch = findDatabaseMatch(dbItems, cleaned);
 
             if (dbMatch) {
                 matchedCount++;
