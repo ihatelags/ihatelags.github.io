@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Gear Optimizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --panel: #1a202c;
+            --text: #e2e8f0;
+            --accent: #f6ad55;
+            --border: #2d3748;
+            --header-bg: #171923;
+            --input-bg: #0f172a;
+            --muted: #718096;
+        }
+
+        body { 
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .terminal-container {
+            border: 1px solid var(--border);
+        }
+
+        .slot-name { 
+            color: var(--muted); 
+            width: 140px; 
+            flex-shrink: 0; 
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            margin-right: 1rem;
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+        }
+
+        .gear-slot-row {
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            cursor: pointer;
+            transition: all 0.1s ease;
+            min-height: 3.5rem;
+        }
+
+        .gear-slot-row:hover {
+            background: rgba(246, 173, 85, 0.05);
+        }
+
+        .slot-conflict {
+            background: rgba(220, 38, 38, 0.15) !important;
+            border-left: 3px solid #ef4444 !important;
+        }
+
+        .stat-badge {
+            font-size: 0.6rem;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            padding: 1px 4px;
+            border-radius: 3px;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); }
+
+        .inventory-item {
+            border: 1px solid var(--border);
+        }
+        
+        .inventory-item:hover {
+            border: 1px solid var(--accent);
+            background: rgba(246, 173, 85, 0.1);
+        }
+        
+        .active-row {
+            background: rgba(246, 173, 85, 0.02);
+        }
+
+        .keyword-chip {
+            transition: all 0.2s;
+            cursor: copy;
+        }
+
+        #copyToast {
+            transition: opacity 0.3s;
+        }
+
+        .plain-stat-row {
+            font-size: 0.75rem;
+            border-bottom: 1px solid #1e293b;
+            padding: 2px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body class="p-4 flex justify-center min-h-screen">
+    <div id="copyToast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-[#f6ad55] text-black text-xs font-bold px-4 py-2 rounded shadow-lg opacity-0 pointer-events-none z-[100]">
+        COPIED TO CLIPBOARD
+    </div>
+
+    <div class="terminal-container w-full max-w-7xl bg-[#1a202c] rounded overflow-hidden shadow-2xl flex flex-col">
+        <header class="bg-[#171923] px-6 py-3 border-b border-[#2d3748] flex justify-between items-center">
+            <h1 class="text-[#f6ad55] font-bold uppercase tracking-widest text-sm">Gear Optimizer</h1>
+            <div class="flex gap-3">
+                <label class="cursor-pointer bg-[#f6ad55] hover:bg-[#ed8936] text-[#1a202c] px-3 py-1.5 rounded text-xs font-black uppercase transition-colors">
+                    Upload New TXT
+                    <input type="file" id="fileInput" accept=".txt" class="hidden">
+                </label>
+                <button id="resetBtn" class="bg-red-900/30 hover:bg-red-900/50 text-red-400 border border-red-900/50 px-3 py-1.5 rounded text-xs font-black uppercase transition-colors">
+                    Clear Loadout
+                </button>
+            </div>
+        </header>
+
+        <div class="p-4 bg-[#0a0e14] border-b border-[#2d3748]">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Total Stats</h2>
+                <div id="handWarning" class="hidden text-[0.6rem] bg-red-600 text-white px-2 py-0.5 rounded animate-pulse uppercase font-black">Hand Conflict!</div>
+            </div>
+            <div id="statsDisplay" class="grid grid-cols-3 gap-x-8 gap-y-0 text-[#e2e8f0]">
+                <div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Loading data...</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 flex-1 overflow-hidden">
+            <div class="lg:col-span-7 p-4 border-r border-[#2d3748] flex flex-col overflow-hidden">
+                <div id="gearGrid" class="flex-1 overflow-y-auto mb-4 pr-2 space-y-0.5"></div>
+                <div class="mt-auto border-t border-[#2d3748] pt-4">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Equipped Keywords</h2>
+                        <button id="copyAllFetchBtn" class="text-[0.6rem] bg-[#f6ad55] hover:bg-[#ed8936] text-[#1a202c] px-2 py-1 rounded font-black uppercase transition-colors">
+                            Copy All Fetch
+                        </button>
+                    </div>
+                    <div id="keywordList" class="flex flex-wrap gap-2 overflow-y-auto max-h-[100px] pr-2"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col bg-[#111827] overflow-hidden">
+                <div class="p-4 flex flex-col h-full">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 class="text-[0.65rem] text-[#718096] uppercase font-black tracking-wider">Inventory Archive</h2>
+                        <span id="itemCount" class="text-[0.6rem] text-[#f6ad55]">0 ITEMS</span>
+                    </div>
+                    <input type="text" id="itemSearch" placeholder="Search (example: 'find,damage roll')..." class="w-full bg-[#0f172a] border border-[#2d3748] text-[#f6ad55] text-xs p-2.5 rounded outline-none mb-3">
+                    
+                    <div id="inventoryContainer" class="flex-1 flex flex-col overflow-hidden">
+                        <div id="inventoryList" class="overflow-y-auto flex-1 space-y-1 pr-2"></div>
+                        <div id="showAllContainer" class="hidden pt-3 border-t border-[#2d3748] mt-2">
+                            <button id="showAllBtn" class="w-full bg-[#1a202c] hover:bg-[#2d3748] text-[#f6ad55] border border-[#f6ad55]/20 text-[0.65rem] font-black uppercase py-2 rounded">
+                                Show All Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Selection Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#1a202c] w-full max-w-lg rounded border border-[#2d3748] max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="bg-[#171923] p-4 border-b border-[#2d3748] flex justify-between items-center">
+                <h3 id="modalTitle" class="text-[#f6ad55] text-xs font-black uppercase tracking-widest">Select Item</h3>
+                <button onclick="closeModal()" class="text-[#718096] text-xl">&times;</button>
+            </div>
+            <div id="modalList" class="overflow-y-auto p-4 space-y-2 bg-[#0a0e14]"></div>
+            <div class="p-4 bg-[#171923] border-t border-[#2d3748] flex gap-2">
+                <button id="modalUnequipBtn" class="flex-1 bg-red-900/20 text-red-400 border border-red-900/40 p-2 rounded text-[0.65rem] font-black uppercase">Unequip</button>
+                <button onclick="closeModal()" class="flex-1 bg-[#2d3748] text-white p-2 rounded text-[0.65rem] font-black uppercase">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SLOTS = [
+            "<worn on finger>", "<worn on finger>", "<worn around neck>", "<worn around neck>",
+            "<worn on torso>", "<worn on head>", "<worn on legs>", "<worn on feet>",
+            "<worn on hands>", "<worn on arms>", "<worn on body>", "<worn on waist>",
+            "<worn around wrist>", "<worn around wrist>", "<wielded>", "<worn as shield>",
+            "<dual wielded>", "<held>", "<used as light>"
+        ];
+
+        const HAND_SLOTS = [14, 15, 16, 17, 18]; 
+        const INITIAL_LIMIT = 15;
+
+        let inventory = [];
+        let equipped = {}; 
+        let isShowingAll = false;
+
+        const gearGrid = document.getElementById('gearGrid');
+        const inventoryList = document.getElementById('inventoryList');
+        const keywordList = document.getElementById('keywordList');
+        const statsDisplay = document.getElementById('statsDisplay');
+        const fileInput = document.getElementById('fileInput');
+        const itemSearch = document.getElementById('itemSearch');
+        const resetBtn = document.getElementById('resetBtn');
+        const itemCount = document.getElementById('itemCount');
+        const handWarning = document.getElementById('handWarning');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const copyAllFetchBtn = document.getElementById('copyAllFetchBtn');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initSlots();
+            loadDefaultFile();
+        });
+
+        async function loadDefaultFile() {
+            try {
+                const response = await fetch('idents.txt');
+                if (response.ok) {
+                    const text = await response.text();
+                    parseItems(text);
+                } else {
+                    statsDisplay.innerHTML = '<div class="text-[0.7rem] text-[#4a5568] italic col-span-3">No default idents.txt found. Upload a file to begin.</div>';
+                }
+            } catch (err) {
+                console.warn("Could not load idents.txt automatically.");
+                statsDisplay.innerHTML = '<div class="text-[0.7rem] text-[#4a5568] italic col-span-3">Upload a file to begin...</div>';
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('copyToast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 1500);
+        }
+
+        function copyToClipboard(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast(`COPIED TO CLIPBOARD`);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text || "";
+            return div.innerHTML;
+        }
+
+        function initSlots() {
+            gearGrid.innerHTML = '';
+            SLOTS.forEach((slot, index) => {
+                const div = document.createElement('div');
+                div.className = 'gear-slot-row flex items-center p-2 rounded';
+                div.id = `slot-${index}`;
+                div.onclick = () => openSlotSelection(index);
+                div.innerHTML = `
+                    <span class="slot-name">${escapeHtml(slot)}</span>
+                    <div class="flex-grow min-w-0 py-1">
+                        <div class="item-name text-[0.75rem] text-[#4a5568] italic truncate">-- Empty --</div>
+                        <div class="item-stats-container flex flex-wrap gap-1 mt-1"></div>
+                    </div>
+                `;
+                gearGrid.appendChild(div);
+            });
+        }
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => parseItems(event.target.result);
+            reader.readAsText(file);
+        });
+
+        // Extraction function to isolate identify blocks from dirty logs
+        function extractIdentifyBlocks(rawText) {
+            const lines = rawText.split(/\r?\n/);
+            const blocks = [];
+            let currentBlock = [];
+            let capturing = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+
+                if (!capturing) {
+                    if (line.toLowerCase().includes(".. this object,")) {
+                        capturing = true;
+                        currentBlock.push(line);
+                    }
+                } else {
+                    // Stop on empty or whitespace-only line
+                    if (line.trim() === "") {
+                        capturing = false;
+                        blocks.push(currentBlock.join("\n"));
+                        currentBlock = [];
+                    } else {
+                        currentBlock.push(line);
+                    }
+                }
+            }
+
+            if (currentBlock.length > 0) {
+                blocks.push(currentBlock.join("\n"));
+            }
+
+            return blocks;
+        }
+
+        function parseItems(text) {
+            inventory = [];
+            const blocks = extractIdentifyBlocks(text);
+            const nameCount = {}; 
+
+            blocks.forEach((textToProcess) => {
+                const nameMatch = textToProcess.match(/\.\.\s*this\s*object,\s*(.*?),\s*is/i);
+                if (!nameMatch) return;
+                
+                let name = nameMatch[1].trim();
+                if (nameCount[name]) {
+                    nameCount[name]++;
+                    name = `${name}_${nameCount[name]}`;
+                } else {
+                    nameCount[name] = 1;
+                }
+
+                let stats = {};
+                let slotType = "??";
+                let keywords = "";
+                
+                if (textToProcess.includes("Its attacks take the form")) { slotType = "wielded"; }
+                else if (textToProcess.includes("You can use it as a shield.")) { slotType = "shield"; }
+                else if (textToProcess.includes("You can wear it on your hands.")) { slotType = "hands"; }
+                else if (textToProcess.includes("You can wear it on your head.")) { slotType = "head"; }
+                else if (textToProcess.includes("You can wear it around your neck.")) { slotType = "neck"; }
+                else if (textToProcess.includes("You can wear it about your waist.")) { slotType = "waist"; }
+                else if (textToProcess.includes("You can wear it on your legs.")) { slotType = "legs"; }
+                else if (textToProcess.includes("You can wear it on your arms.")) { slotType = "arms"; }
+                else if (textToProcess.includes("You can wear it around your wrist.")) { slotType = "wrist"; }
+                else if (textToProcess.includes("You can wear it on your finger.")) { slotType = "finger"; }
+                else if (textToProcess.includes("You can wear it on your torso.")) { slotType = "torso"; }
+                else if (textToProcess.includes("You can wear it around your body.")) { slotType = "body"; }
+                else if (textToProcess.includes("You can wear it on your feet.")) { slotType = "feet"; }
+                else if (textToProcess.includes("you can hold it")) { slotType = "held"; }
+                else if (textToProcess.includes("used as a light")) { slotType = "light"; }
+
+                const keywordMatch = textToProcess.match(/can be referred to as '(.*?)'/i);
+                if (keywordMatch) keywords = `'${keywordMatch[1]}'`;
+
+                const lines = textToProcess.split(/\n/);
+                lines.forEach(line => {
+                    const pctMatch = line.match(/(?:modifies|boosts)\s+(.*?)\s+by\s+(-?\d+)%/i);
+                    const resMatch = line.match(/resistance\s+to\s+(.*?)\s+by\s+(-?\d+)/i);
+                    const modMatch = line.match(/modifies\s+(.*?)\s+by\s+(-?\d+)/i);
+                    const acMatch = line.match(/Armor\s+class\s+bonus:\s*(.*)/i);
+
+                    if (pctMatch) {
+                        statsMapping(stats, pctMatch[1].toUpperCase() + "%", parseInt(pctMatch[2], 10));
+                    } else if (resMatch) {
+                        statsMapping(stats, "RES_" + resMatch[1].toUpperCase(), parseInt(resMatch[2], 10));
+                    } else if (modMatch) {
+                        statsMapping(stats, modMatch[1].toUpperCase(), parseInt(modMatch[2], 10));
+                    } else if (acMatch) {
+                        const firstNum = acMatch[1].match(/-?\d+/);
+                        if (firstNum) statsMapping(stats, "AC_BONUS", parseInt(firstNum[0], 10));
+                    }
+                });
+
+                inventory.push({ 
+                    id: crypto.randomUUID(), 
+                    name, stats, slotType, keywords,
+                    raw: textToProcess.toUpperCase() 
+                });
+            });
+
+            itemCount.innerText = `${inventory.length} ITEMS`;
+            isShowingAll = false;
+            renderInventory();
+            renderKeywords();
+            calculateStats();
+        }
+
+        function statsMapping(statsObj, key, val) {
+            key = key.trim();
+            if (key.includes("HIT ROLL")) key = "HIT";
+            if (key.includes("DAM ROLL")) key = "DAMROLL";
+            if (key.includes("SAVING THROW")) key = "SAVES";
+            statsObj[key] = (statsObj[key] || 0) + val;
+        }
+
+        function renderInventory() {
+            const queryRaw = itemSearch.value.toUpperCase().trim();
+            const criteria = queryRaw.split(',').map(c => c.trim()).filter(c => c !== "");
+            
+            inventoryList.innerHTML = '';
+            
+            let filtered = inventory.filter(item => {
+                if (criteria.length === 0) return true;
+                return criteria.every(crit => 
+                    item.name.toUpperCase().includes(crit) || 
+                    item.raw.includes(crit) || 
+                    (item.keywords && item.keywords.toUpperCase().includes(crit)) ||
+                    item.slotType.toUpperCase().includes(crit)
+                );
+            });
+
+            filtered.sort((a, b) => a.slotType.localeCompare(b.slotType));
+
+            const itemsToDisplay = isShowingAll ? filtered : filtered.slice(0, INITIAL_LIMIT);
+            if (filtered.length > INITIAL_LIMIT && !isShowingAll) {
+                document.getElementById('showAllContainer').classList.remove('hidden');
+                showAllBtn.innerText = `Show All (${filtered.length} Results)`;
+            } else {
+                document.getElementById('showAllContainer').classList.add('hidden');
+            }
+
+            itemsToDisplay.forEach(item => {
+                const isEquipped = Object.values(equipped).some(ei => ei.id === item.id);
+                const div = document.createElement('div');
+                div.className = 'inventory-item p-2 bg-[#0f172a] rounded cursor-pointer transition-all hover:bg-[#1e293b]';
+                div.onclick = () => autoEquip(item);
+                
+                let statsHtml = Object.entries(item.stats).map(([k, v]) => 
+                    `<span class="stat-badge">${v > 0 ? '+' : ''}${v}${k.includes('%')?'%':''} ${k.replace('%','')}</span>`
+                ).join('');
+
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <div class="text-[0.75rem] font-bold ${isEquipped ? 'text-green-400' : 'text-[#e2e8f0]'}">${escapeHtml(item.name)}</div>
+                        <div class="text-[0.55rem] text-[#f6ad55] font-black px-1 border border-[#f6ad55]/30 rounded uppercase">${escapeHtml(item.slotType)}</div>
+                    </div>
+                    <div class="flex flex-wrap gap-1">${statsHtml}</div>
+                `;
+                inventoryList.appendChild(div);
+            });
+        }
+
+        function renderKeywords() {
+            keywordList.innerHTML = '';
+            const equippedItems = Object.values(equipped).filter(i => i.keywords);
+            if (equippedItems.length === 0) {
+                keywordList.innerHTML = '<p class="text-[0.65rem] text-[#4a5568] italic">No equipped keywords.</p>';
+                return;
+            }
+            [...new Set(equippedItems.map(i => i.keywords))].sort().forEach(kw => {
+                const span = document.createElement('span');
+                span.className = 'keyword-chip text-[0.65rem] bg-[#0a0e14] border border-[#2d3748] text-[#f6ad55] px-2 py-1 rounded cursor-pointer hover:border-[#f6ad55]';
+                span.innerText = kw; 
+                span.onclick = () => copyToClipboard(kw);
+                keywordList.appendChild(span);
+            });
+        }
+
+        copyAllFetchBtn.onclick = () => {
+            const equippedItems = Object.values(equipped).filter(i => i.keywords);
+            if (equippedItems.length === 0) return;
+            const commands = equippedItems.map(item => `get ${item.keywords} %1;`).join('\n');
+            copyToClipboard(commands);
+        };
+
+        function autoEquip(item) {
+            const type = item.slotType.toLowerCase();
+            const validIndices = [];
+            SLOTS.forEach((s, i) => {
+                const slotLabel = s.toLowerCase();
+                if (type === "wielded") {
+                    if (slotLabel.includes("wielded") || slotLabel.includes("dual")) validIndices.push(i);
+                } else if (slotLabel.includes(type)) {
+                    validIndices.push(i);
+                }
+            });
+
+            if (validIndices.length === 0) return;
+            
+            for (let idx of validIndices) {
+                if (equipped[idx] && equipped[idx].id === item.id) {
+                    delete equipped[idx];
+                    updateSlotUI(idx);
+                    finishUpdate();
+                    return;
+                }
+            }
+
+            const emptySlot = validIndices.find(idx => !equipped[idx]);
+            if (emptySlot !== undefined) {
+                equipToSlot(emptySlot, item);
+            } else {
+                openSlotSelectionForReplacement(validIndices, item);
+            }
+        }
+
+        function equipToSlot(index, item) {
+            Object.keys(equipped).forEach(key => { if (equipped[key].id === item.id) delete equipped[key]; });
+            equipped[index] = item;
+            SLOTS.forEach((_, i) => updateSlotUI(i));
+            finishUpdate();
+            closeModal();
+        }
+
+        function openSlotSelectionForReplacement(indices, item) {
+            const modal = document.getElementById('modal');
+            const list = document.getElementById('modalList');
+            document.getElementById('modalTitle').innerText = "Slot Conflict";
+            modal.classList.replace('hidden', 'flex');
+            list.innerHTML = indices.map(idx => `
+                <div class="p-3 bg-[#1a202c] border border-[#2d3748] rounded cursor-pointer hover:border-[#f6ad55] mb-2" onclick="equipToSlot(${idx}, ${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                    <div class="text-[0.6rem] text-[#718096] uppercase font-black">${SLOTS[idx]}</div>
+                    <div class="text-xs font-bold text-[#f6ad55]">${equipped[idx].name}</div>
+                </div>
+            `).join('');
+            document.getElementById('modalUnequipBtn').style.display = 'none';
+        }
+
+        function openSlotSelection(index) {
+            const modal = document.getElementById('modal');
+            const list = document.getElementById('modalList');
+            document.getElementById('modalTitle').innerText = SLOTS[index].toUpperCase();
+            document.getElementById('modalUnequipBtn').style.display = 'block';
+            document.getElementById('modalUnequipBtn').onclick = () => { delete equipped[index]; updateSlotUI(index); finishUpdate(); closeModal(); };
+            modal.classList.replace('hidden', 'flex');
+            
+            const slotLabel = SLOTS[index].toLowerCase();
+            const compatible = inventory.filter(item => {
+                const type = item.slotType.toLowerCase();
+                if (type === "wielded") return slotLabel.includes("wielded") || slotLabel.includes("dual");
+                return slotLabel.includes(type);
+            });
+
+            list.innerHTML = compatible.map(item => `
+                <div class="p-2 bg-[#1a202c] border border-[#2d3748] rounded cursor-pointer hover:bg-[#2d3748]" onclick="equipToSlot(${index}, ${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                    <div class="text-xs font-bold text-[#f6ad55]">${item.name}</div>
+                </div>
+            `).join('');
+        }
+
+        function closeModal() { document.getElementById('modal').classList.replace('flex', 'hidden'); }
+
+        function finishUpdate() {
+            calculateStats();
+            checkHandConflicts();
+            renderInventory();
+            renderKeywords();
+        }
+
+        function updateSlotUI(index) {
+            const row = document.getElementById(`slot-${index}`);
+            if (!row) return;
+            const item = equipped[index];
+            const nameEl = row.querySelector('.item-name');
+            const statsContainer = row.querySelector('.item-stats-container');
+            if (item) {
+                nameEl.innerText = item.name;
+                nameEl.className = "item-name text-[0.75rem] text-[#f6ad55] font-bold truncate";
+                statsContainer.innerHTML = Object.entries(item.stats).map(([k, v]) => `<span class="stat-badge">${v > 0 ? '+' : ''}${v}${k.includes('%')?'%':''} ${k.replace('%','')}</span>`).join('');
+                row.classList.add('active-row');
+            } else {
+                nameEl.innerText = "-- Empty --";
+                nameEl.className = "item-name text-[0.75rem] text-[#4a5568] italic truncate";
+                statsContainer.innerHTML = '';
+                row.classList.remove('active-row');
+            }
+        }
+
+        function checkHandConflicts() {
+            let used = 0;
+            HAND_SLOTS.forEach(idx => { if (equipped[idx]) used++; });
+            const conflict = used > 2;
+            handWarning.classList.toggle('hidden', !conflict);
+            HAND_SLOTS.forEach(idx => {
+                const row = document.getElementById(`slot-${idx}`);
+                if (row) {
+                    if (conflict && equipped[idx]) row.classList.add('slot-conflict');
+                    else row.classList.remove('slot-conflict');
+                }
+            });
+        }
+
+        function calculateStats() {
+            const totals = {};
+            Object.values(equipped).forEach(item => {
+                Object.entries(item.stats).forEach(([s, v]) => totals[s] = (totals[s] || 0) + v);
+            });
+            
+            const sorted = Object.entries(totals).sort((a, b) => a[0].localeCompare(b[0]));
+            if (sorted.length === 0) {
+                statsDisplay.innerHTML = '<div class="text-[0.7rem] text-[#4a5568] italic col-span-3">No stats from equipped items.</div>';
+                return;
+            }
+
+            const rowCount = Math.ceil(sorted.length / 3);
+            let html = '';
+            for (let r = 0; r < rowCount; r++) {
+                for (let c = 0; c < 3; c++) {
+                    const idx = r + (c * rowCount);
+                    const entry = sorted[idx];
+                    if (entry) {
+                        const [s, v] = entry;
+                        html += `
+                            <div class="plain-stat-row px-1">
+                                <span class="text-[#718096] uppercase text-[0.6rem] truncate mr-2">${s.replace('_', ' ')}</span>
+                                <span class="font-bold text-[#f6ad55] whitespace-nowrap">${v > 0 ? '+' : ''}${v}${s.includes('%')?'%':''}</span>
+                            </div>`;
+                    } else {
+                        html += `<div></div>`;
+                    }
+                }
+            }
+            statsDisplay.innerHTML = html;
+        }
+
+        itemSearch.addEventListener('input', () => { isShowingAll = false; renderInventory(); });
+        showAllBtn.onclick = () => { isShowingAll = true; renderInventory(); };
+        resetBtn.onclick = () => { equipped = {}; SLOTS.forEach((_, i) => updateSlotUI(i)); finishUpdate(); };
+    </script>
+</body>
+</html>
