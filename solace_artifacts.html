@@ -389,7 +389,7 @@
 
                 inventory.push({ 
                     id: crypto.randomUUID(), 
-                    name, stats, slotType, keywords, attackForm,
+                    name, stats, slotType, keywords, attackForm, damage,
                     raw: textToProcess.toUpperCase() 
                 });
             });
@@ -422,6 +422,7 @@
                     item.raw.includes(crit) || 
                     (item.keywords && item.keywords.toUpperCase().includes(crit)) ||
                     (item.attackForm && item.attackForm.toUpperCase().includes(crit)) ||
+                    (item.damage && item.damage.toUpperCase().includes(crit)) ||
                     item.slotType.toUpperCase().includes(crit)
                 );
             });
