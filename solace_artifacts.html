@@ -347,6 +347,11 @@
                 if (attackMatch) {
                     attackForm = attackMatch[1].trim();
                 }
+                
+                const dmgMatch = textToProcess.match(/It\s+deals\s+([0-9]+d[0-9]+)\s+damage\s*\(averaging\s+at\s+([0-9]+)\)/i);
+                if (dmgMatch) {
+                    damage = `${dmgMatch[1]}(${dmgMatch[2]})`;
+                }
 
                 if (textToProcess.includes("Its attacks take the form") || attackForm) { slotType = "wielded"; }
                 else if (textToProcess.includes("You can use it as a shield.")) { slotType = "shield"; }
@@ -372,7 +377,6 @@
                     const pctMatch = line.match(/(?:modifies|boosts)\s+(.*?)\s+by\s+(-?\d+)%/i);
                     const resMatch = line.match(/resistance\s+to\s+(.*?)\s+by\s+(-?\d+)/i);
                     const modMatch = line.match(/modifies\s+(.*?)\s+by\s+(-?\d+)/i);
-                    const acMatch = line.match(/Armor\s+class\s+bonus:\s*(.*)/i);
 
                     if (pctMatch) {
                         statsMapping(stats, pctMatch[1].toUpperCase() + "%", parseInt(pctMatch[2], 10));
@@ -380,9 +384,6 @@
                         statsMapping(stats, "RES_" + resMatch[1].toUpperCase(), parseInt(resMatch[2], 10));
                     } else if (modMatch) {
                         statsMapping(stats, modMatch[1].toUpperCase(), parseInt(modMatch[2], 10));
-                    } else if (acMatch) {
-                        const firstNum = acMatch[1].match(/-?\d+/);
-                        if (firstNum) statsMapping(stats, "AC_BONUS", parseInt(firstNum[0], 10));
                     }
                 });
 
@@ -402,7 +403,7 @@
 
         function statsMapping(statsObj, key, val) {
             key = key.trim();
-            if (key.includes("HIT ROLL")) key = "HIT";
+            if (key.includes("HIT ROLL")) key = "HITROLL";
             if (key.includes("DAM ROLL")) key = "DAMROLL";
             if (key.includes("SAVING THROW")) key = "SAVES";
             statsObj[key] = (statsObj[key] || 0) + val;
@@ -446,12 +447,13 @@
                 ).join('');
 
                 let attackHtml = item.attackForm ? `<span class="dmg-badge">ATK: ${escapeHtml(item.attackForm.toUpperCase())}</span>` : '';
+                let damageHtml = item.damage ? `<span class="dmg-badge font-bold">DMG: ${escapeHtml(item.damage)}</span>` : '';
 
                 div.innerHTML = `
                     <div class="flex justify-between items-start mb-1">
                         <div class="text-[0.75rem] font-bold ${isEquipped ? 'text-green-400' : 'text-[#e2e8f0]'}">${escapeHtml(item.name)}</div>
                         <div class="flex gap-1 items-center">
-                            ${attackHtml}
+                            ${attackHtml} ${attackHtml}
                             <div class="text-[0.55rem] text-[#f6ad55] font-black px-1 border border-[#f6ad55]/30 rounded uppercase">${escapeHtml(item.slotType)}</div>
                         </div>
                     </div>
