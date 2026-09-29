@@ -500,7 +500,7 @@
         copyAllFetchBtn.onclick = () => {
             const equippedItems = Object.values(equipped).filter(i => i.keywords);
             if (equippedItems.length === 0) return;
-            const commands = equippedItems.map(item => `get ${item.keywords} %1;`).join('\n');
+            const commands = equippedItems.map(item => `get ${item.keywords} %1;`);
             copyToClipboard(commands);
         };
 
